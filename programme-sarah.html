@@ -411,6 +411,40 @@ nav::-webkit-scrollbar { display: none; }
 .tracker-checkbox.checked { background: linear-gradient(135deg, #1e9455, #6ab820); border-color: #1e9455; color: white; }
 .tracker-checkbox.rest { background: var(--border); border-color: var(--border); cursor: default; }
 
+/* Case "séance faite" sur la ligne du planning */
+.plan-check {
+  margin-left: auto; align-self: center; flex-shrink: 0;
+  width: 26px; height: 26px; border-radius: 7px;
+  border: 2px solid var(--border); background: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; color: transparent; cursor: pointer; transition: all .2s;
+}
+.plan-check:hover { border-color: #1e9455; }
+.plan-check.checked { background: linear-gradient(135deg, #1e9455, #6ab820); border-color: #1e9455; color: #fff; }
+
+/* Case à cocher d'un exercice dans le drawer */
+.exo-check {
+  flex-shrink: 0; width: 24px; height: 24px; border-radius: 6px;
+  border: 2px solid var(--border); background: #fff;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; color: transparent; cursor: pointer; transition: all .2s;
+}
+.exo-check.checked { background: linear-gradient(135deg, #1e9455, #6ab820); border-color: #1e9455; color: #fff; }
+
+/* Bandeau de mise à jour */
+#updateBanner {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+  display: none; align-items: center; justify-content: center; gap: 14px;
+  padding: 10px 16px; font-size: 13px; font-weight: 600;
+  background: linear-gradient(135deg, #0d2318, #1e9455); color: #fff;
+  box-shadow: 0 2px 12px rgba(0,0,0,.25);
+}
+#updateBanner.show { display: flex; }
+#updateBanner button {
+  background: #fff; color: #0d2318; border: none; border-radius: 8px;
+  padding: 6px 14px; font-weight: 700; font-size: 13px; cursor: pointer; font-family: inherit;
+}
+
 /* DRAWER */
 .drawer-overlay {
   display: none; position: fixed; inset: 0;
@@ -1261,7 +1295,7 @@ function buildTracker() {
   const c = document.getElementById('tracker-container');
   c.innerHTML = '';
   WEEKS.forEach(w => {
-    const done = Object.keys(checks).filter(k => k.startsWith('w'+w.num+'-') && checks[k]).length;
+    const done = Object.keys(checks).filter(k => new RegExp('^w'+w.num+'-\\d+$').test(k) && checks[k]).length;
     const total = 4;
     const pct = Math.round(done/total*100);
     c.innerHTML += `
@@ -1287,11 +1321,21 @@ function buildTracker() {
       </div>`;
   });
 }
-function toggleCheck(key) {
-  checks[key] = !checks[key];
+function persist() {
   localStorage.setItem('sarahChecks', JSON.stringify(checks));
-  buildTracker();
   saveToCloud();
+}
+
+// Coche/décoche une séance entière (grille tracker + planning)
+function toggleCheck(key) { setDayChecked(key, !checks[key]); }
+
+function setDayChecked(dayKey, val) {
+  checks[dayKey] = val;
+  // efface les états d'exercices : ils ré-hériteront de l'état du jour
+  Object.keys(checks).forEach(k => { if (k.startsWith(dayKey + '-e')) delete checks[k]; });
+  persist();
+  buildTracker();
+  refreshPlanChecks();
 }
 
 // Envoi vers le cloud (regroupé pour éviter les appels en rafale)
@@ -1319,11 +1363,128 @@ async function loadFromCloud() {
     checks = data.checks;
     localStorage.setItem('sarahChecks', JSON.stringify(checks));
     buildTracker();
+    refreshPlanChecks();
   }
 }
 
-buildTracker();    // rendu immédiat depuis le cache local
-loadFromCloud();   // puis synchronisation avec le cloud
+// ===== Planning : cases "séance faite" + cases exercices dans le drawer =====
+let currentDayCtx = null;
+const REST = (i) => REST_DAYS.has(i);
+
+function enhancePlanning() {
+  document.querySelectorAll('.week-block').forEach(block => {
+    const numEl = block.querySelector('.week-num');
+    if (!numEl) return;
+    const wnum = parseInt(numEl.textContent.replace(/\D/g, ''), 10);
+    if (!wnum) return;
+    const rows = block.querySelectorAll('.week-body > .day-row');
+    rows.forEach((row, i) => {
+      if (i > 6 || REST(i)) return;            // jours de repos : pas de case
+      const dayKey = 'w' + wnum + '-' + i;
+      row.dataset.dayKey = dayKey;
+      // case "séance faite" visible sur la ligne (sans ouvrir le drawer)
+      const box = document.createElement('div');
+      box.className = 'plan-check';
+      box.title = 'Marquer la séance comme faite';
+      box.addEventListener('click', (e) => { e.stopPropagation(); toggleCheck(dayKey); });
+      row.appendChild(box);
+    });
+  });
+  // Capture-phase : fixe le contexte du jour AVANT que le onclick inline (openDay) ne s'exécute
+  document.addEventListener('click', (e) => {
+    const row = e.target.closest && e.target.closest('.day-row.clickable');
+    if (row) currentDayCtx = row.dataset.dayKey ? { dayKey: row.dataset.dayKey } : null;
+  }, true);
+  refreshPlanChecks();
+}
+
+function refreshPlanChecks() {
+  document.querySelectorAll('.plan-check').forEach(box => {
+    const row = box.closest('.day-row');
+    const on = !!(row && checks[row.dataset.dayKey]);
+    box.classList.toggle('checked', on);
+    box.innerHTML = on ? '✓' : '';
+  });
+}
+
+// ---- Cases à cocher des exercices dans le drawer ----
+function injectExoChecks() {
+  if (!currentDayCtx) return;
+  const dayKey = currentDayCtx.dayKey;
+  const exos = document.querySelectorAll('#drawerContent .d-exo');
+  if (!exos.length) return;                    // séance sans liste d'exercices
+  const dayOn = !!checks[dayKey];
+  exos.forEach((exo, i) => {
+    const head = exo.querySelector('.d-exo-head');
+    if (!head || head.querySelector('.exo-check')) return;
+    const ek = dayKey + '-e' + i;
+    const on = (ek in checks) ? checks[ek] : dayOn;   // état explicite, sinon hérite du jour
+    const cb = document.createElement('div');
+    cb.className = 'exo-check' + (on ? ' checked' : '');
+    cb.innerHTML = on ? '✓' : '';
+    cb.title = 'Exercice fait';
+    cb.addEventListener('click', (e) => { e.stopPropagation(); toggleExo(i, exos.length); });
+    head.insertBefore(cb, head.firstChild);
+  });
+}
+
+function toggleExo(idx, total) {
+  if (!currentDayCtx) return;
+  const dayKey = currentDayCtx.dayKey;
+  const dayOn = !!checks[dayKey];
+  for (let j = 0; j < total; j++) {            // rendre explicites tous les exercices
+    const k = dayKey + '-e' + j;
+    if (!(k in checks)) checks[k] = dayOn;
+  }
+  const ek = dayKey + '-e' + idx;
+  checks[ek] = !checks[ek];
+  let all = true;                              // séance faite si TOUS cochés
+  for (let j = 0; j < total; j++) { if (!checks[dayKey + '-e' + j]) { all = false; break; } }
+  checks[dayKey] = all;
+  persist();
+  refreshDrawerExos();
+  buildTracker();
+  refreshPlanChecks();
+}
+
+function refreshDrawerExos() {
+  if (!currentDayCtx) return;
+  const dayKey = currentDayCtx.dayKey;
+  const dayOn = !!checks[dayKey];
+  document.querySelectorAll('#drawerContent .d-exo').forEach((exo, i) => {
+    const ek = dayKey + '-e' + i;
+    const on = (ek in checks) ? checks[ek] : dayOn;
+    const cb = exo.querySelector('.exo-check');
+    if (cb) { cb.classList.toggle('checked', on); cb.innerHTML = on ? '✓' : ''; }
+  });
+}
+
+// ===== Bandeau "mise à jour disponible" =====
+let baseVersion = null;
+function initUpdateBanner() {
+  const bar = document.createElement('div');
+  bar.id = 'updateBanner';
+  bar.innerHTML = '<span>🔄 Une mise à jour est disponible</span><button type="button">Actualiser</button>';
+  bar.querySelector('button').addEventListener('click', () => location.reload());
+  document.body.appendChild(bar);
+  checkUpdate();
+  setInterval(checkUpdate, 180000);            // toutes les 3 min
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) checkUpdate(); });
+}
+async function checkUpdate() {
+  try {
+    const res = await fetch(location.pathname + '?_=' + Date.now(), { method: 'HEAD', cache: 'no-store' });
+    const v = res.headers.get('etag') || res.headers.get('last-modified') || res.headers.get('content-length');
+    if (!v) return;
+    if (baseVersion === null) { baseVersion = v; return; }   // 1re mesure = référence
+    if (v !== baseVersion) document.getElementById('updateBanner').classList.add('show');
+  } catch (e) { /* hors-ligne : on ignore */ }
+}
+
+buildTracker();      // rendu immédiat depuis le cache local
+enhancePlanning();   // cases "séance faite" + contexte drawer
+initUpdateBanner();  // bandeau de mise à jour
+loadFromCloud();     // puis synchronisation avec le cloud
 
 // DRAWER DATA
 const DRAWER = {
@@ -1494,6 +1655,7 @@ function openDay(key, label, title) {
   document.getElementById('drawerTitle').textContent = title;
   const content = DRAWER[key] || '<p style="padding:16px;color:var(--muted)">Contenu disponible bientôt.</p>';
   document.getElementById('drawerContent').innerHTML = content;
+  injectExoChecks();
   document.getElementById('dayDrawer').classList.add('open');
   document.body.style.overflow = 'hidden';
 }
