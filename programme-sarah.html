@@ -410,6 +410,16 @@ nav::-webkit-scrollbar { display: none; }
 }
 .tracker-checkbox.checked { background: linear-gradient(135deg, #1e9455, #6ab820); border-color: #1e9455; color: white; }
 .tracker-checkbox.rest { background: var(--border); border-color: var(--border); cursor: default; }
+.tracker-checkbox[data-key] { cursor: pointer; }
+.tc-arrow { color: var(--muted); font-size: 15px; line-height: 1; }
+.tracker-toggle {
+  width: 100%; height: 18px; border-radius: 5px; padding: 0; margin-top: 1px;
+  border: 1.5px solid var(--border); background: #fff; color: var(--muted);
+  font-size: 11px; line-height: 1; cursor: pointer; font-family: inherit;
+  display: flex; align-items: center; justify-content: center; transition: all .15s;
+}
+.tracker-toggle:hover { border-color: #1e9455; color: #1e9455; }
+.tracker-toggle.on { background: linear-gradient(135deg, #1e9455, #6ab820); border-color: #1e9455; color: #fff; }
 
 /* Case "séance faite" sur la ligne du planning */
 .plan-check {
@@ -1309,18 +1319,74 @@ function buildTracker() {
             const key = 'w'+w.num+'-'+i;
             const isRest = REST_DAYS.has(i);
             const checked = checks[key];
+            if (isRest) {
+              return `<div class="tracker-day">
+                <div class="tracker-day-label">${DAYS_LABELS[i]}</div>
+                <div class="tracker-checkbox rest" title="${d}">—</div>
+              </div>`;
+            }
             return `<div class="tracker-day">
               <div class="tracker-day-label">${DAYS_LABELS[i]}</div>
-              <div class="tracker-checkbox ${isRest?'rest':''} ${checked?'checked':''}"
-                onclick="${isRest?'':'toggleCheck(\''+key+'\')'}" title="${d}">
-                ${isRest?'—':checked?'✓':''}
+              <div class="tracker-checkbox ${checked?'checked':''}" data-key="${key}" role="button" tabindex="0" title="Voir le détail — ${d}">
+                ${checked ? '✓' : '<span class="tc-arrow">›</span>'}
               </div>
+              <button type="button" class="tracker-toggle ${checked?'on':''}" data-key="${key}" title="${checked?'Décocher la séance':'Valider la séance'}" aria-label="Valider la séance">${checked ? '✓' : '○'}</button>
             </div>`;
           }).join('')}
         </div>
       </div>`;
   });
 }
+
+// ===== Tracker (onglet Suivi) : tap sur la case = drawer · bouton ✓ = valider =====
+const DAYS_FULL = ['Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi','Dimanche'];
+
+// Clé de contenu du drawer selon semaine + jour (identique à l'onglet Programme)
+function drawerKeyFor(week, i) {
+  const type = (WEEKS[week-1] && WEEKS[week-1].days[i]) || '';
+  if (type === 'Gainage') return 'gainage_s' + Math.min(week, 4);
+  if (type === 'Vacuum')  return week <= 2 ? 'vacuum_s1' : 'vacuum_s2';
+  if (type === 'Bilan')   return 'vacuum_s2';   // pas de contenu "bilan" dédié → repli
+  return null;
+}
+function drawerTitleFor(week, i) {
+  const type = (WEEKS[week-1] && WEEKS[week-1].days[i]) || '';
+  return type === 'Gainage' ? 'Gainage profond'
+       : type === 'Vacuum'  ? 'Stomach Vacuum'
+       : type === 'Bilan'   ? 'Bilan final' : 'Séance';
+}
+function openTrackerDrawer(key) {
+  const m = /^w(\d+)-(\d+)$/.exec(key);
+  if (!m) return;
+  const week = +m[1], day = +m[2];
+  const dk = drawerKeyFor(week, day);
+  if (!dk) return;
+  currentDayCtx = { dayKey: key };              // exos liés au bon jour (comme l'onglet Programme)
+  openDay(dk, 'Semaine ' + week + ' — ' + DAYS_FULL[day], drawerTitleFor(week, day));
+}
+
+let trackerWired = false;
+function initTrackerUI() {
+  if (trackerWired) return;
+  trackerWired = true;
+  const c = document.getElementById('tracker-container');
+  if (!c) return;
+  c.addEventListener('click', (e) => {
+    const tog = e.target.closest('.tracker-toggle');
+    if (tog) { e.stopPropagation(); toggleCheck(tog.dataset.key); return; }   // bouton ✓ → valider
+    const cell = e.target.closest('.tracker-checkbox');
+    if (cell && cell.dataset.key) openTrackerDrawer(cell.dataset.key);        // case → drawer
+  });
+  c.addEventListener('keydown', (e) => {                                      // accès clavier
+    const cell = e.target.closest && e.target.closest('.tracker-checkbox[data-key]');
+    if (cell && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openTrackerDrawer(cell.dataset.key); }
+  });
+  const legend = document.createElement('div');
+  legend.style.cssText = 'font-size:11px;color:var(--muted);margin:2px 2px 12px;text-align:center;line-height:1.5;';
+  legend.innerHTML = 'Touchez une case pour le détail des exercices · bouton <b>✓</b> pour valider la séance';
+  c.parentNode.insertBefore(legend, c);
+}
+
 function persist() {
   localStorage.setItem('sarahChecks', JSON.stringify(checks));
   saveToCloud();
@@ -1482,6 +1548,7 @@ async function checkUpdate() {
 }
 
 buildTracker();      // rendu immédiat depuis le cache local
+initTrackerUI();     // tracker double action : case = drawer, bouton ✓ = valider
 enhancePlanning();   // cases "séance faite" + contexte drawer
 initUpdateBanner();  // bandeau de mise à jour
 loadFromCloud();     // puis synchronisation avec le cloud
