@@ -1,0 +1,1569 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Programme Sarah — Ventre Plat</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f2faf4;
+  --blanc: #ffffff;
+  --encre: #0d2318;
+  --mid: #1e4a30;
+  --muted: #6a9478;
+  --border: #c8e8d0;
+
+  /* Gainage — vert forêt */
+  --sage: #1e9455;
+  --sage-bg: #e8f8ee;
+
+  /* Vacuum — vert menthe vif */
+  --rosé: #0fb872;
+  --rosé-bg: #e6faf2;
+
+  /* Lavande — vert-bleu teal */
+  --lavande: #0d9e82;
+  --lavande-bg: #e6f7f4;
+
+  /* Doré — vert lime */
+  --dore: #6ab820;
+  --dore-bg: #f2fae6;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  background: var(--bg);
+  color: var(--encre);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 15px;
+  line-height: 1.65;
+}
+
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, #0d2318 0%, #0f5c30 45%, #1db860 100%);
+  padding: 48px 24px 56px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -80px; right: -80px;
+  width: 320px; height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,255,255,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero::after {
+  content: '✦';
+  position: absolute;
+  bottom: 20px; right: 24px;
+  font-size: 80px;
+  color: rgba(255,255,255,0.06);
+  pointer-events: none;
+  line-height: 1;
+}
+.hero-tag {
+  font-size: 11px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: rgba(160,255,200,0.9);
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+.hero h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: clamp(48px, 13vw, 78px);
+  font-weight: 600;
+  line-height: 0.95;
+  color: #ffffff;
+  letter-spacing: -0.5px;
+}
+.hero h1 em {
+  font-style: italic;
+  color: #a0ffc8;
+}
+.hero-sub {
+  margin-top: 16px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.65);
+  max-width: 340px;
+  line-height: 1.6;
+}
+.hero-pills {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 24px;
+}
+.hero-pill {
+  font-size: 11px;
+  padding: 5px 13px;
+  border-radius: 100px;
+  border: 1px solid rgba(255,255,255,0.2);
+  color: rgba(255,255,255,0.55);
+  font-weight: 500;
+  letter-spacing: 0.3px;
+  backdrop-filter: blur(4px);
+}
+.hero-pill.active {
+  border-color: rgba(255,200,230,0.7);
+  color: #a0ffc8;
+  background: rgba(255,255,255,0.08);
+}
+
+/* NAV */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--encre);
+  display: flex;
+  overflow-x: auto;
+  scrollbar-width: none;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+}
+nav::-webkit-scrollbar { display: none; }
+.nav-btn {
+  flex-shrink: 0;
+  padding: 13px 18px;
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.4);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  white-space: nowrap;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: all 0.2s;
+}
+.nav-btn.active { color: #ffffff; border-bottom-color: var(--rosé); }
+.nav-btn:hover:not(.active) { color: #aaa; }
+
+/* SECTIONS */
+.section { display: none; padding: 28px 18px 80px; }
+.section.active { display: block; }
+
+/* SECTION HEADER */
+.sec-head {
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid var(--border);
+}
+.sec-head h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32px;
+  font-weight: 600;
+  line-height: 1.1;
+  margin-bottom: 4px;
+  background: linear-gradient(135deg, #0d2318, #1e9455);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.sec-head p { font-size: 13px; color: var(--muted); }
+
+/* CARDS */
+.card {
+  background: var(--blanc);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  box-shadow: 0 2px 12px rgba(100,60,160,0.06);
+  overflow: hidden;
+  margin-bottom: 14px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.card-head {
+  padding: 16px 18px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  user-select: none;
+}
+.card-icon {
+  width: 44px; height: 44px;
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+.card-icon.sage { background: var(--sage-bg); }
+.card-icon.rosé { background: var(--rosé-bg); }
+.card-icon.lavande { background: var(--lavande-bg); }
+.card-icon.dore { background: var(--dore-bg); }
+.card-head-text { flex: 1; }
+.card-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 19px;
+  font-weight: 600;
+  color: var(--encre);
+  line-height: 1.1;
+}
+.card-meta { font-size: 12px; color: var(--muted); margin-top: 2px; }
+.card-chevron { color: var(--muted); font-size: 14px; transition: transform 0.3s; }
+.card.open .card-chevron { transform: rotate(180deg); }
+.card-body { display: none; padding: 0 18px 18px; }
+.card.open .card-body { display: block; }
+
+/* BADGE */
+.badge {
+  display: inline-flex;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  padding: 3px 10px;
+  border-radius: 100px;
+  margin-bottom: 4px;
+}
+.badge.sage { background: var(--sage-bg); color: var(--sage); }
+.badge.rosé { background: var(--rosé-bg); color: var(--rosé); }
+.badge.lavande { background: var(--lavande-bg); color: var(--lavande); }
+.badge.dore { background: var(--dore-bg); color: var(--dore); }
+
+/* STEP LIST */
+.step-block { margin: 10px 0; }
+.step-title {
+  font-size: 10px; font-weight: 600; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--muted);
+  margin-bottom: 6px; margin-top: 14px;
+}
+.step-list { list-style: none; }
+.step-list li {
+  font-size: 13px; color: var(--mid);
+  padding: 6px 0 6px 22px;
+  position: relative;
+  border-bottom: 1px dashed var(--border);
+  line-height: 1.5;
+}
+.step-list li:last-child { border-bottom: none; }
+.step-list li::before {
+  content: attr(data-n);
+  position: absolute; left: 0;
+  font-size: 10px; font-weight: 700;
+  color: var(--sage);
+  font-family: 'DM Sans', sans-serif;
+}
+.warn-list { list-style: none; }
+.warn-list li {
+  font-size: 12px; color: #c05020;
+  padding: 4px 0 4px 18px;
+  position: relative;
+}
+.warn-list li::before { content: '✗'; position: absolute; left: 0; font-weight: 700; }
+
+.tip-row {
+  display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px;
+}
+.tip-chip {
+  font-size: 12px; padding: 5px 12px; border-radius: 100px;
+  background: #eaf7ee; border: 1px solid #c0e8cc; color: var(--mid);
+}
+.tip-chip.sage { background: var(--sage-bg); border-color: #c4dac6; color: var(--sage); }
+.tip-chip.rosé { background: var(--rosé-bg); border-color: #e8c0bc; color: var(--rosé); }
+.tip-chip.lavande { background: var(--lavande-bg); border-color: #c8c4e0; color: var(--lavande); }
+
+.info-box {
+  background: #eaf7ee; border: 1px solid #c0e8cc;
+  border-radius: 10px; padding: 13px 14px;
+  font-size: 13px; color: var(--mid); line-height: 1.65;
+  margin: 10px 0;
+}
+.info-box strong { color: var(--encre); font-weight: 600; }
+
+/* PROGRAMME TABS */
+.prog-tabs {
+  display: flex; gap: 6px;
+  overflow-x: auto; scrollbar-width: none;
+  margin-bottom: 22px;
+}
+.prog-tabs::-webkit-scrollbar { display: none; }
+.prog-tab {
+  flex-shrink: 0; padding: 8px 16px;
+  border-radius: 100px;
+  border: 1.5px solid var(--border);
+  background: var(--blanc);
+  font-size: 12px; font-weight: 600;
+  color: var(--muted); cursor: pointer; transition: all 0.2s;
+  font-family: 'DM Sans', sans-serif;
+}
+.prog-tab.active { background: linear-gradient(135deg, #0d2318, #1e9455); color: #fff; border-color: var(--sage); }
+
+.phase-section { display: none; }
+.phase-section.active { display: block; }
+
+/* WEEK CARD */
+.week-block {
+  background: var(--blanc);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  overflow: hidden;
+  margin-bottom: 14px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+}
+.week-head {
+  padding: 14px 16px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: linear-gradient(135deg, #0d2318, #0f5c30); cursor: pointer; user-select: none;
+}
+.week-head-left { display: flex; align-items: center; gap: 10px; }
+.week-num {
+  font-size: 12px; font-weight: 700; color: var(--rosé);
+  letter-spacing: 1px; font-family: 'DM Sans', sans-serif;
+}
+.week-name {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 17px; font-weight: 500; color: #ffffff;
+}
+.week-arrow { color: #5a5048; font-size: 14px; transition: transform 0.3s; }
+.week-block.open .week-arrow { transform: rotate(180deg); }
+.week-body { display: none; padding: 16px; }
+.week-block.open .week-body { display: block; }
+
+/* DAY ROW */
+.day-row {
+  display: flex; gap: 12px; align-items: flex-start;
+  padding: 11px 0; border-bottom: 1px solid var(--border);
+}
+.day-row:last-child { border-bottom: none; }
+.day-row.clickable { cursor: pointer; border-radius: 8px; transition: background 0.15s; }
+.day-row.clickable:hover { background: #eaf7ee; }
+.day-row.clickable:active { background: #d0f0da; }
+
+.day-tag { flex-shrink: 0; width: 44px; text-align: center; }
+.day-label {
+  font-size: 10px; font-weight: 600; text-transform: uppercase;
+  letter-spacing: 1px; color: var(--muted);
+}
+.day-emoji { font-size: 18px; display: block; margin-top: 2px; }
+.day-content { flex: 1; }
+.day-type {
+  display: inline-flex; align-items: center;
+  font-size: 10px; font-weight: 600; letter-spacing: 1px;
+  text-transform: uppercase; padding: 3px 9px; border-radius: 100px; margin-bottom: 5px;
+}
+.day-type.gainage { background: var(--sage-bg); color: var(--sage); font-weight: 700; }
+.day-type.vacuum { background: var(--rosé-bg); color: var(--rosé); font-weight: 700; }
+.day-type.cardio { background: var(--dore-bg); color: var(--dore); }
+.day-type.repos { background: #f0eeff; color: #b0a8d0; }
+.day-type.combo { background: var(--lavande-bg); color: var(--lavande); font-weight: 700; }
+
+.day-detail { font-size: 13px; color: var(--mid); line-height: 1.5; }
+.day-detail strong { color: var(--encre); font-weight: 600; }
+.day-hint { font-size: 10px; color: #1e9455; margin-top: 3px; font-weight: 600; letter-spacing: 0.3px; }
+.day-duration { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+/* VACUUM PROGRESS */
+.vacuum-progress {
+  display: grid; grid-template-columns: 1fr 1fr 1fr;
+  gap: 10px; margin-bottom: 18px;
+}
+.vp-card {
+  background: var(--blanc); border: 1px solid var(--border);
+  border-radius: 12px; padding: 14px 12px; text-align: center;
+  box-shadow: 0 2px 10px rgba(100,60,160,0.08);
+}
+.vp-phase {
+  font-size: 10px; font-weight: 600; letter-spacing: 1.5px;
+  text-transform: uppercase; margin-bottom: 6px;
+}
+.vp-phase.s1 { color: #1e9455; }
+.vp-phase.s2 { color: #6ab820; }
+.vp-phase.s3 { color: #0fb872; }
+.vp-val {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 26px; font-weight: 600; line-height: 1;
+  margin-bottom: 4px;
+}
+.vp-label { font-size: 11px; color: var(--muted); }
+
+/* TRACKER */
+.tracker-week {
+  background: var(--blanc); border: 1px solid var(--border);
+  border-radius: 14px; padding: 16px; margin-bottom: 10px;
+}
+.tracker-week-head {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 12px;
+}
+.tracker-week-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 17px; font-weight: 600;
+  color: var(--encre);
+}
+.tracker-days { display: grid; grid-template-columns: repeat(7, 1fr); gap: 5px; }
+.tracker-day { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.tracker-day-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+.tracker-checkbox {
+  width: 28px; height: 28px; border-radius: 8px;
+  border: 2px solid var(--border); background: var(--bg);
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  font-size: 14px; transition: all 0.2s; color: transparent;
+}
+.tracker-checkbox.checked { background: linear-gradient(135deg, #1e9455, #6ab820); border-color: #1e9455; color: white; }
+.tracker-checkbox.rest { background: var(--border); border-color: var(--border); cursor: default; }
+
+/* DRAWER */
+.drawer-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(10,35,20,0.5); z-index: 400;
+  align-items: flex-end; justify-content: center;
+}
+.drawer-overlay.open { display: flex; }
+.drawer-box {
+  background: var(--blanc); border-radius: 24px 24px 0 0;
+  width: 100%; max-width: 520px; max-height: 88vh;
+  overflow-y: auto; padding: 0 0 44px;
+  animation: slideUp 0.26s ease;
+  border-top: 4px solid var(--rosé);
+}
+@keyframes slideUp {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+.drawer-bar {
+  position: sticky; top: 0; background: var(--blanc);
+  padding: 14px 18px 12px;
+  border-top: 3px solid var(--sage);
+  display: flex; align-items: center; justify-content: space-between;
+  border-bottom: 2px solid var(--border); z-index: 2;
+}
+.drawer-close {
+  background: var(--border); border: none;
+  width: 32px; height: 32px; border-radius: 50%;
+  font-size: 16px; cursor: pointer; color: var(--muted);
+  display: flex; align-items: center; justify-content: center;
+}
+.drawer-day-label { font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+.drawer-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px; font-weight: 600; color: var(--encre);
+}
+.drawer-content { padding: 18px 18px 0; }
+.d-info {
+background: #eaf7ee; border: 1px solid #c0e8cc;
+  border-radius: 12px; padding: 13px 14px;
+  font-size: 13px; color: var(--mid); line-height: 1.65;
+  margin-bottom: 12px;
+}
+.d-info strong { color: var(--encre); font-weight: 600; }
+.d-info.sage { background: var(--sage-bg); border-color: #c4dac6; }
+.d-info.lavande { background: var(--lavande-bg); border-color: #c8c4e0; }
+.d-info.rosé { background: var(--rosé-bg); border-color: #e8c0bc; }
+.d-sep { font-size: 10px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin: 16px 0 10px; }
+
+.d-exo {
+  border: 1px solid var(--border); border-radius: 12px;
+  overflow: hidden; margin-bottom: 10px;
+}
+.d-exo-head {
+  display: flex; align-items: center; gap: 10px;
+  padding: 12px 14px; cursor: pointer; background: #eaf7ee;
+}
+.d-exo-icon {
+  width: 36px; height: 36px; border-radius: 8px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0;
+}
+.d-exo-name { font-family: 'Cormorant Garamond', serif; font-size: 17px; font-weight: 600; flex: 1; }
+.d-exo-dose { font-size: 11px; color: var(--muted); }
+.d-chevron { color: var(--muted); transition: transform 0.25s; font-size: 13px; }
+.d-exo.open .d-chevron { transform: rotate(180deg); }
+.d-exo-body { display: none; padding: 13px 14px; background: var(--blanc); border-top: 1px solid var(--border); }
+.d-exo.open .d-exo-body { display: block; }
+.d-exo-body p { font-size: 13px; color: var(--mid); line-height: 1.65; margin-bottom: 8px; }
+.d-step-list { list-style: none; margin-bottom: 8px; }
+.d-step-list li {
+  font-size: 13px; color: var(--mid);
+  padding: 5px 0 5px 20px; position: relative;
+  border-bottom: 1px dashed var(--border); line-height: 1.5;
+}
+.d-step-list li:last-child { border-bottom: none; }
+.d-step-list li::before {
+  content: attr(data-n); position: absolute; left: 0;
+  font-size: 10px; font-weight: 700; color: var(--rosé);
+}
+.d-tip-pill {
+  display: inline-block; font-size: 11px; padding: 4px 10px;
+  border-radius: 100px; background: var(--bg);
+  border: 1px solid var(--border); color: var(--mid);
+  margin: 2px 3px 2px 0;
+}
+.d-tip-pill.sage { background: var(--sage-bg); border-color: #c4dac6; color: var(--sage); }
+.d-tip-pill.rosé { background: var(--rosé-bg); border-color: #e8c0bc; color: var(--rosé); }
+.d-tip-pill.lavande { background: var(--lavande-bg); border-color: #c8c4e0; color: var(--lavande); }
+
+/* FAB */
+.fab {
+  position: fixed; bottom: 20px; right: 20px;
+  width: 52px; height: 52px; background: var(--encre);
+  border-radius: 50%; border: none; color: #ffffff;
+  font-size: 20px; cursor: pointer;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.18); z-index: 200;
+  transition: transform 0.2s;
+}
+.fab:hover { transform: scale(1.08); }
+
+/* MODAL */
+.modal-overlay {
+  display: none; position: fixed; inset: 0;
+  background: rgba(0,0,0,0.5); z-index: 300;
+  align-items: flex-end; justify-content: center;
+}
+.modal-overlay.open { display: flex; }
+.modal-box {
+  background: linear-gradient(170deg, #0a1f12 0%, #0f5c30 100%); border-radius: 24px 24px 0 0;
+  padding: 28px 24px 44px; width: 100%; max-width: 480px; text-align: center;
+}
+.modal-handle { width: 36px; height: 3px; background: #3d3830; border-radius: 2px; margin: 0 auto 20px; }
+.modal-title {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px; font-weight: 500; color: #ffffff; margin-bottom: 4px;
+}
+.timer-phase { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 16px; color: #a0ffc8; }
+.timer-big {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 88px; font-weight: 400; line-height: 1;
+  color: #a0ffc8; margin: 12px 0; letter-spacing: -2px;
+}
+.presets { display: flex; gap: 6px; justify-content: center; margin-bottom: 14px; flex-wrap: wrap; }
+.preset-btn {
+  padding: 6px 13px; border-radius: 100px;
+  border: 1px solid #3d3830; background: none; color: #7a7068;
+  font-size: 12px; cursor: pointer; font-family: 'DM Sans', sans-serif;
+  font-weight: 500; transition: all 0.2s;
+}
+.preset-btn.sel, .preset-btn:hover { border-color: #a0ffc8; color: #a0ffc8; }
+.t-btns { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.t-btn {
+  padding: 12px 22px; border-radius: 100px; border: none;
+  font-family: 'DM Sans', sans-serif; font-size: 13px;
+  font-weight: 600; cursor: pointer; transition: all 0.2s;
+}
+.t-btn.primary { background: linear-gradient(135deg, #1e9455, #0fb872); color: white; }
+.t-btn.secondary { background: #2d2824; color: #ffffff; }
+</style>
+</head>
+<body>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-tag">Programme personnalisé · Sarah</div>
+  <h1>Ventre<br><em>plat</em></h1>
+  <p class="hero-sub">Gainage profond · Stomach vacuum. Sans crunchs, sans douleur à la nuque. Maison, zéro matériel.</p>
+  <div class="hero-pills">
+    <div class="hero-pill active">✓ Sans crunchs</div>
+    <div class="hero-pill active">✓ Sans douleur nuque</div>
+    <div class="hero-pill active">✓ Stomach vacuum</div>
+    <div class="hero-pill active">✓ Zéro matériel</div>
+  </div>
+</div>
+
+<!-- NAV -->
+<nav>
+  <button class="nav-btn active" onclick="showSection('programme')">Programme</button>
+  <button class="nav-btn" onclick="showSection('exercices')">Exercices</button>
+  <button class="nav-btn" onclick="showSection('vacuum')">Vacuum</button>
+  <button class="nav-btn" onclick="showSection('suivi')">Suivi</button>
+</nav>
+
+<!-- ══════════════════ PROGRAMME ══════════════════ -->
+<div id="programme" class="section active">
+  <div class="sec-head">
+    <h2>Planning 8 semaines</h2>
+    <p>Progression douce et régulière. Clique sur un jour pour voir le détail complet.</p>
+  </div>
+
+  <div class="prog-tabs">
+    <button class="prog-tab active" onclick="showPhase('p1', this)">Phase 1 — S1–S2</button>
+    <button class="prog-tab" onclick="showPhase('p2', this)">Phase 2 — S3–S4</button>
+    <button class="prog-tab" onclick="showPhase('p3', this)">Phase 3 — S5–S6</button>
+    <button class="prog-tab" onclick="showPhase('p4', this)">Phase 4 — S7–S8</button>
+  </div>
+
+  <!-- PHASE 1 -->
+  <div id="p1" class="phase-section active">
+    <div class="card" style="margin-bottom:20px">
+      <div class="card-head" style="cursor:default">
+        <div class="card-icon sage">🌱</div>
+        <div class="card-head-text">
+          <div class="card-name">Phase 1 · Fondations</div>
+          <div class="card-meta">Semaines 1–2 · Apprivoiser les mouvements</div>
+        </div>
+      </div>
+      <div class="card-body" style="display:block;padding-top:0">
+        <div class="info-box">On ne cherche pas à se fatiguer. L'objectif : bien sentir le transverse (le muscle profond du ventre), apprendre à faire le vacuum correctement, et installer la régularité. Les planches restent courtes. On prend le temps de bien ressentir chaque mouvement.</div>
+      </div>
+    </div>
+
+    <div class="week-block">
+      <div class="week-head" onclick="toggleWeek(this)">
+        <div class="week-head-left"><span class="week-num">S1</span><span class="week-name">Découverte — Prendre les marques</span></div>
+        <span class="week-arrow">▾</span>
+      </div>
+      <div class="week-body">
+        <div class="day-row">
+          <div class="day-tag"><div class="day-label">Lun</div><span class="day-emoji">🧘</span></div>
+          <div class="day-content">
+            <div class="day-type repos">Repos actif</div>
+            <div class="day-detail">Étirements doux ou repos. Aucune obligation.</div>
+          </div>
+        </div>
+        <div class="day-row clickable" onclick="openDay('gainage_s1','MARDI','Gainage profond — Séance 1')">
+          <div class="day-tag"><div class="day-label">Mar</div><span class="day-emoji">🧘</span></div>
+          <div class="day-content">
+            <div class="day-type gainage">Gainage</div>
+            <div class="day-detail"><strong>Circuit gainage doux · 2 tours</strong> — Vacuum × 3 (15 sec), Planche 20 sec, Bird Dog × 8/côté, Planche latérale 15 sec/côté.</div>
+            <div class="day-duration">20 min</div>
+            <div class="day-hint">👆 Voir le détail des exercices</div>
+          </div>
+        </div>
+        <div class="day-row clickable" onclick="openDay('vacuum_s1','MERCREDI','Stomach Vacuum — Introduction')">
+          <div class="day-tag"><div class="day-label">Mer</div><span class="day-emoji">💨</span></div>
+          <div class="day-content">
+            <div class="day-type vacuum">Vacuum</div>
+            <div class="day-detail"><strong>Stomach vacuum × 5</strong> — 15 sec tenu, 20 sec repos. Le matin à jeun idéalement.</div>
+            <div class="day-duration">5 min</div>
+            <div class="day-hint">👆 Voir la technique complète</div>
+          </div>
+        </div>
+        <div class="day-row">
+          <div class="day-tag"><div class="day-label">Jeu</div><span class="day-emoji">🧘</span></div>
+          <div class="day-content">
+            <div class="day-type repos">Repos actif</div>
+            <div class="day-detail">Étirements doux ou repos. Aucune obligation.</div>
+          </div>
+        </div>
+        <div class="day-row clickable" onclick="openDay('gainage_s1','VENDREDI','Gainage profond — Séance 2')">
+          <div class="day-tag"><div class="day-label">Ven</div><span class="day-emoji">🧘</span></div>
+          <div class="day-content">
+            <div class="day-type gainage">Gainage</div>
+            <div class="day-detail"><strong>Circuit gainage doux · 2 tours</strong> — Même programme que mardi.</div>
+            <div class="day-duration">20 min</div>
+            <div class="day-hint">👆 Voir le détail des exercices</div>
+          </div>
+        </div>
+        <div class="day-row clickable" onclick="openDay('vacuum_s1','SAMEDI','Stomach Vacuum — Séance légère')">
+          <div class="day-tag"><div class="day-label">Sam</div><span class="day-emoji">💨</span></div>
+          <div class="day-content">
+            <div class="day-type vacuum">Vacuum</div>
+            <div class="day-detail"><strong>Vacuum × 5 — 15 sec tenus</strong> — Séance courte, qualité du mouvement.</div>
+            <div class="day-duration">5 min</div>
+            <div class="day-hint">👆 Voir la technique</div>
+          </div>
+        </div>
+        <div class="day-row">
+          <div class="day-tag"><div class="day-label">Dim</div><span class="day-emoji">😴</span></div>
+          <div class="day-content">
+            <div class="day-type repos">Repos</div>
+            <div class="day-detail">Repos complet. Le corps se reconstruit pendant le repos.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="week-block">
+      <div class="week-head" onclick="toggleWeek(this)">
+        <div class="week-head-left"><span class="week-num">S2</span><span class="week-name">Consolidation — Durées légèrement allongées</span></div>
+        <span class="week-arrow">▾</span>
+      </div>
+      <div class="week-body">
+        <div class="day-row">
+          <div class="day-tag"><div class="day-label">Lun</div><span class="day-emoji">🧘</span></div>
+          <div class="day-content">
+            <div class="day-type repos">Repos actif</div>
+            <div class="day-detail">Étirements doux ou repos. Aucune obligation.</div>
+          </div>
+        </div>
+        <div class="day-row clickable" onclick="openDay('gainage_s2','MARDI S2','Gainage — 3 tours')">
+          <div class="day-tag"><div class="day-label">Mar</div><span class="day-emoji">🧘</span></div>
+          <div class="day-content">
+            <div class="day-type gainage">Gainage</div>
+            <div class="day-detail"><strong>Circuit · 3 tours</strong> — Vacuum × 5 (20 sec), Planche 25 sec, Bird Dog × 10/côté, Planche latérale 20 sec/côté.</div>
+            <div class="day-duration">25 min</div>
+            <div class="day-hint">👆 Voir le détail</div>
+          </div>
+        </div>
+        <div class="day-row clickable" onclick="openDay('vacuum_s1','MERCREDI S2','Stomach Vacuum — Progression')">
+          <div class="day-tag"><div class="day-label">Mer</div><span class="day-emoji">💨</span></div>
+          <div class="day-content">
+            <div class="day-type vacuum">Vacuum</div>
+            <div class="day-detail"><strong>Vacuum × 5 tenu 20 sec</strong> — +5 sec vs S1.</div>
+            <div class="day-hint">👆 Voir la technique</div>
+          </div>
+        </div>
+        <div class="day-row">
+          <div class="day-tag"><div class="day-label">Jeu</div><span class="day-emoji">🧘</span></div>
+          <div class="day-content">
+            <div class="day-type repos">Repos actif</div>
+            <div class="day-detail">Étirements doux ou repos. Aucune obligation.</div>
+          </div>
+        </div>
+        <div class="day-row clickable" onclick="openDay('gainage_s2','VENDREDI S2','Gainage — 3 tours')">
+          <div class="day-tag"><div class="day-label">Ven</div><span class="day-emoji">🧘</span></div>
+          <div class="day-content">
+            <div class="day-type gainage">Gainage</div>
+            <div class="day-detail"><strong>Circuit · 3 tours</strong></div>
+            <div class="day-duration">25 min</div>
+            <div class="day-hint">👆 Voir le détail</div>
+          </div>
+        </div>
+        <div class="day-row">
+          <div class="day-tag"><div class="day-label">Sam</div><span class="day-emoji">🧘</span></div>
+          <div class="day-content">
+            <div class="day-type repos">Repos actif</div>
+            <div class="day-detail">Étirements doux ou repos. Pas d'obligation.</div>
+          </div>
+        </div>
+        <div class="day-row">
+          <div class="day-tag"><div class="day-label">Dim</div><span class="day-emoji">😴</span></div>
+          <div class="day-content"><div class="day-type repos">Repos</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHASE 2 -->
+  <div id="p2" class="phase-section">
+    <div class="card" style="margin-bottom:20px">
+      <div class="card-head" style="cursor:default">
+        <div class="card-icon dore">🌼</div>
+        <div class="card-head-text">
+          <div class="card-name">Phase 2 · Construction</div>
+          <div class="card-meta">Semaines 3–4 · Durées allongées, vacuum plus long</div>
+        </div>
+      </div>
+      <div class="card-body" style="display:block;padding-top:0">
+        <div class="info-box">Le transverse commence à se renforcer. Les planches durent plus longtemps, le vacuum passe à 25–30 sec. On ajoute le Dead Bug qui travaille la coordination profonde sans solliciter la nuque.</div>
+      </div>
+    </div>
+
+    <div class="week-block">
+      <div class="week-head" onclick="toggleWeek(this)">
+        <div class="week-head-left"><span class="week-num">S3</span><span class="week-name">Durée — Plus long, même douceur</span></div>
+        <span class="week-arrow">▾</span>
+      </div>
+      <div class="week-body">
+        <div class="day-row">
+          <div class="day-tag"><div class="day-label">Lun</div><span class="day-emoji">🧘</span></div>
+          <div class="day-content">
+            <div class="day-type repos">Repos actif</div>
+            <div class="day-detail">Étirements doux ou repos. Aucune obligation.</div>
+          </div>
+        </div>
+        <div class="day-row clickable" onclick="openDay('gainage_s3','MARDI S3','Gainage + Dead Bug')">
+          <div class="day-tag"><div class="day-label">Mar</div><span class="day-emoji">🧘</span></div>
+          <div class="day-content"><div class="day-type gainage">Gainage</div><div class="day-detail"><strong>3 tours</strong> — Vacuum 25 sec, Planche 30 sec, Dead Bug × 10, Planche latérale 25 sec, Bird Dog × 10.</div><div class="day-duration">30 min</div><div class="day-hint">👆 Voir le détail</div></div>
+        </div>
+        <div class="day-row clickable" onclick="openDay('vacuum_s2','MERCREDI S3','Vacuum 25 sec')">
+          <div class="day-tag"><div class="day-label">Mer</div><span class="day-emoji">💨</span></div>
+          <div class="day-content"><div class="day-type vacuum">Vacuum</div><div class="day-detail"><strong>Vacuum × 5 tenu 25 sec</strong></div><div class="day-hint">👆 Voir la technique</div></div>
+        </div>
+        <div class="day-row">
+          <div class="day-tag"><div class="day-label">Jeu</div><span class="day-emoji">🧘</span></div>
+          <div class="day-content">
+            <div class="day-type repos">Repos actif</div>
+            <div class="day-detail">Étirements doux ou repos. Aucune obligation.</div>
+          </div>
+        </div>
+        <div class="day-row clickable" onclick="openDay('gainage_s3','VENDREDI S3','Gainage + Dead Bug')">
+          <div class="day-tag"><div class="day-label">Ven</div><span class="day-emoji">🧘</span></div>
+          <div class="day-content"><div class="day-type gainage">Gainage</div><div class="day-detail"><strong>3 tours</strong></div><div class="day-duration">30 min</div><div class="day-hint">👆 Voir le détail</div></div>
+        </div>
+        <div class="day-row"><div class="day-tag"><div class="day-label">Sam</div><span class="day-emoji">🧘</span></div><div class="day-content"><div class="day-type repos">Repos actif</div><div class="day-detail">Étirements doux ou repos libre.</div></div></div>
+        <div class="day-row"><div class="day-tag"><div class="day-label">Dim</div><span class="day-emoji">😴</span></div><div class="day-content"><div class="day-type repos">Repos</div></div></div>
+      </div>
+    </div>
+
+    <div class="week-block">
+      <div class="week-head" onclick="toggleWeek(this)">
+        <div class="week-head-left"><span class="week-num">S4</span><span class="week-name">Volume — 4 tours, vacuum 30 sec</span></div>
+        <span class="week-arrow">▾</span>
+      </div>
+      <div class="week-body">
+        <div class="day-row"><div class="day-tag"><div class="day-label">Lun</div><span class="day-emoji">🧘</span></div><div class="day-content"><div class="day-type repos">Repos actif</div><div class="day-detail">Étirements doux ou repos libre.</div></div></div>
+        <div class="day-row clickable" onclick="openDay('gainage_s4','MARDI S4','Gainage — 4 tours')">
+          <div class="day-tag"><div class="day-label">Mar</div><span class="day-emoji">🧘</span></div>
+          <div class="day-content"><div class="day-type gainage">Gainage</div><div class="day-detail"><strong>4 tours</strong> — Vacuum 30 sec, Planche 35 sec, Dead Bug × 12, Planche latérale 30 sec, Bird Dog × 12.</div><div class="day-duration">35 min</div><div class="day-hint">👆 Voir le détail</div></div>
+        </div>
+        <div class="day-row clickable" onclick="openDay('vacuum_s2','MERCREDI S4','Vacuum 30 sec')">
+          <div class="day-tag"><div class="day-label">Mer</div><span class="day-emoji">💨</span></div>
+          <div class="day-content"><div class="day-type vacuum">Vacuum</div><div class="day-detail"><strong>Vacuum × 5 tenu 30 sec</strong></div><div class="day-hint">👆 Voir la technique</div></div>
+        </div>
+        <div class="day-row"><div class="day-tag"><div class="day-label">Jeu</div><span class="day-emoji">🧘</span></div><div class="day-content"><div class="day-type repos">Repos actif</div><div class="day-detail">Étirements doux ou repos libre.</div></div></div>
+        <div class="day-row clickable" onclick="openDay('gainage_s4','VENDREDI S4','Gainage — 4 tours')">
+          <div class="day-tag"><div class="day-label">Ven</div><span class="day-emoji">🧘</span></div>
+          <div class="day-content"><div class="day-type gainage">Gainage</div><div class="day-detail"><strong>4 tours</strong></div><div class="day-duration">35 min</div><div class="day-hint">👆 Voir le détail</div></div>
+        </div>
+        <div class="day-row"><div class="day-tag"><div class="day-label">Sam</div><span class="day-emoji">🧘</span></div><div class="day-content"><div class="day-type repos">Repos actif</div><div class="day-detail">Étirements doux ou repos libre.</div></div></div>
+        <div class="day-row"><div class="day-tag"><div class="day-label">Dim</div><span class="day-emoji">😴</span></div><div class="day-content"><div class="day-type repos">Repos</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHASE 3 -->
+  <div id="p3" class="phase-section">
+    <div class="card" style="margin-bottom:20px">
+      <div class="card-head" style="cursor:default">
+        <div class="card-icon rosé">🌸</div>
+        <div class="card-head-text">
+          <div class="card-name">Phase 3 · Intensité douce</div>
+          <div class="card-meta">Semaines 5–6 · Durées allongées, vacuum 35–40 sec</div>
+        </div>
+      </div>
+      <div class="card-body" style="display:block;padding-top:0">
+        <div class="info-box">Les résultats deviennent visibles. Le transverse est plus tonique, la posture s'améliore. On allonge les séances de gainage et le vacuum atteint 35–40 secondes tenus. C'est ici que la taille commence à s'affiner.</div>
+      </div>
+    </div>
+
+    <div class="week-block">
+      <div class="week-head" onclick="toggleWeek(this)">
+        <div class="week-head-left"><span class="week-num">S5</span><span class="week-name">Endurance — Séances allongées</span></div>
+        <span class="week-arrow">▾</span>
+      </div>
+      <div class="week-body">
+        <div class="day-row"><div class="day-tag"><div class="day-label">Lun</div><span class="day-emoji">🧘</span></div><div class="day-content"><div class="day-type repos">Repos actif</div><div class="day-detail">Étirements doux ou repos libre.</div></div></div>
+        <div class="day-row"><div class="day-tag"><div class="day-label">Mar</div><span class="day-emoji">🧘</span></div><div class="day-content"><div class="day-type gainage">Gainage</div><div class="day-detail"><strong>4 tours · Vacuum 35 sec, Planche 40 sec, Dead Bug × 12, Planche lat. 35 sec, Bird Dog × 12</strong></div><div class="day-duration">38 min</div></div></div>
+        <div class="day-row"><div class="day-tag"><div class="day-label">Mer</div><span class="day-emoji">💨</span></div><div class="day-content"><div class="day-type vacuum">Vacuum</div><div class="day-detail"><strong>Vacuum × 5 tenu 35 sec</strong></div></div></div>
+        <div class="day-row"><div class="day-tag"><div class="day-label">Jeu</div><span class="day-emoji">🧘</span></div><div class="day-content"><div class="day-type repos">Repos actif</div><div class="day-detail">Étirements doux ou repos libre.</div></div></div>
+        <div class="day-row"><div class="day-tag"><div class="day-label">Ven</div><span class="day-emoji">🧘</span></div><div class="day-content"><div class="day-type gainage">Gainage</div><div class="day-detail"><strong>4 tours</strong></div><div class="day-duration">38 min</div></div></div>
+        <div class="day-row"><div class="day-tag"><div class="day-label">Sam</div><span class="day-emoji">🧘</span></div><div class="day-content"><div class="day-type repos">Repos actif</div><div class="day-detail">Étirements doux ou repos libre.</div></div></div>
+        <div class="day-row"><div class="day-tag"><div class="day-label">Dim</div><span class="day-emoji">😴</span></div><div class="day-content"><div class="day-type repos">Repos</div></div></div>
+      </div>
+    </div>
+
+    <div class="week-block">
+      <div class="week-head" onclick="toggleWeek(this)">
+        <div class="week-head-left"><span class="week-num">S6</span><span class="week-name">Pic — Vacuum 40 sec, 5 tours</span></div>
+        <span class="week-arrow">▾</span>
+      </div>
+      <div class="week-body">
+        <div class="day-row"><div class="day-tag"><div class="day-label">Lun</div><span class="day-emoji">🧘</span></div><div class="day-content"><div class="day-type repos">Repos actif</div><div class="day-detail">Étirements doux ou repos libre.</div></div></div>
+        <div class="day-row"><div class="day-tag"><div class="day-label">Mar</div><span class="day-emoji">🧘</span></div><div class="day-content"><div class="day-type gainage">Gainage</div><div class="day-detail"><strong>5 tours · Vacuum 40 sec, Planche 45 sec, Dead Bug × 15, Planche lat. 40 sec, Bird Dog × 15</strong></div><div class="day-duration">42 min</div></div></div>
+        <div class="day-row"><div class="day-tag"><div class="day-label">Mer</div><span class="day-emoji">💨</span></div><div class="day-content"><div class="day-type vacuum">Vacuum</div><div class="day-detail"><strong>Vacuum × 5 tenu 40 sec</strong> — Objectif intermédiaire atteint !</div></div></div>
+        <div class="day-row"><div class="day-tag"><div class="day-label">Jeu</div><span class="day-emoji">🧘</span></div><div class="day-content"><div class="day-type repos">Repos actif</div><div class="day-detail">Étirements doux ou repos libre.</div></div></div>
+        <div class="day-row"><div class="day-tag"><div class="day-label">Ven</div><span class="day-emoji">🧘</span></div><div class="day-content"><div class="day-type gainage">Gainage</div><div class="day-detail"><strong>5 tours</strong></div><div class="day-duration">42 min</div></div></div>
+        <div class="day-row"><div class="day-tag"><div class="day-label">Sam</div><span class="day-emoji">🧘</span></div><div class="day-content"><div class="day-type repos">Repos actif</div><div class="day-detail">Étirements doux ou repos libre.</div></div></div>
+        <div class="day-row"><div class="day-tag"><div class="day-label">Dim</div><span class="day-emoji">😴</span></div><div class="day-content"><div class="day-type repos">Repos bien mérité</div></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PHASE 4 -->
+  <div id="p4" class="phase-section">
+    <div class="card" style="margin-bottom:20px">
+      <div class="card-head" style="cursor:default">
+        <div class="card-icon lavande">✨</div>
+        <div class="card-head-text">
+          <div class="card-name">Phase 4 · Ancrage</div>
+          <div class="card-meta">Semaines 7–8 · Consolider et mesurer</div>
+        </div>
+      </div>
+      <div class="card-body" style="display:block;padding-top:0">
+        <div class="info-box">S7 = charge maximale. S8 = décharge pour laisser le corps consolider. La S8 se termine par un bilan : photos, tour de taille, ressenti général. Le vacuum vise 45 sec.</div>
+      </div>
+    </div>
+
+    <div class="week-block">
+      <div class="week-head" onclick="toggleWeek(this)">
+        <div class="week-head-left"><span class="week-num">S7</span><span class="week-name">Maximum — Vacuum 45 sec</span></div>
+        <span class="week-arrow">▾</span>
+      </div>
+      <div class="week-body">
+        <div class="day-row"><div class="day-tag"><div class="day-label">Lun</div><span class="day-emoji">🧘</span></div><div class="day-content"><div class="day-type repos">Repos actif</div><div class="day-detail">Étirements doux ou repos libre.</div></div></div>
+        <div class="day-row"><div class="day-tag"><div class="day-label">Mar</div><span class="day-emoji">🧘</span></div><div class="day-content"><div class="day-type gainage">Gainage</div><div class="day-detail"><strong>5 tours · Vacuum 45 sec, Planche 50 sec, Dead Bug × 15, Planche lat. 45 sec, Bird Dog × 15</strong></div><div class="day-duration">45 min</div></div></div>
+        <div class="day-row"><div class="day-tag"><div class="day-label">Mer</div><span class="day-emoji">💨</span></div><div class="day-content"><div class="day-type vacuum">Vacuum</div><div class="day-detail"><strong>Vacuum × 5 tenu 45 sec</strong> — Objectif avancé !</div></div></div>
+        <div class="day-row"><div class="day-tag"><div class="day-label">Jeu</div><span class="day-emoji">🧘</span></div><div class="day-content"><div class="day-type repos">Repos actif</div><div class="day-detail">Étirements doux ou repos libre.</div></div></div>
+        <div class="day-row"><div class="day-tag"><div class="day-label">Ven</div><span class="day-emoji">🧘</span></div><div class="day-content"><div class="day-type gainage">Gainage</div><div class="day-detail"><strong>5 tours</strong></div><div class="day-duration">45 min</div></div></div>
+        <div class="day-row"><div class="day-tag"><div class="day-label">Sam</div><span class="day-emoji">🧘</span></div><div class="day-content"><div class="day-type repos">Repos actif</div><div class="day-detail">Étirements doux ou repos libre.</div></div></div>
+        <div class="day-row"><div class="day-tag"><div class="day-label">Dim</div><span class="day-emoji">😴</span></div><div class="day-content"><div class="day-type repos">Repos absolu</div></div></div>
+      </div>
+    </div>
+
+    <div class="week-block">
+      <div class="week-head" onclick="toggleWeek(this)">
+        <div class="week-head-left"><span class="week-num">S8</span><span class="week-name">Bilan — Décharge et mesures</span></div>
+        <span class="week-arrow">▾</span>
+      </div>
+      <div class="week-body">
+        <div class="day-row"><div class="day-tag"><div class="day-label">Lun</div><span class="day-emoji">🧘</span></div><div class="day-content"><div class="day-type repos">Repos actif</div><div class="day-detail">Étirements doux. Semaine de décharge.</div></div></div>
+        <div class="day-row"><div class="day-tag"><div class="day-label">Mar</div><span class="day-emoji">🧘</span></div><div class="day-content"><div class="day-type gainage">Gainage</div><div class="day-detail"><strong>3 tours légers</strong> — Retour aux volumes de S2. Qualité du mouvement.</div></div></div>
+        <div class="day-row"><div class="day-tag"><div class="day-label">Mer</div><span class="day-emoji">💨</span></div><div class="day-content"><div class="day-type vacuum">Vacuum</div><div class="day-detail"><strong>Vacuum × 5 tenu 45 sec</strong> — Maintien.</div></div></div>
+        <div class="day-row"><div class="day-tag"><div class="day-label">Jeu</div><span class="day-emoji">🧘</span></div><div class="day-content"><div class="day-type repos">Repos actif</div><div class="day-detail">Étirements doux ou repos libre.</div></div></div>
+        <div class="day-row"><div class="day-tag"><div class="day-label">Ven</div><span class="day-emoji">🧘</span></div><div class="day-content"><div class="day-type gainage">Gainage</div><div class="day-detail"><strong>3 tours légers</strong></div></div></div>
+        <div class="day-row"><div class="day-tag"><div class="day-label">Sam</div><span class="day-emoji">📏</span></div><div class="day-content"><div class="day-type combo">Bilan</div><div class="day-detail"><strong>Photos + mesures</strong> — Tour de taille, hanches. Comparer avec J1. À jeun le matin.</div></div></div>
+        <div class="day-row"><div class="day-tag"><div class="day-label">Dim</div><span class="day-emoji">🎉</span></div><div class="day-content"><div class="day-type repos">Repos — 8 semaines !</div></div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ EXERCICES ══════════════════ -->
+<div id="exercices" class="section">
+  <div class="sec-head">
+    <h2>Les exercices</h2>
+    <p>Technique complète pour chaque mouvement. Clique pour développer.</p>
+  </div>
+
+  <div style="display:flex;flex-direction:column;gap:12px">
+
+    <div class="card">
+      <div class="card-head" onclick="toggleCard(this)">
+        <div class="card-icon lavande">💨</div>
+        <div class="card-head-text">
+          <div class="card-name">Stomach Vacuum</div>
+          <div class="card-meta">Transverse · Taille fine · Posture</div>
+        </div>
+        <span class="card-chevron">▾</span>
+      </div>
+      <div class="card-body">
+        <div class="info-box" style="background:var(--lavande-bg);border-color:#c8c4e0">
+          <p>💡 <strong>C'est l'exercice n°1 pour affiner la taille.</strong> Il ne brûle pas de calories, mais il renforce le transverse — le muscle qui agit comme une ceinture naturelle autour du ventre. Avec de la régularité, le ventre est naturellement plus plat au repos.</p>
+        </div>
+        <div class="step-title">Comment faire</div>
+        <ul class="step-list">
+          <li data-n="1">Expire complètement tout l'air de tes poumons.</li>
+          <li data-n="2">Sans inspirer, rentre le nombril vers la colonne vertébrale — comme si tu voulais le "coller" à ton dos.</li>
+          <li data-n="3">Garde la poitrine ouverte, les épaules décontractées. Ne force pas sur la nuque.</li>
+          <li data-n="4">Maintiens la position. Respire très légèrement si besoin (petites inspirations nasales).</li>
+          <li data-n="5">Relâche progressivement, reprends ta respiration normale.</li>
+        </ul>
+        <div class="step-title">Positions (de la plus facile à la plus difficile)</div>
+        <ul class="step-list">
+          <li data-n="→">À quatre pattes : le plus facile pour sentir le mouvement</li>
+          <li data-n="→">Debout : position quotidienne idéale</li>
+          <li data-n="→">Assis sur une chaise : parfait au bureau</li>
+          <li data-n="→">Allongé sur le dos : difficile mais très efficace</li>
+          <li data-n="→">En marchant : niveau avancé (S7–S8)</li>
+        </ul>
+        <div class="tip-row">
+          <span class="tip-chip lavande">Le matin à jeun = optimal</span>
+          <span class="tip-chip">Peut se faire n'importe où</span>
+          <span class="tip-chip lavande">Quotidien = meilleurs résultats</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head" onclick="toggleCard(this)">
+        <div class="card-icon sage">🧱</div>
+        <div class="card-head-text">
+          <div class="card-name">Planche frontale</div>
+          <div class="card-meta">Core profond · Lombaires · Sans solliciter la nuque</div>
+        </div>
+        <span class="card-chevron">▾</span>
+      </div>
+      <div class="card-body">
+        <div class="step-title">Position</div>
+        <ul class="step-list">
+          <li data-n="1">Sur les avant-bras, coudes exactement sous les épaules.</li>
+          <li data-n="2">Corps en ligne droite de la tête aux talons — ni trop haut, ni trop bas.</li>
+          <li data-n="3">Rentrer le nombril, contracter les fessiers, jambes actives.</li>
+          <li data-n="4">Regard vers le sol — la nuque reste dans l'axe, <strong>pas de tension cervicale</strong>.</li>
+          <li data-n="5">Respirer normalement. Ne pas bloquer sa respiration.</li>
+        </ul>
+        <div class="step-title">Erreurs à éviter</div>
+        <ul class="warn-list">
+          <li>Hanches trop hautes — inefficace</li>
+          <li>Hanches qui s'affaissent — dangereux pour le bas du dos</li>
+          <li>Tête relevée ou enfoncée — tension nuque</li>
+          <li>Retenir sa respiration</li>
+        </ul>
+        <div class="tip-row">
+          <span class="tip-chip sage">Regard sol = nuque neutre</span>
+          <span class="tip-chip">Corps rigide comme une planche</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head" onclick="toggleCard(this)">
+        <div class="card-icon sage">🔀</div>
+        <div class="card-head-text">
+          <div class="card-name">Planche latérale</div>
+          <div class="card-meta">Obliques · Taille affinée · Sans nuque</div>
+        </div>
+        <span class="card-chevron">▾</span>
+      </div>
+      <div class="card-body">
+        <div class="step-title">Position</div>
+        <ul class="step-list">
+          <li data-n="1">Sur le côté, appuie sur l'avant-bras droit, coude sous l'épaule.</li>
+          <li data-n="2">Empiler les pieds (ou le genou du bas au sol si trop difficile).</li>
+          <li data-n="3">Soulever les hanches pour former une ligne droite épaule–hanche–cheville.</li>
+          <li data-n="4">Regard droit devant, pas vers le bas.</li>
+          <li data-n="5">Tenir, puis changer de côté.</li>
+        </ul>
+        <div class="step-title">Version plus facile</div>
+        <p>Genou du bas posé au sol. Même alignement du tronc. Idéal pour débuter en S1–S2.</p>
+        <div class="tip-row">
+          <span class="tip-chip sage">Travaille les obliques = taille affinée</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head" onclick="toggleCard(this)">
+        <div class="card-icon rosé">🐦</div>
+        <div class="card-head-text">
+          <div class="card-name">Bird Dog</div>
+          <div class="card-meta">Coordination · Gainage profond · Bas du dos</div>
+        </div>
+        <span class="card-chevron">▾</span>
+      </div>
+      <div class="card-body">
+        <div class="info-box" style="background:var(--rosé-bg);border-color:#e8c0bc">
+          <p>Le Bird Dog est l'un des meilleurs exercices pour renforcer le gainage sans aucun risque pour la nuque. La tête est dans l'axe naturel du dos, aucune traction cervicale.</p>
+        </div>
+        <div class="step-title">Exécution</div>
+        <ul class="step-list">
+          <li data-n="1">À quatre pattes, mains sous les épaules, genoux sous les hanches.</li>
+          <li data-n="2">Dos plat — ni cambré, ni arrondi. Regard vers le sol.</li>
+          <li data-n="3">Tendre simultanément le bras droit vers l'avant et la jambe gauche vers l'arrière.</li>
+          <li data-n="4">Tenir 2–3 secondes. Le ventre reste rentré pendant tout le mouvement.</li>
+          <li data-n="5">Revenir lentement et alterner : bras gauche + jambe droite.</li>
+        </ul>
+        <div class="step-title">Erreurs fréquentes</div>
+        <ul class="warn-list">
+          <li>Se déhancher en levant la jambe</li>
+          <li>Cambrer le dos</li>
+          <li>Aller trop vite (c'est un exercice lent)</li>
+        </ul>
+        <div class="tip-row">
+          <span class="tip-chip rosé">Lent = efficace</span>
+          <span class="tip-chip">Ventre rentré pendant tout le mouvement</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-head" onclick="toggleCard(this)">
+        <div class="card-icon rosé">🪲</div>
+        <div class="card-head-text">
+          <div class="card-name">Dead Bug</div>
+          <div class="card-meta">Transverse · Coordination · Zéro nuque</div>
+        </div>
+        <span class="card-chevron">▾</span>
+      </div>
+      <div class="card-body">
+        <div class="info-box" style="background:var(--rosé-bg);border-color:#e8c0bc">
+          <p>Allongé sur le dos, la nuque repose complètement sur le sol. Zéro tension cervicale. C'est un exercice de gainage profond qui apprend au ventre à rester plat même en mouvement.</p>
+        </div>
+        <div class="step-title">Position de départ</div>
+        <ul class="step-list">
+          <li data-n="1">Allongé sur le dos. Bras tendus vers le plafond, genoux pliés à 90° en l'air (table).</li>
+          <li data-n="2">Dos à plat contre le sol — pas de cambrure. Sortir l'air du ventre.</li>
+          <li data-n="3">Rentrer le nombril vers le sol et maintenir cette tension tout au long.</li>
+        </ul>
+        <div class="step-title">Exécution</div>
+        <ul class="step-list">
+          <li data-n="1">Étendre lentement le bras droit vers l'arrière (au-dessus de la tête) ET la jambe gauche vers l'avant simultanément.</li>
+          <li data-n="2">Le dos reste collé au sol. Si tu te cambre — c'est trop loin, réduis l'amplitude.</li>
+          <li data-n="3">Revenir lentement. Alterner : bras gauche + jambe droite.</li>
+        </ul>
+        <div class="tip-row">
+          <span class="tip-chip rosé">Dos collé au sol = exercice réussi</span>
+          <span class="tip-chip">Expirer en étendant</span>
+        </div>
+      </div>
+    </div>
+
+
+  </div>
+</div>
+
+<!-- ══════════════════ VACUUM ══════════════════ -->
+<div id="vacuum" class="section">
+  <div class="sec-head">
+    <h2>Stomach Vacuum</h2>
+    <p>L'exercice clé pour affiner la taille. Progressif sur 8 semaines.</p>
+  </div>
+
+  <div class="vacuum-progress">
+    <div class="vp-card">
+      <div class="vp-phase s1">S1–S2</div>
+      <div class="vp-val" style="color:var(--sage)">15–20s</div>
+      <div class="vp-label">× 5 reps</div>
+    </div>
+    <div class="vp-card">
+      <div class="vp-phase s2">S3–S5</div>
+      <div class="vp-val" style="color:var(--dore)">25–35s</div>
+      <div class="vp-label">× 5 reps</div>
+    </div>
+    <div class="vp-card">
+      <div class="vp-phase s3">S6–S8</div>
+      <div class="vp-val" style="color:var(--rosé)">40–45s</div>
+      <div class="vp-label">× 5 reps</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head" style="cursor:default">
+      <div class="card-icon lavande">🎯</div>
+      <div class="card-head-text">
+        <div class="card-name">Pourquoi ça fonctionne</div>
+      </div>
+    </div>
+    <div class="card-body" style="display:block;padding-top:0">
+      <div class="info-box" style="background:var(--lavande-bg);border-color:#c8c4e0">
+        <p>Le stomach vacuum cible le <strong>transverse</strong> — le muscle le plus profond de l'abdomen, qui agit comme une ceinture naturelle. Contrairement aux crunchs qui développent le volume des abdos, le vacuum <em>resserre</em> cette ceinture, ce qui donne visuellement une taille plus fine et un ventre plus plat même au repos.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head" onclick="toggleCard(this)">
+      <div class="card-icon lavande">📋</div>
+      <div class="card-head-text">
+        <div class="card-name">Protocole semaine par semaine</div>
+        <div class="card-meta">Du débutant au niveau avancé</div>
+      </div>
+      <span class="card-chevron">▾</span>
+    </div>
+    <div class="card-body">
+      <div class="step-title">Semaines 1–2 · Débutant</div>
+      <div class="info-box">5 répétitions × 15 sec tenus · 20 sec repos entre chaque<br>Position recommandée : à quatre pattes ou debout<br>Fréquence : quotidien (matin à jeun idéalement)</div>
+      <div class="step-title">Semaines 3–4 · Intermédiaire bas</div>
+      <div class="info-box">5 répétitions × 25 sec tenus · 20 sec repos<br>Introduction de la position assise</div>
+      <div class="step-title">Semaines 5–6 · Intermédiaire</div>
+      <div class="info-box">5 répétitions × 35–40 sec tenus · 20 sec repos<br>Essayer en position allongée sur le dos</div>
+      <div class="step-title">Semaines 7–8 · Avancé</div>
+      <div class="info-box">5 répétitions × 45 sec tenus · 20 sec repos<br>Objectif bonus : tenir en marchant lentement</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-head" onclick="toggleCard(this)">
+      <div class="card-icon lavande">❓</div>
+      <div class="card-head-text">
+        <div class="card-name">Questions fréquentes</div>
+      </div>
+      <span class="card-chevron">▾</span>
+    </div>
+    <div class="card-body">
+      <div class="step-title">Je n'arrive pas à tenir 15 sec, c'est normal ?</div>
+      <p>Oui, totalement. Au début, 5–8 sec c'est bien. Augmente de 2–3 sec chaque semaine. Ce n'est pas une compétition.</p>
+      <div class="step-title">Est-ce que ça fait mal ?</div>
+      <p>Non, jamais. Si tu ressens une douleur — arrête. Il doit y avoir une légère sensation de contraction profonde dans le bas du ventre, c'est tout.</p>
+      <div class="step-title">Quand le faire ?</div>
+      <p>Idéalement le matin à jeun ou 2h après un repas. Le ventre moins rempli = contraction plus profonde = meilleur effet.</p>
+      <div class="step-title">Combien de temps avant de voir des résultats ?</div>
+      <p>Les premières différences de tonicité se sentent vers la semaine 3–4. Les résultats visuels apparaissent vers la semaine 5–6.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ SUIVI ══════════════════ -->
+<div id="suivi" class="section">
+  <div class="sec-head">
+    <h2>Suivi</h2>
+    <p>Coche chaque séance complétée. La régularité fait tout.</p>
+  </div>
+  <div id="tracker-container"></div>
+</div>
+
+<!-- DRAWER -->
+<div class="drawer-overlay" id="dayDrawer" onclick="closeDrawer(event)">
+  <div class="drawer-box">
+    <div class="drawer-bar">
+      <div>
+        <div class="drawer-day-label" id="drawerLabel">LUNDI</div>
+        <div class="drawer-title" id="drawerTitle">Séance</div>
+      </div>
+      <button class="drawer-close" onclick="closeDrawer()">✕</button>
+    </div>
+    <div class="drawer-content" id="drawerContent"></div>
+  </div>
+</div>
+
+<!-- FAB -->
+<button class="fab" onclick="openTimer()">⏱</button>
+
+<!-- MODAL TIMER -->
+<div class="modal-overlay" id="timerModal">
+  <div class="modal-box">
+    <div class="modal-handle"></div>
+    <div class="modal-title">Chrono</div>
+    <div class="timer-phase" id="timerPhase">Prêt</div>
+    <div class="timer-big" id="timerDisplay">00:20</div>
+    <div class="presets">
+      <button class="preset-btn" onclick="setTimer(15)">15s</button>
+      <button class="preset-btn" onclick="setTimer(20)">20s</button>
+      <button class="preset-btn sel" onclick="setTimer(30)">30s</button>
+      <button class="preset-btn" onclick="setTimer(40)">40s</button>
+      <button class="preset-btn" onclick="setTimer(45)">45s</button>
+      <button class="preset-btn" onclick="setTimer(60)">1 min</button>
+    </div>
+    <div class="t-btns">
+      <button class="t-btn primary" id="btnStart" onclick="toggleTimer()">▶ Démarrer</button>
+      <button class="t-btn secondary" onclick="resetTimer()">↺</button>
+      <button class="t-btn secondary" onclick="closeTimer()">✕</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+// NAV
+function showSection(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  event.target.classList.add('active');
+  window.scrollTo(0, 0);
+}
+
+// PHASES
+function showPhase(id, btn) {
+  document.querySelectorAll('.phase-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.prog-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// WEEK TOGGLE
+function toggleWeek(head) { head.closest('.week-block').classList.toggle('open'); }
+
+// CARD TOGGLE
+function toggleCard(head) { head.closest('.card').classList.toggle('open'); }
+
+// TRACKER
+const WEEKS = [
+  { num: 1, days: ['Repos', 'Gainage', 'Vacuum', 'Repos', 'Gainage', 'Vacuum', 'Repos'] },
+  { num: 2, days: ['Repos', 'Gainage', 'Vacuum', 'Repos', 'Gainage', 'Gainage', 'Repos'] },
+  { num: 3, days: ['Repos', 'Gainage', 'Vacuum', 'Repos', 'Gainage', 'Gainage', 'Repos'] },
+  { num: 4, days: ['Repos', 'Gainage', 'Vacuum', 'Repos', 'Gainage', 'Gainage', 'Repos'] },
+  { num: 5, days: ['Repos', 'Gainage', 'Vacuum', 'Repos', 'Gainage', 'Gainage', 'Repos'] },
+  { num: 6, days: ['Repos', 'Gainage', 'Vacuum', 'Repos', 'Gainage', 'Gainage', 'Repos'] },
+  { num: 7, days: ['Repos', 'Gainage', 'Vacuum', 'Repos', 'Gainage', 'Gainage', 'Repos'] },
+  { num: 8, days: ['Repos', 'Gainage', 'Vacuum', 'Repos', 'Gainage', 'Bilan', 'Repos'] },
+];
+const DAYS_LABELS = ['L','M','M','J','V','S','D'];
+const REST_DAYS = new Set([0, 3, 6]);
+// ---- Supabase (synchro cloud) ----
+const SUPABASE_URL = 'https://heabihuzgxcsfvbbrsjw.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_TUN_9i5LWYKgqKmDeahJUA_egfsd9_u';
+const PROGRAMME = 'sarah';
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+// Cache local : affichage instantané + secours hors-ligne
+let checks = JSON.parse(localStorage.getItem('sarahChecks') || '{}');
+
+function buildTracker() {
+  const c = document.getElementById('tracker-container');
+  c.innerHTML = '';
+  WEEKS.forEach(w => {
+    const done = Object.keys(checks).filter(k => k.startsWith('w'+w.num+'-') && checks[k]).length;
+    const total = 4;
+    const pct = Math.round(done/total*100);
+    c.innerHTML += `
+      <div class="tracker-week">
+        <div class="tracker-week-head">
+          <div class="tracker-week-title">Semaine ${w.num}</div>
+          <div style="font-size:12px;color:${pct===100?'var(--sage)':'var(--muted)'};font-weight:600">${done}/${total} · ${pct}%</div>
+        </div>
+        <div class="tracker-days">
+          ${w.days.map((d,i) => {
+            const key = 'w'+w.num+'-'+i;
+            const isRest = REST_DAYS.has(i);
+            const checked = checks[key];
+            return `<div class="tracker-day">
+              <div class="tracker-day-label">${DAYS_LABELS[i]}</div>
+              <div class="tracker-checkbox ${isRest?'rest':''} ${checked?'checked':''}"
+                onclick="${isRest?'':'toggleCheck(\''+key+'\')'}" title="${d}">
+                ${isRest?'—':checked?'✓':''}
+              </div>
+            </div>`;
+          }).join('')}
+        </div>
+      </div>`;
+  });
+}
+function toggleCheck(key) {
+  checks[key] = !checks[key];
+  localStorage.setItem('sarahChecks', JSON.stringify(checks));
+  buildTracker();
+  saveToCloud();
+}
+
+// Envoi vers le cloud (regroupé pour éviter les appels en rafale)
+let saveTimer = null;
+function saveToCloud() {
+  clearTimeout(saveTimer);
+  saveTimer = setTimeout(async () => {
+    const { error } = await sb
+      .from('sport_suivi')
+      .update({ checks, updated_at: new Date().toISOString() })
+      .eq('programme', PROGRAMME);
+    if (error) console.warn('Synchro Supabase échouée :', error.message);
+  }, 400);
+}
+
+// Récupération depuis le cloud au chargement
+async function loadFromCloud() {
+  const { data, error } = await sb
+    .from('sport_suivi')
+    .select('checks')
+    .eq('programme', PROGRAMME)
+    .single();
+  if (error) { console.warn('Lecture Supabase échouée :', error.message); return; }
+  if (data && data.checks) {
+    checks = data.checks;
+    localStorage.setItem('sarahChecks', JSON.stringify(checks));
+    buildTracker();
+  }
+}
+
+buildTracker();    // rendu immédiat depuis le cache local
+loadFromCloud();   // puis synchronisation avec le cloud
+
+// DRAWER DATA
+const DRAWER = {
+
+  vacuum_s1: `
+    <div class="d-info lavande">
+      <p>💨 <strong>Objectif : 15–20 secondes tenus · 5 répétitions</strong><br>
+      Si tu n'arrives pas à 15 sec au début, tiens 8–10 sec. C'est normal, augmente chaque semaine.</p>
+    </div>
+    <div class="d-sep">⏱ Déroulé (~5 min)</div>
+    <div class="d-info">
+      <p>Répète 5 fois :<br>
+      &nbsp;&nbsp;① Expire tout l'air<br>
+      &nbsp;&nbsp;② Rentre le nombril vers la colonne<br>
+      &nbsp;&nbsp;③ Tiens <strong>15–20 sec</strong><br>
+      &nbsp;&nbsp;④ Relâche<br>
+      &nbsp;&nbsp;⏸ 20 sec de repos<br><br>
+      Position recommandée au début : <strong>à quatre pattes</strong> ou debout.</p>
+    </div>
+    <div class="d-sep">Technique complète</div>
+  ` + buildDExo('vacuum_detail', 'Stomach Vacuum', '5 × 15–20 sec', 'sage', '💨', `
+    <ul class="d-step-list">
+      <li data-n="1">Expire complètement. Vide bien les poumons.</li>
+      <li data-n="2">Sans inspirer, rentre le nombril vers la colonne vertébrale.</li>
+      <li data-n="3">Garde la poitrine ouverte, épaules décontractées.</li>
+      <li data-n="4">Tiens. Si besoin : petites inspirations nasales légères.</li>
+      <li data-n="5">Relâche progressivement, reprends ta respiration.</li>
+    </ul>
+    <div class="d-tip-pill lavande">À jeun le matin = optimal</div>
+    <div class="d-tip-pill">Quotidien = meilleurs résultats</div>
+  `),
+  vacuum_s2: `
+    <div class="d-info lavande">
+      <p>💨 <strong>Objectif : 25–30 secondes tenus · 5 répétitions</strong></p>
+    </div>
+    <div class="d-sep">⏱ Déroulé</div>
+    <div class="d-info">
+      <p>Répète 5 fois :<br>
+      &nbsp;&nbsp;① Expire tout l'air<br>
+      &nbsp;&nbsp;② Rentre le nombril à fond<br>
+      &nbsp;&nbsp;③ Tiens <strong>25–30 sec</strong><br>
+      &nbsp;&nbsp;④ Relâche · ⏸ 20 sec repos<br><br>
+      Essaie la position <strong>assise</strong> en plus de debout.</p>
+    </div>
+  `,
+  gainage_s1: `
+    <div class="d-info" style="background:var(--sage-bg);border-color:#c4dac6">
+      <p>💡 <strong>C'est quoi un "tour" ?</strong><br><br>
+      Un tour = faire les 4 exercices l'un après l'autre dans l'ordre, avec 15 sec entre chaque pour se repositionner.<br><br>
+      Quand tu as fini les 4 → fin du tour 1. Tu prends <strong>60 sec de repos</strong>, puis tu recommences = tour 2.<br><br>
+      <strong>Ici : 2 tours = tu fais la liste complète 2 fois.</strong></p>
+    </div>
+    <div class="d-sep">⏱ Déroulé (~20 min)</div>
+    <div class="d-info">
+      <p>▶ <strong>TOUR 1 et 2</strong> (identiques) :<br>
+      &nbsp;&nbsp;① Vacuum × 3 — 15 sec tenus → 15 sec<br>
+      &nbsp;&nbsp;② Planche frontale 20 sec → 15 sec<br>
+      &nbsp;&nbsp;③ Bird Dog × 8/côté → 15 sec<br>
+      &nbsp;&nbsp;④ Planche latérale 15 sec/côté<br>
+      &nbsp;&nbsp;⏸ <strong>60 sec repos</strong> → tour suivant</p>
+    </div>
+    <div class="d-sep">Le détail de chaque exercice</div>
+  ` + buildDExo('planche', 'Planche frontale', '20 secondes', 'sage', '🧱', `
+    <ul class="d-step-list">
+      <li data-n="1">Avant-bras au sol, coudes sous les épaules.</li>
+      <li data-n="2">Corps droit de la tête aux talons.</li>
+      <li data-n="3">Nombril rentré, fessiers contractés.</li>
+      <li data-n="4">Regard vers le sol — nuque dans l'axe, aucune tension.</li>
+      <li data-n="5">Respire normalement. Ne retiens pas ta respiration.</li>
+    </ul>
+    <div class="d-tip-pill sage">Regard sol = nuque neutre</div>
+  `) + buildDExo('bird_dog', 'Bird Dog', '8 reps par côté', 'rosé', '🐦', `
+    <ul class="d-step-list">
+      <li data-n="1">À quatre pattes, dos plat, regard vers le sol.</li>
+      <li data-n="2">Tendre bras droit + jambe gauche simultanément.</li>
+      <li data-n="3">Tenir 2–3 sec. Ventre rentré pendant tout le mouvement.</li>
+      <li data-n="4">Revenir lentement. Alterner les côtés.</li>
+    </ul>
+    <div class="d-tip-pill rosé">Mouvement lent = exercice efficace</div>
+  `) + buildDExo('planche_lat', 'Planche latérale', '15 sec par côté', 'sage', '🔀', `
+    <ul class="d-step-list">
+      <li data-n="1">Sur le côté, appuie sur l'avant-bras.</li>
+      <li data-n="2">Soulever les hanches — ligne droite épaule–hanche.</li>
+      <li data-n="3">Regard droit devant. Tiens.</li>
+      <li data-n="4">Changer de côté.</li>
+    </ul>
+    <p>Version plus facile : genou du bas posé au sol.</p>
+  `),
+  gainage_s2: `
+    <div class="d-info" style="background:var(--sage-bg);border-color:#c4dac6">
+      <p>💡 <strong>3 tours.</strong> Même principe : 4 exercices à la suite → 60 sec repos → recommencer.<br><br>
+      Les durées augmentent légèrement par rapport à S1.</p>
+    </div>
+    <div class="d-sep">⏱ Déroulé (~25 min)</div>
+    <div class="d-info">
+      <p>▶ <strong>3 tours identiques :</strong><br>
+      &nbsp;&nbsp;① Vacuum × 5 — 20 sec tenus → 15 sec<br>
+      &nbsp;&nbsp;② Planche 25 sec → 15 sec<br>
+      &nbsp;&nbsp;③ Bird Dog × 10/côté → 15 sec<br>
+      &nbsp;&nbsp;④ Planche latérale 20 sec/côté<br>
+      &nbsp;&nbsp;⏸ <strong>60 sec repos</strong></p>
+    </div>
+  `,
+  gainage_s3: `
+    <div class="d-info" style="background:var(--sage-bg);border-color:#c4dac6">
+      <p>💡 <strong>3 tours + introduction du Dead Bug.</strong><br><br>
+      Le Dead Bug remplace le vacuum dans le circuit (le vacuum se fait à part le matin). Il est allongé sur le dos — aucune tension sur la nuque.</p>
+    </div>
+    <div class="d-sep">⏱ Déroulé (~30 min)</div>
+    <div class="d-info">
+      <p>▶ <strong>3 tours :</strong><br>
+      &nbsp;&nbsp;① Planche 30 sec → 15 sec<br>
+      &nbsp;&nbsp;② Dead Bug × 10 → 15 sec<br>
+      &nbsp;&nbsp;③ Planche latérale 25 sec/côté → 15 sec<br>
+      &nbsp;&nbsp;④ Bird Dog × 10/côté<br>
+      &nbsp;&nbsp;⏸ <strong>60 sec repos</strong></p>
+    </div>
+    <div class="d-sep">Le Dead Bug</div>
+  ` + buildDExo('dead_bug', 'Dead Bug', '10 reps par côté', 'rosé', '🪲', `
+    <div class="d-info" style="background:var(--rosé-bg);border-color:#e8c0bc;margin-bottom:10px">
+      <p>La nuque repose sur le sol en permanence. Zéro tension cervicale.</p>
+    </div>
+    <ul class="d-step-list">
+      <li data-n="1">Allongé sur le dos, bras vers le plafond, genoux à 90° en l'air.</li>
+      <li data-n="2">Dos collé au sol. Expire et rentre le ventre.</li>
+      <li data-n="3">Étendre bras droit vers l'arrière + jambe gauche vers l'avant, lentement.</li>
+      <li data-n="4">Le dos doit rester collé au sol tout le temps.</li>
+      <li data-n="5">Revenir lentement. Alterner.</li>
+    </ul>
+    <div class="d-tip-pill rosé">Dos collé = exercice réussi</div>
+  `),
+  gainage_s4: `
+    <div class="d-info" style="background:var(--sage-bg);border-color:#c4dac6">
+      <p>💡 <strong>4 tours.</strong> +1 tour vs S3. Même ordre, durées légèrement allongées.</p>
+    </div>
+    <div class="d-sep">⏱ Déroulé (~35 min)</div>
+    <div class="d-info">
+      <p>▶ <strong>4 tours :</strong><br>
+      &nbsp;&nbsp;① Planche 35 sec → 15 sec<br>
+      &nbsp;&nbsp;② Dead Bug × 12 → 15 sec<br>
+      &nbsp;&nbsp;③ Planche latérale 30 sec/côté → 15 sec<br>
+      &nbsp;&nbsp;④ Bird Dog × 12/côté<br>
+      &nbsp;&nbsp;⏸ <strong>60 sec repos</strong></p>
+    </div>
+  `,
+};
+
+function buildDExo(id, name, dose, color, icon, content) {
+  return `
+    <div class="d-exo" id="dexo-${id}">
+      <div class="d-exo-head" onclick="toggleDExo(this)">
+        <div class="d-exo-icon" style="background:var(--${color}-bg)">${icon}</div>
+        <div style="flex:1">
+          <div class="d-exo-name">${name}</div>
+          <div class="d-exo-dose">${dose}</div>
+        </div>
+        <span class="d-chevron">▾</span>
+      </div>
+      <div class="d-exo-body">${content}</div>
+    </div>
+  `;
+}
+
+function toggleDExo(head) { head.closest('.d-exo').classList.toggle('open'); }
+
+function openDay(key, label, title) {
+  document.getElementById('drawerLabel').textContent = label;
+  document.getElementById('drawerTitle').textContent = title;
+  const content = DRAWER[key] || '<p style="padding:16px;color:var(--muted)">Contenu disponible bientôt.</p>';
+  document.getElementById('drawerContent').innerHTML = content;
+  document.getElementById('dayDrawer').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeDrawer(e) {
+  if (e && e.target !== document.getElementById('dayDrawer')) return;
+  document.getElementById('dayDrawer').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// TIMER
+let duration = 20, remaining = 20, timerInterval = null, running = false;
+
+function setTimer(sec) {
+  clearInterval(timerInterval); running = false;
+  document.getElementById('btnStart').textContent = '▶ Démarrer';
+  duration = sec; remaining = sec;
+  document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('sel'));
+  event.target.classList.add('sel');
+  updateTimerDisplay();
+  document.getElementById('timerPhase').textContent = 'Prêt';
+}
+
+function updateTimerDisplay() {
+  const m = Math.floor(remaining/60), s = remaining%60;
+  document.getElementById('timerDisplay').textContent = String(m).padStart(2,'0')+':'+String(s).padStart(2,'0');
+  const pct = remaining/duration;
+  document.getElementById('timerDisplay').style.color = pct > 0.5 ? 'var(--rosé)' : pct > 0.2 ? 'var(--dore)' : 'var(--sage)';
+}
+
+function toggleTimer() {
+  if (running) {
+    clearInterval(timerInterval); running = false;
+    document.getElementById('btnStart').textContent = '▶ Reprendre';
+    document.getElementById('timerPhase').textContent = 'En pause';
+  } else {
+    running = true;
+    document.getElementById('btnStart').textContent = '⏸ Pause';
+    document.getElementById('timerPhase').textContent = 'En cours...';
+    timerInterval = setInterval(() => {
+      remaining--;
+      updateTimerDisplay();
+      if (remaining <= 0) {
+        clearInterval(timerInterval); running = false;
+        document.getElementById('timerPhase').textContent = '✓ Terminé !';
+        document.getElementById('btnStart').textContent = '▶ Démarrer';
+        remaining = duration;
+        setTimeout(updateTimerDisplay, 800);
+      }
+    }, 1000);
+  }
+}
+
+function resetTimer() {
+  clearInterval(timerInterval); running = false; remaining = duration;
+  document.getElementById('btnStart').textContent = '▶ Démarrer';
+  document.getElementById('timerPhase').textContent = 'Prêt';
+  updateTimerDisplay();
+}
+
+function openTimer() { document.getElementById('timerModal').classList.add('open'); }
+function closeTimer() {
+  document.getElementById('timerModal').classList.remove('open');
+  clearInterval(timerInterval); running = false; remaining = duration;
+  document.getElementById('btnStart').textContent = '▶ Démarrer';
+  document.getElementById('timerPhase').textContent = 'Prêt';
+  updateTimerDisplay();
+}
+
+updateTimerDisplay();
+</script>
+</body>
+</html>
