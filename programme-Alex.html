@@ -2231,13 +2231,22 @@ function refreshDrawerExos() {
 function initUpdateBanner() {
   const bar = document.createElement('div');
   bar.id = 'updateBanner';
-  bar.innerHTML = '<span>🔄 Une mise à jour est disponible</span><button type="button">Actualiser</button>';
+  bar.innerHTML = '<span></span><button type="button">Actualiser</button>';
   document.body.appendChild(bar);
+  const label = bar.querySelector('span');
 
   if (!('serviceWorker' in navigator)) return;   // vieux navigateur : pas de SW, pas de bandeau
 
-  let waitingSW = null;
-  const showBanner = (sw) => { waitingSW = sw; bar.classList.add('show'); };
+  let waitingSW = null;   // SW en attente (cas mise à jour) ou null (cas 1ère installation)
+  // kind = 'update' : nouvelle version prête à remplacer l'ancienne
+  // kind = 'ready'  : toute première installation (pas encore de contrôleur)
+  const showBanner = (sw, kind) => {
+    waitingSW = (kind === 'update') ? sw : null;
+    label.textContent = (kind === 'update')
+      ? '🔄 Une mise à jour est disponible'
+      : '✅ Application installée — actualiser pour l\'activer';
+    bar.classList.add('show');
+  };
 
   // Clic « Actualiser » → on demande au SW en attente de prendre la main, puis reload.
   bar.querySelector('button').addEventListener('click', () => {
@@ -2257,15 +2266,17 @@ function initUpdateBanner() {
   navigator.serviceWorker.register('sw-alex.js', { scope: 'programme-Alex.html' })
     .then(reg => {
       // Un SW est déjà en attente au chargement (mise à jour pas encore appliquée)
-      if (reg.waiting && navigator.serviceWorker.controller) showBanner(reg.waiting);
+      if (reg.waiting && navigator.serviceWorker.controller) showBanner(reg.waiting, 'update');
 
-      // Nouvelle version détectée pendant la session
+      // Nouvelle version détectée pendant la session (ou toute première installation)
       reg.addEventListener('updatefound', () => {
         const nw = reg.installing;
         if (!nw) return;
         nw.addEventListener('statechange', () => {
-          // « installed » + un contrôleur existe déjà ⇒ c'est bien une MISE À JOUR
-          if (nw.state === 'installed' && navigator.serviceWorker.controller) showBanner(nw);
+          if (nw.state !== 'installed') return;
+          // un contrôleur existe déjà ⇒ MISE À JOUR ; sinon ⇒ 1ère INSTALLATION
+          if (navigator.serviceWorker.controller) showBanner(nw, 'update');
+          else showBanner(nw, 'ready');
         });
       });
 
