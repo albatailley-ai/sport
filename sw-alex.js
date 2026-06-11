@@ -13,7 +13,7 @@
    CDN passent directement au réseau : la synchro est intacte.
    ============================================================ */
 
-const CACHE_VERSION = 'alex-v2';
+const CACHE_VERSION = 'alex-v3';
 const PAGE = 'programme-Alex.html';
 
 // --- Installation : on précharge la page, sans forcer l'activation ---
