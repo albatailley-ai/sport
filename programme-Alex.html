@@ -863,6 +863,16 @@ nav::-webkit-scrollbar { display: none; }
 .zone-hiit { background: var(--fire-bg); color: var(--fire); font-weight: 700; }
 .drawer-sep { font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); margin: 16px 0 10px; }
 
+/* Toggle 1h / 1h30 dans le drawer running */
+.run-toggle { display: flex; gap: 8px; margin: 4px 0 14px; }
+.run-mode-btn {
+  flex: 1; padding: 10px; border-radius: 10px;
+  border: 1.5px solid var(--border); background: var(--surface);
+  font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 13px;
+  color: var(--muted); cursor: pointer; transition: all 0.2s;
+}
+.run-mode-btn.active { background: linear-gradient(135deg, #e8660a, #c47d00); color: #fff; border-color: #e8660a; }
+
 /* TABLE PROG */
 .prog-table {
   background: var(--surface);
@@ -963,13 +973,13 @@ nav::-webkit-scrollbar { display: none; }
         <span class="week-arrow">▾</span>
       </div>
       <div class="week-body">
-        <div class="day-row clickable" onclick="openDay('run_z2_35','LUNDI','Running Z2 — 35 min')">
+        <div class="day-row clickable" onclick="openDay('run_lun_s12','LUNDI','Running · Endurance')">
           <div class="day-tag"><div class="day-name-short">Lun</div><span class="day-emoji">🏃</span></div>
           <div class="day-content">
-            <div class="day-type-label run">Running Z2</div>
-            <div class="day-detail"><strong>35 min footing confort</strong> — Allure où tu peux parler sans être essoufflé.</div>
-            <div class="day-duration">Total : 35 min · ~320 kcal</div>
-            <div class="day-tap-hint">👆 Voir le détail</div>
+            <div class="day-type-label run">Running · Endurance</div>
+            <div class="day-detail"><strong>Séance 3 blocs</strong> — Activation 5 min · <strong>2 × 12 min à 60% VMA</strong> · Renfo + étirements 10 min.</div>
+            <div class="day-duration">40–45 min (1h30 : 55–60 min)</div>
+            <div class="day-tap-hint">👆 Voir le détail des 3 blocs</div>
           </div>
         </div>
         <div class="day-row clickable" onclick="openDay('circuit_a_2t','MARDI','Circuit A — Bas du corps · 2 tours')">
@@ -990,13 +1000,13 @@ nav::-webkit-scrollbar { display: none; }
             <div class="day-tap-hint">👆 Voir le détail</div>
           </div>
         </div>
-        <div class="day-row clickable" onclick="openDay('run_z2_35','JEUDI','Running Z2 — 35 min')">
+        <div class="day-row clickable" onclick="openDay('run_jeu_s12','JEUDI','Running · Allures')">
           <div class="day-tag"><div class="day-name-short">Jeu</div><span class="day-emoji">🏃</span></div>
           <div class="day-content">
-            <div class="day-type-label run">Running Z2</div>
-            <div class="day-detail"><strong>35 min footing</strong> — Même protocole que lundi.</div>
-            <div class="day-duration">Total : 35 min · ~320 kcal</div>
-            <div class="day-tap-hint">👆 Voir le détail</div>
+            <div class="day-type-label run">Running · Allures</div>
+            <div class="day-detail"><strong>Séance 3 blocs</strong> — Activation · <strong>8 min + 6 × (1 min soutenu / 1 min marche) + 6 min</strong> · Renfo + étirements.</div>
+            <div class="day-duration">40–45 min (1h30 : 55–60 min)</div>
+            <div class="day-tap-hint">👆 Voir le détail des 3 blocs</div>
           </div>
         </div>
         <div class="day-row clickable" onclick="openDay('circuit_b_2t','VENDREDI','Circuit B — Haut + Core · 2 tours')">
@@ -1035,13 +1045,13 @@ nav::-webkit-scrollbar { display: none; }
         <span class="week-arrow">▾</span>
       </div>
       <div class="week-body">
-        <div class="day-row clickable" onclick="openDay('run_z2_35','LUNDI','Running Z2 — 40 min')">
+        <div class="day-row clickable" onclick="openDay('run_lun_s12','LUNDI','Running · Endurance')">
           <div class="day-tag"><div class="day-name-short">Lun</div><span class="day-emoji">🏃</span></div>
           <div class="day-content">
-            <div class="day-type-label run">Running Z2</div>
-            <div class="day-detail"><strong>40 min footing</strong> — +5 min vs S1. Même allure confort.</div>
-            <div class="day-duration">Total : 40 min · ~370 kcal</div>
-            <div class="day-tap-hint">👆 Voir le détail</div>
+            <div class="day-type-label run">Running · Endurance</div>
+            <div class="day-detail"><strong>Séance 3 blocs</strong> — Activation 5 min · <strong>2 × 12 min à 60% VMA</strong> · Renfo + étirements 10 min.</div>
+            <div class="day-duration">40–45 min (1h30 : 55–60 min)</div>
+            <div class="day-tap-hint">👆 Voir le détail des 3 blocs</div>
           </div>
         </div>
         <div class="day-row clickable" onclick="openDay('circuit_a_3t','MARDI','Circuit A — 3 tours')">
@@ -1062,13 +1072,13 @@ nav::-webkit-scrollbar { display: none; }
             <div class="day-tap-hint">👆 Voir le détail</div>
           </div>
         </div>
-        <div class="day-row clickable" onclick="openDay('run_z2_35','JEUDI','Running Z2 — 40 min')">
+        <div class="day-row clickable" onclick="openDay('run_jeu_s12','JEUDI','Running · Allures')">
           <div class="day-tag"><div class="day-name-short">Jeu</div><span class="day-emoji">🏃</span></div>
           <div class="day-content">
-            <div class="day-type-label run">Running Z2</div>
-            <div class="day-detail"><strong>40 min footing</strong></div>
-            <div class="day-duration">Total : 40 min · ~370 kcal</div>
-            <div class="day-tap-hint">👆 Voir le détail</div>
+            <div class="day-type-label run">Running · Allures</div>
+            <div class="day-detail"><strong>Séance 3 blocs</strong> — Activation · <strong>8 min + 6 × (1 min soutenu / 1 min marche) + 6 min</strong> · Renfo + étirements.</div>
+            <div class="day-duration">40–45 min (1h30 : 55–60 min)</div>
+            <div class="day-tap-hint">👆 Voir le détail des 3 blocs</div>
           </div>
         </div>
         <div class="day-row clickable" onclick="openDay('circuit_b_3t','VENDREDI','Circuit B — 3 tours')">
@@ -1080,13 +1090,13 @@ nav::-webkit-scrollbar { display: none; }
             <div class="day-tap-hint">👆 Voir le détail des exercices</div>
           </div>
         </div>
-        <div class="day-row clickable" onclick="openDay('run_long','SAMEDI','Long Run — 45 min Z2')">
+        <div class="day-row clickable" onclick="openDay('run_sam_s12','SAMEDI','Running · Sortie longue')">
           <div class="day-tag"><div class="day-name-short">Sam</div><span class="day-emoji">🏃</span></div>
           <div class="day-content">
-            <div class="day-type-label run">Long Run</div>
-            <div class="day-detail"><strong>45 min footing Z2</strong> — Première sortie longue.</div>
-            <div class="day-duration">Total : 45 min · ~420 kcal</div>
-            <div class="day-tap-hint">👆 Voir le détail</div>
+            <div class="day-type-label run">Running · Sortie longue</div>
+            <div class="day-detail"><strong>Séance 3 blocs</strong> — Activation · <strong>30 min continu à 60% VMA</strong> · Renfo + étirements.</div>
+            <div class="day-duration">45 min (1h30 : 60 min)</div>
+            <div class="day-tap-hint">👆 Voir le détail des 3 blocs</div>
           </div>
         </div>
         <div class="day-row">
@@ -1111,13 +1121,13 @@ nav::-webkit-scrollbar { display: none; }
         <span class="week-arrow">▾</span>
       </div>
       <div class="week-body">
-        <div class="day-row clickable" onclick="openDay('run_z2_35','LUNDI S3','Running Z2 — 40 min')">
+        <div class="day-row clickable" onclick="openDay('run_lun_s34','LUNDI','Running · Endurance')">
           <div class="day-tag"><div class="day-name-short">Lun</div><span class="day-emoji">🏃</span></div>
           <div class="day-content">
-            <div class="day-type-label run">Running Z2</div>
-            <div class="day-detail"><strong>40 min footing confort</strong></div>
-            <div class="day-duration">~370 kcal</div>
-            <div class="day-tap-hint">👆 Voir le détail</div>
+            <div class="day-type-label run">Running · Endurance</div>
+            <div class="day-detail"><strong>Séance 3 blocs</strong> — Activation · <strong>25 min à 60–65% VMA + 2 × 3 min à 70–75%</strong> · Renfo + étirements.</div>
+            <div class="day-duration">40–45 min (1h30 : 55–60 min)</div>
+            <div class="day-tap-hint">👆 Voir le détail des 3 blocs</div>
           </div>
         </div>
         <div class="day-row clickable" onclick="openDay('circuit_a_3t','MARDI S3','Circuit A+ — 3 tours 45s/15s')">
@@ -1138,13 +1148,13 @@ nav::-webkit-scrollbar { display: none; }
             <div class="day-tap-hint">👆 Voir le détail</div>
           </div>
         </div>
-        <div class="day-row clickable" onclick="openDay('fractionne_6','JEUDI S3','Fractionné Running — Introduction')">
+        <div class="day-row clickable" onclick="openDay('run_jeu_s34','JEUDI','Running · Fractionné')">
           <div class="day-tag"><div class="day-name-short">Jeu</div><span class="day-emoji">⚡</span></div>
           <div class="day-content">
-            <div class="day-type-label hiit">Fractionné Running</div>
-            <div class="day-detail"><strong>6 × [30s sprint / 90s récup]</strong> + échauff/retour.</div>
-            <div class="day-duration">30 min · ~380 kcal</div>
-            <div class="day-tap-hint">👆 Voir le protocole</div>
+            <div class="day-type-label run">Running · Fractionné</div>
+            <div class="day-detail"><strong>Séance 3 blocs</strong> — Activation · <strong>10 min + 6 × (30s à 80% / 30s lent) + 8 min</strong> · Renfo + étirements.</div>
+            <div class="day-duration">40–45 min (1h30 : 55–60 min)</div>
+            <div class="day-tap-hint">👆 Voir le détail des 3 blocs</div>
           </div>
         </div>
         <div class="day-row clickable" onclick="openDay('circuit_b_3t','VENDREDI S3','Circuit B+ — 3 tours 45s/15s')">
@@ -1156,13 +1166,13 @@ nav::-webkit-scrollbar { display: none; }
             <div class="day-tap-hint">👆 Voir le détail</div>
           </div>
         </div>
-        <div class="day-row clickable" onclick="openDay('run_long','SAMEDI S3','Long Run — 50 min Z2')">
+        <div class="day-row clickable" onclick="openDay('run_sam_s34','SAMEDI','Running · Sortie longue')">
           <div class="day-tag"><div class="day-name-short">Sam</div><span class="day-emoji">🏃</span></div>
           <div class="day-content">
-            <div class="day-type-label run">Long Run</div>
-            <div class="day-detail"><strong>50 min Z2</strong></div>
-            <div class="day-duration">~460 kcal</div>
-            <div class="day-tap-hint">👆 Voir le détail</div>
+            <div class="day-type-label run">Running · Sortie longue</div>
+            <div class="day-detail"><strong>Séance 3 blocs</strong> — Activation · <strong>35 min continu à 60–65% VMA</strong> · Renfo + étirements.</div>
+            <div class="day-duration">50 min (1h30 : 65 min)</div>
+            <div class="day-tap-hint">👆 Voir le détail des 3 blocs</div>
           </div>
         </div>
         <div class="day-row">
@@ -1178,9 +1188,14 @@ nav::-webkit-scrollbar { display: none; }
         <span class="week-arrow">▾</span>
       </div>
       <div class="week-body">
-        <div class="day-row">
+        <div class="day-row clickable" onclick="openDay('run_lun_s34','LUNDI','Running · Endurance')">
           <div class="day-tag"><div class="day-name-short">Lun</div><span class="day-emoji">🏃</span></div>
-          <div class="day-content"><div class="day-type-label run">Running Z2</div><div class="day-detail"><strong>45 min footing</strong></div><div class="day-duration">~415 kcal</div></div>
+          <div class="day-content">
+            <div class="day-type-label run">Running · Endurance</div>
+            <div class="day-detail"><strong>Séance 3 blocs</strong> — Activation · <strong>25 min à 60–65% VMA + 2 × 3 min à 70–75%</strong> · Renfo + étirements.</div>
+            <div class="day-duration">40–45 min (1h30 : 55–60 min)</div>
+            <div class="day-tap-hint">👆 Voir le détail des 3 blocs</div>
+          </div>
         </div>
         <div class="day-row">
           <div class="day-tag"><div class="day-name-short">Mar</div><span class="day-emoji">💪</span></div>
@@ -1190,17 +1205,27 @@ nav::-webkit-scrollbar { display: none; }
           <div class="day-tag"><div class="day-name-short">Mer</div><span class="day-emoji">🪢</span></div>
           <div class="day-content"><div class="day-type-label corde">Corde + Muscu</div><div class="day-detail"><strong>Circuit combiné</strong> — 3 tours : 2 min corde / 1 min squats / 1 min repos.</div><div class="day-duration">20 min</div></div>
         </div>
-        <div class="day-row">
+        <div class="day-row clickable" onclick="openDay('run_jeu_s34','JEUDI','Running · Fractionné')">
           <div class="day-tag"><div class="day-name-short">Jeu</div><span class="day-emoji">⚡</span></div>
-          <div class="day-content"><div class="day-type-label hiit">Fractionné Running</div><div class="day-detail"><strong>8 × [30s sprint / 90s récup]</strong> + échauff/retour. +2 répétitions vs S3.</div><div class="day-duration">38 min · ~450 kcal</div></div>
+          <div class="day-content">
+            <div class="day-type-label run">Running · Fractionné</div>
+            <div class="day-detail"><strong>Séance 3 blocs</strong> — Activation · <strong>10 min + 6 × (30s à 80% / 30s lent) + 8 min</strong> · Renfo + étirements.</div>
+            <div class="day-duration">40–45 min (1h30 : 55–60 min)</div>
+            <div class="day-tap-hint">👆 Voir le détail des 3 blocs</div>
+          </div>
         </div>
         <div class="day-row">
           <div class="day-tag"><div class="day-name-short">Ven</div><span class="day-emoji">💪</span></div>
           <div class="day-content"><div class="day-type-label muscu">Circuit B+</div><div class="day-detail"><strong>4 tours 45s/15s</strong></div><div class="day-duration">40 min · ~350 kcal</div></div>
         </div>
-        <div class="day-row">
+        <div class="day-row clickable" onclick="openDay('run_sam_s34','SAMEDI','Running · Sortie longue')">
           <div class="day-tag"><div class="day-name-short">Sam</div><span class="day-emoji">🏃</span></div>
-          <div class="day-content"><div class="day-type-label run">Long Run</div><div class="day-detail"><strong>55 min Z2</strong></div><div class="day-duration">~500 kcal</div></div>
+          <div class="day-content">
+            <div class="day-type-label run">Running · Sortie longue</div>
+            <div class="day-detail"><strong>Séance 3 blocs</strong> — Activation · <strong>35 min continu à 60–65% VMA</strong> · Renfo + étirements.</div>
+            <div class="day-duration">50 min (1h30 : 65 min)</div>
+            <div class="day-tap-hint">👆 Voir le détail des 3 blocs</div>
+          </div>
         </div>
         <div class="day-row">
           <div class="day-tag"><div class="day-name-short">Dim</div><span class="day-emoji">😴</span></div>
@@ -1224,9 +1249,14 @@ nav::-webkit-scrollbar { display: none; }
         <span class="week-arrow">▾</span>
       </div>
       <div class="week-body">
-        <div class="day-row">
+        <div class="day-row clickable" onclick="openDay('run_lun_s56','LUNDI','Running · Endurance')">
           <div class="day-tag"><div class="day-name-short">Lun</div><span class="day-emoji">🏃</span></div>
-          <div class="day-content"><div class="day-type-label run">Running Z2</div><div class="day-detail"><strong>45 min</strong> avec 3 accélérations de 2 min à 75% effort vers les km 3, 5 et 7.</div><div class="day-duration">~430 kcal</div></div>
+          <div class="day-content">
+            <div class="day-type-label run">Running · Endurance</div>
+            <div class="day-detail"><strong>Séance 3 blocs</strong> — Activation · <strong>10 min + 2 × (6 × 30s à 80% / 30s lent) + 8 min</strong> · Renfo + étirements.</div>
+            <div class="day-duration">40–45 min (1h30 : 55–60 min)</div>
+            <div class="day-tap-hint">👆 Voir le détail des 3 blocs</div>
+          </div>
         </div>
         <div class="day-row">
           <div class="day-tag"><div class="day-name-short">Mar</div><span class="day-emoji">💪</span></div>
@@ -1236,17 +1266,27 @@ nav::-webkit-scrollbar { display: none; }
           <div class="day-tag"><div class="day-name-short">Mer</div><span class="day-emoji">🪢</span></div>
           <div class="day-content"><div class="day-type-label corde">HIIT Corde</div><div class="day-detail"><strong>10 × [30s sprint corde / 30s repos]</strong>. Vitesse maximale sur les sprints. Introduction double pied rapide.</div><div class="day-duration">22 min · ~280 kcal</div></div>
         </div>
-        <div class="day-row">
+        <div class="day-row clickable" onclick="openDay('run_jeu_s56','JEUDI','Running · Fractionné')">
           <div class="day-tag"><div class="day-name-short">Jeu</div><span class="day-emoji">⚡</span></div>
-          <div class="day-content"><div class="day-type-label hiit">Fractionné Running</div><div class="day-detail"><strong>10 × [30s sprint / 60s récup]</strong> — Récup réduite à 60s. Plus difficile. Sprint à fond.</div><div class="day-duration">38 min · ~500 kcal</div></div>
+          <div class="day-content">
+            <div class="day-type-label run">Running · Fractionné</div>
+            <div class="day-detail"><strong>Séance 3 blocs</strong> — Activation · <strong>10 min + 2 × (8 × 30s à 80% / 30s lent) + 6 min</strong> · Renfo + étirements.</div>
+            <div class="day-duration">40–45 min (1h30 : 55–60 min)</div>
+            <div class="day-tap-hint">👆 Voir le détail des 3 blocs</div>
+          </div>
         </div>
         <div class="day-row">
           <div class="day-tag"><div class="day-name-short">Ven</div><span class="day-emoji">💪</span></div>
           <div class="day-content"><div class="day-type-label muscu">Circuit B · Full</div><div class="day-detail"><strong>4 tours 45s/15s</strong> — Pompes pirates, Planche latérale alternée, Dips + leg raise, Mountain climbers rapides, Burpees complets × 10, Crunchs obliques.</div><div class="day-duration">40 min · ~380 kcal</div></div>
         </div>
-        <div class="day-row">
+        <div class="day-row clickable" onclick="openDay('run_sam_s56','SAMEDI','Running · Sortie longue')">
           <div class="day-tag"><div class="day-name-short">Sam</div><span class="day-emoji">🏃</span></div>
-          <div class="day-content"><div class="day-type-label run">Long Run</div><div class="day-detail"><strong>55 min Z2</strong> — À jeun si possible (2h après réveil).</div><div class="day-duration">~500 kcal</div></div>
+          <div class="day-content">
+            <div class="day-type-label run">Running · Sortie longue</div>
+            <div class="day-detail"><strong>Séance 3 blocs</strong> — Activation · <strong>40 min continu à 60–65% VMA</strong> (à jeun si possible) · Renfo + étirements.</div>
+            <div class="day-duration">55 min (1h30 : 70 min)</div>
+            <div class="day-tap-hint">👆 Voir le détail des 3 blocs</div>
+          </div>
         </div>
         <div class="day-row">
           <div class="day-tag"><div class="day-name-short">Dim</div><span class="day-emoji">😴</span></div>
@@ -1261,9 +1301,14 @@ nav::-webkit-scrollbar { display: none; }
         <span class="week-arrow">▾</span>
       </div>
       <div class="week-body">
-        <div class="day-row">
+        <div class="day-row clickable" onclick="openDay('run_lun_s56','LUNDI','Running · Endurance')">
           <div class="day-tag"><div class="day-name-short">Lun</div><span class="day-emoji">🏃</span></div>
-          <div class="day-content"><div class="day-type-label run">Running Progressif</div><div class="day-detail"><strong>45 min</strong> — 15 min Z2 + 15 min Z3 (effort soutenu) + 10 min Z2 + 5 min retour.</div><div class="day-duration">~480 kcal</div></div>
+          <div class="day-content">
+            <div class="day-type-label run">Running · Endurance</div>
+            <div class="day-detail"><strong>Séance 3 blocs</strong> — Activation · <strong>10 min + 2 × (6 × 30s à 80% / 30s lent) + 8 min</strong> · Renfo + étirements.</div>
+            <div class="day-duration">40–45 min (1h30 : 55–60 min)</div>
+            <div class="day-tap-hint">👆 Voir le détail des 3 blocs</div>
+          </div>
         </div>
         <div class="day-row">
           <div class="day-tag"><div class="day-name-short">Mar</div><span class="day-emoji">💪</span></div>
@@ -1273,17 +1318,27 @@ nav::-webkit-scrollbar { display: none; }
           <div class="day-tag"><div class="day-name-short">Mer</div><span class="day-emoji">🪢</span></div>
           <div class="day-content"><div class="day-type-label corde">Circuit Corde + Corps</div><div class="day-detail"><strong>3 tours</strong> : 2 min corde / 1 min burpees / 1 min squat / 1 min repos.</div><div class="day-duration">25 min · ~320 kcal</div></div>
         </div>
-        <div class="day-row">
+        <div class="day-row clickable" onclick="openDay('run_jeu_s56','JEUDI','Running · Fractionné')">
           <div class="day-tag"><div class="day-name-short">Jeu</div><span class="day-emoji">⚡</span></div>
-          <div class="day-content"><div class="day-type-label hiit">Tabata Running</div><div class="day-detail"><strong>8 × [20s sprint max / 10s trot]</strong> — Format Tabata. 4 min d'enfer. Faire 3 séries avec 2 min de récup entre séries. + échauff/retour.</div><div class="day-duration">35 min · ~480 kcal</div></div>
+          <div class="day-content">
+            <div class="day-type-label run">Running · Fractionné</div>
+            <div class="day-detail"><strong>Séance 3 blocs</strong> — Activation · <strong>10 min + 2 × (8 × 30s à 80% / 30s lent) + 6 min</strong> · Renfo + étirements.</div>
+            <div class="day-duration">40–45 min (1h30 : 55–60 min)</div>
+            <div class="day-tap-hint">👆 Voir le détail des 3 blocs</div>
+          </div>
         </div>
         <div class="day-row">
           <div class="day-tag"><div class="day-name-short">Ven</div><span class="day-emoji">💪</span></div>
           <div class="day-content"><div class="day-type-label muscu">Circuit B Complexe</div><div class="day-detail"><strong>5 tours 40s/20s</strong></div><div class="day-duration">38 min · ~380 kcal</div></div>
         </div>
-        <div class="day-row">
+        <div class="day-row clickable" onclick="openDay('run_sam_s56','SAMEDI','Running · Sortie longue')">
           <div class="day-tag"><div class="day-name-short">Sam</div><span class="day-emoji">🏃</span></div>
-          <div class="day-content"><div class="day-type-label run">Long Run</div><div class="day-detail"><strong>60 min Z2</strong> — Premier 60 min.</div><div class="day-duration">~550 kcal</div></div>
+          <div class="day-content">
+            <div class="day-type-label run">Running · Sortie longue</div>
+            <div class="day-detail"><strong>Séance 3 blocs</strong> — Activation · <strong>40 min continu à 60–65% VMA</strong> · Renfo + étirements.</div>
+            <div class="day-duration">55 min (1h30 : 70 min)</div>
+            <div class="day-tap-hint">👆 Voir le détail des 3 blocs</div>
+          </div>
         </div>
         <div class="day-row">
           <div class="day-tag"><div class="day-name-short">Dim</div><span class="day-emoji">😴</span></div>
@@ -1307,9 +1362,14 @@ nav::-webkit-scrollbar { display: none; }
         <span class="week-arrow">▾</span>
       </div>
       <div class="week-body">
-        <div class="day-row">
+        <div class="day-row clickable" onclick="openDay('run_lun_s7','LUNDI','Running · Endurance')">
           <div class="day-tag"><div class="day-name-short">Lun</div><span class="day-emoji">🏃</span></div>
-          <div class="day-content"><div class="day-type-label run">Running Z2 + Z3</div><div class="day-detail"><strong>50 min</strong> — 20 min Z2 + 20 min Z3 + 10 min retour.</div><div class="day-duration">~520 kcal</div></div>
+          <div class="day-content">
+            <div class="day-type-label run">Running · Endurance</div>
+            <div class="day-detail"><strong>Séance 3 blocs</strong> — Activation · <strong>10 min + 3 × (6 × 30s à 80% / 30s lent) + 8 min</strong> · Renfo + étirements.</div>
+            <div class="day-duration">40–45 min (1h30 : 55–60 min)</div>
+            <div class="day-tap-hint">👆 Voir le détail des 3 blocs</div>
+          </div>
         </div>
         <div class="day-row">
           <div class="day-tag"><div class="day-name-short">Mar</div><span class="day-emoji">💪</span></div>
@@ -1319,17 +1379,27 @@ nav::-webkit-scrollbar { display: none; }
           <div class="day-tag"><div class="day-name-short">Mer</div><span class="day-emoji">🪢</span></div>
           <div class="day-content"><div class="day-type-label corde">HIIT Corde intensif</div><div class="day-detail"><strong>15 × [30s max / 30s repos]</strong> — 15 séries. Mélange simple, alterné et course en place.</div><div class="day-duration">25 min · ~350 kcal</div></div>
         </div>
-        <div class="day-row">
+        <div class="day-row clickable" onclick="openDay('run_jeu_s7','JEUDI','Running · Fractionné')">
           <div class="day-tag"><div class="day-name-short">Jeu</div><span class="day-emoji">⚡</span></div>
-          <div class="day-content"><div class="day-type-label hiit">Fractionné Long</div><div class="day-detail"><strong>12 × [30s sprint / 60s récup]</strong> + échauff/retour.</div><div class="day-duration">45 min · ~560 kcal</div></div>
+          <div class="day-content">
+            <div class="day-type-label run">Running · Fractionné</div>
+            <div class="day-detail"><strong>Séance 3 blocs</strong> — Activation · <strong>10 min + 3 × (8 × 30s à 80% / 30s lent) + 6 min</strong> · Renfo + étirements.</div>
+            <div class="day-duration">40–45 min (1h30 : 55–60 min)</div>
+            <div class="day-tap-hint">👆 Voir le détail des 3 blocs</div>
+          </div>
         </div>
         <div class="day-row">
           <div class="day-tag"><div class="day-name-short">Ven</div><span class="day-emoji">💪</span></div>
           <div class="day-content"><div class="day-type-label muscu">Full Body Circuit B</div><div class="day-detail"><strong>5 tours 45s/15s</strong></div><div class="day-duration">45 min · ~420 kcal</div></div>
         </div>
-        <div class="day-row">
+        <div class="day-row clickable" onclick="openDay('run_sam_s7','SAMEDI','Running · Sortie longue')">
           <div class="day-tag"><div class="day-name-short">Sam</div><span class="day-emoji">🏃</span></div>
-          <div class="day-content"><div class="day-type-label run">Long Run 65 min</div><div class="day-detail"><strong>65 min Z2</strong> — Record personnel du programme.</div><div class="day-duration">~600 kcal</div></div>
+          <div class="day-content">
+            <div class="day-type-label run">Running · Sortie longue</div>
+            <div class="day-detail"><strong>Séance 3 blocs</strong> — Activation · <strong>45 min continu à 60–65% VMA</strong> (record du programme) · Renfo + étirements.</div>
+            <div class="day-duration">60 min (1h30 : 75 min)</div>
+            <div class="day-tap-hint">👆 Voir le détail des 3 blocs</div>
+          </div>
         </div>
         <div class="day-row">
           <div class="day-tag"><div class="day-name-short">Dim</div><span class="day-emoji">😴</span></div>
@@ -1344,9 +1414,14 @@ nav::-webkit-scrollbar { display: none; }
         <span class="week-arrow">▾</span>
       </div>
       <div class="week-body">
-        <div class="day-row">
+        <div class="day-row clickable" onclick="openDay('run_lun_s8','LUNDI','Running · Endurance (décharge)')">
           <div class="day-tag"><div class="day-name-short">Lun</div><span class="day-emoji">🏃</span></div>
-          <div class="day-content"><div class="day-type-label run">Running Z2</div><div class="day-detail"><strong>40 min footing léger</strong> — Retour à l'allure confort. Le corps récupère et consolide.</div></div>
+          <div class="day-content">
+            <div class="day-type-label run">Running · Endurance</div>
+            <div class="day-detail"><strong>Séance 3 blocs · décharge</strong> — Activation · <strong>25 min à 60–65% VMA + 2 × 3 min à 70–75%</strong> · Renfo + étirements.</div>
+            <div class="day-duration">40–45 min (1h30 : 55–60 min)</div>
+            <div class="day-tap-hint">👆 Voir le détail des 3 blocs</div>
+          </div>
         </div>
         <div class="day-row">
           <div class="day-tag"><div class="day-name-short">Mar</div><span class="day-emoji">💪</span></div>
@@ -1356,9 +1431,14 @@ nav::-webkit-scrollbar { display: none; }
           <div class="day-tag"><div class="day-name-short">Mer</div><span class="day-emoji">🪢</span></div>
           <div class="day-content"><div class="day-type-label corde">Corde Plaisir</div><div class="day-detail"><strong>15 min libres</strong> — Pratique libre. Essayer des variations, s'amuser.</div></div>
         </div>
-        <div class="day-row">
-          <div class="day-tag"><div class="day-name-short">Jeu</div><span class="day-emoji">🏃</span></div>
-          <div class="day-content"><div class="day-type-label run">Fractionné Modéré</div><div class="day-detail"><strong>6 × [30s sprint / 90s récup]</strong> — Retour aux volumes de S3.</div></div>
+        <div class="day-row clickable" onclick="openDay('run_jeu_s8','JEUDI','Running · Fractionné (décharge)')">
+          <div class="day-tag"><div class="day-name-short">Jeu</div><span class="day-emoji">⚡</span></div>
+          <div class="day-content">
+            <div class="day-type-label run">Running · Fractionné</div>
+            <div class="day-detail"><strong>Séance 3 blocs · décharge</strong> — Activation · <strong>10 min + 6 × (30s à 80% / 30s lent) + 8 min</strong> · Renfo + étirements.</div>
+            <div class="day-duration">40–45 min (1h30 : 55–60 min)</div>
+            <div class="day-tap-hint">👆 Voir le détail des 3 blocs</div>
+          </div>
         </div>
         <div class="day-row">
           <div class="day-tag"><div class="day-name-short">Ven</div><span class="day-emoji">💪</span></div>
@@ -1386,14 +1466,14 @@ nav::-webkit-scrollbar { display: none; }
         <div class="prog-th">Circuits</div>
         <div class="prog-th">Intensité</div>
       </div>
-      <div class="prog-row-t"><div class="prog-cell week">S1</div><div class="prog-cell">2 × 35 min Z2</div><div class="prog-cell">2 tours</div><div class="prog-cell intensity i-low">Légère</div></div>
-      <div class="prog-row-t"><div class="prog-cell week">S2</div><div class="prog-cell">3 × 40–45 min Z2</div><div class="prog-cell">3 tours</div><div class="prog-cell intensity i-low">Légère+</div></div>
-      <div class="prog-row-t"><div class="prog-cell week">S3</div><div class="prog-cell">Z2 + 1 fractionné</div><div class="prog-cell">3 tours 45s/15s</div><div class="prog-cell intensity i-mid">Modérée</div></div>
-      <div class="prog-row-t"><div class="prog-cell week">S4</div><div class="prog-cell">Z2 + 1 fractionné</div><div class="prog-cell">4 tours</div><div class="prog-cell intensity i-mid">Modérée+</div></div>
-      <div class="prog-row-t"><div class="prog-cell week">S5</div><div class="prog-cell">Z2 + HIIT running</div><div class="prog-cell">4 tours dense</div><div class="prog-cell intensity i-high">Élevée</div></div>
-      <div class="prog-row-t"><div class="prog-cell week">S6</div><div class="prog-cell">Z2/Z3 + Tabata</div><div class="prog-cell">5 tours bi-sets</div><div class="prog-cell intensity i-high">Très élevée</div></div>
-      <div class="prog-row-t"><div class="prog-cell week">S7</div><div class="prog-cell">Z2/Z3 + 12 fracs</div><div class="prog-cell">5 tours max</div><div class="prog-cell intensity i-peak">Peak 🔥</div></div>
-      <div class="prog-row-t"><div class="prog-cell week">S8</div><div class="prog-cell">Z2 modéré</div><div class="prog-cell">3 tours</div><div class="prog-cell intensity i-low">Décharge</div></div>
+      <div class="prog-row-t"><div class="prog-cell week">S1</div><div class="prog-cell">2 × 12 min à 60% VMA</div><div class="prog-cell">2 tours</div><div class="prog-cell intensity i-low">Légère</div></div>
+      <div class="prog-row-t"><div class="prog-cell week">S2</div><div class="prog-cell">60% VMA + sortie longue</div><div class="prog-cell">3 tours</div><div class="prog-cell intensity i-low">Légère+</div></div>
+      <div class="prog-row-t"><div class="prog-cell week">S3</div><div class="prog-cell">60–65% + 2 × 3 min à 70–75%</div><div class="prog-cell">3 tours 45s/15s</div><div class="prog-cell intensity i-mid">Modérée</div></div>
+      <div class="prog-row-t"><div class="prog-cell week">S4</div><div class="prog-cell">60–65% + fractionné 80%</div><div class="prog-cell">4 tours</div><div class="prog-cell intensity i-mid">Modérée+</div></div>
+      <div class="prog-row-t"><div class="prog-cell week">S5</div><div class="prog-cell">Fractionné 2 × (6 × 30s 80%)</div><div class="prog-cell">4 tours dense</div><div class="prog-cell intensity i-high">Élevée</div></div>
+      <div class="prog-row-t"><div class="prog-cell week">S6</div><div class="prog-cell">Fractionné 80% + sortie longue</div><div class="prog-cell">5 tours bi-sets</div><div class="prog-cell intensity i-high">Très élevée</div></div>
+      <div class="prog-row-t"><div class="prog-cell week">S7</div><div class="prog-cell">Fractionné 3 × (6–8 × 30s 80%)</div><div class="prog-cell">5 tours max</div><div class="prog-cell intensity i-peak">Peak 🔥</div></div>
+      <div class="prog-row-t"><div class="prog-cell week">S8</div><div class="prog-cell">Décharge — niveau S3</div><div class="prog-cell">3 tours</div><div class="prog-cell intensity i-low">Décharge</div></div>
     </div>
   </div>
 </div>
@@ -1799,21 +1879,22 @@ nav::-webkit-scrollbar { display: none; }
       <div class="exo-card-head" onclick="toggleExo(this)">
         <div class="exo-icon run">🎯</div>
         <div class="exo-head-text">
-          <div class="exo-name">Les zones d'effort</div>
-          <div class="exo-meta">Comment courir selon l'objectif</div>
+          <div class="exo-name">Tes allures (VMA) — en simple</div>
+          <div class="exo-meta">60% · 70–75% · 80% expliqués sans jargon</div>
         </div>
         <span class="exo-chevron">▾</span>
       </div>
       <div class="exo-body">
-        <div class="exo-section-title">Zone 2 — Endurance · Brûle les graisses</div>
-        <p><strong>Effort perçu : 5–6/10.</strong> Tu peux tenir une conversation sans être haletant. C'est l'allure qui brûle le plus de graisses en proportion. Idéale pour les sorties longues.</p>
-        <div class="exo-section-title">Zone 3 — Tempo · Seuil</div>
-        <p><strong>Effort perçu : 7/10.</strong> Tu peux parler, mais avec effort. Quelques mots à la fois. Améliore l'endurance aérobie, brûle plus de calories/min mais moins de graisses en %.</p>
-        <div class="exo-section-title">Zone 4–5 — Fractionné / HIIT</div>
-        <p><strong>Effort perçu : 8–10/10.</strong> Sprint. Impossible de parler. Utilisé uniquement sur de courtes durées (20–60 sec). Déclenche l'afterburn (EPOC) : le corps continue à brûler des calories 12–24h après.</p>
+        <p>La <strong>VMA</strong>, c'est simplement ta vitesse quand tu cours à fond. Tout le programme se règle en pourcentage de cette vitesse. Pas besoin de la mesurer précisément : le <strong>test de la parole</strong> suffit pour savoir si tu es dans la bonne zone.</p>
+        <div class="exo-section-title">60% VMA — allure facile</div>
+        <p><strong>Tu peux parler en faisant des phrases complètes</strong>, sans être essoufflé. Si tu n'y arrives pas, ralentis. C'est l'allure de base du programme : celle qui brûle le plus de graisses et qu'on garde sur les sorties longues. La plupart de tes minutes de course sont ici.</p>
+        <div class="exo-section-title">70–75% VMA — un peu plus soutenu</div>
+        <p><strong>Tu peux encore parler, mais par phrases courtes</strong>, ça commence à demander de l'effort. On l'utilise par petites pointes de 2–3 min glissées dans une séance facile, pour habituer le corps à aller un peu plus vite.</p>
+        <div class="exo-section-title">80% VMA — accélérations courtes</div>
+        <p><strong>Là tu ne peux plus parler</strong>, tu respires fort. On n'y reste que <strong>30 secondes à la fois</strong>, suivies de 30 sec lentes pour récupérer. Ce sont les accélérations du fractionné. C'est court mais ça fait travailler le cœur et ça continue à brûler des calories plusieurs heures après.</p>
         <div class="tips-row">
-          <span class="tip-pill run">80% de tes séances en Z2</span>
-          <span class="tip-pill run">20% en haute intensité</span>
+          <span class="tip-pill run">Dans le doute : ralentis</span>
+          <span class="tip-pill run">L'essentiel du temps à 60%</span>
         </div>
       </div>
     </div>
@@ -1846,22 +1927,23 @@ nav::-webkit-scrollbar { display: none; }
       <div class="exo-card-head" onclick="toggleExo(this)">
         <div class="exo-icon run">⚡</div>
         <div class="exo-head-text">
-          <div class="exo-name">Fractionné — Protocoles progressifs</div>
-          <div class="exo-meta">S3 → S8 · HIIT Running détaillé</div>
+          <div class="exo-name">Le fractionné, semaine par semaine</div>
+          <div class="exo-meta">La séance du jeudi · S1 → S8</div>
         </div>
         <span class="exo-chevron">▾</span>
       </div>
       <div class="exo-body">
-        <div class="exo-section-title">S3 : Découverte fractionné</div>
-        <p>8 min échauff + <strong>6 × [30s sprint / 90s trot lent]</strong> + 8 min retour. Le 90s de récup permet de récupérer quasi-complètement entre les sprints. Idéal pour apprendre à sprinter.</p>
-        <div class="exo-section-title">S4 : Augmentation volume</div>
-        <p><strong>8 × [30s / 90s]</strong>. +2 répétitions. Simple.</p>
-        <div class="exo-section-title">S5 : Récup réduite</div>
-        <p><strong>10 × [30s / 60s]</strong>. Récup raccourcie à 60s — plus dur, moins de récupération complète entre les efforts.</p>
-        <div class="exo-section-title">S6 : Tabata</div>
-        <p><strong>3 séries de Tabata : [8 × 20s max / 10s repos]</strong>, 2 min de repos entre séries. Le Tabata est scientifiquement prouvé comme l'un des protocoles les plus efficaces pour la dépense calorique.</p>
-        <div class="exo-section-title">S7 : Fractionné long</div>
-        <p><strong>12 × [30s / 60s]</strong>. Volume maximum du programme.</p>
+        <p>Le fractionné, c'est alterner des moments rapides et des moments lents. Toujours encadré par l'<strong>activation (5 min)</strong> au début et le <strong>renfo + étirements (10 min)</strong> à la fin. On monte tout doucement de semaine en semaine.</p>
+        <div class="exo-section-title">S1–S2 : découverte des allures</div>
+        <p><strong>6 × (1 min un peu plus vite / 1 min de marche).</strong> Pas encore de vrai sprint : juste sentir ce que veut dire « accélérer un peu ». Tu dois finir sans être cuit.</p>
+        <div class="exo-section-title">S3–S4 : premier vrai fractionné</div>
+        <p><strong>6 × (30 sec à 80% / 30 sec lent).</strong> Les accélérations passent à 30 secondes, là où tu ne peux plus parler. La récup lente est aussi de 30 secondes.</p>
+        <div class="exo-section-title">S5–S6 : on densifie</div>
+        <p><strong>2 blocs de 8 × (30 sec à 80% / 30 sec lent),</strong> avec 2 min de marche entre les deux blocs. Plus de répétitions, donc plus de travail.</p>
+        <div class="exo-section-title">S7 : le pic</div>
+        <p><strong>3 blocs de 8 × (30 sec à 80% / 30 sec lent).</strong> Le plus gros volume du programme. Garde la même qualité d'accélération jusqu'au bout.</p>
+        <div class="exo-section-title">S8 : décharge</div>
+        <p><strong>Retour à 6 × (30 sec / 30 sec).</strong> On lève le pied pour récupérer et ancrer les progrès avant le bilan.</p>
       </div>
     </div>
   </div>
@@ -2870,6 +2952,115 @@ function buildDrawerContent(dayKey) {
 
 function toggleDExo(head) {
   head.closest('.d-exo').classList.toggle('open');
+}
+
+// ═══════════════════════════════════════
+// SÉANCES RUNNING — structure 3 blocs (Activation + VMA + Renfo)
+// ═══════════════════════════════════════
+const RUN_NUTRI = `
+  <div class="drawer-info-block" style="background:#fff8e6;border-color:#f0d98a;">
+    <p>🍌 <strong>Nutrition du matin</strong><br>
+    • Boire un grand verre d'eau dès le réveil<br>
+    • Optionnel : 1 banane ou 3–4 dattes 10 min avant si le ventre est vide<br>
+    • Manger dans les 30 min après la séance (protéines + glucides lents)</p>
+  </div>`;
+
+const RUN_TOGGLE = `
+  <div class="run-toggle">
+    <button class="run-mode-btn active" onclick="setRunMode('1h', this)">⏱ J'ai 1h</button>
+    <button class="run-mode-btn" onclick="setRunMode('1h30', this)">⏱ J'ai 1h30</button>
+  </div>`;
+
+const RUN_BLOC1 = `
+  <div class="drawer-sep">Bloc 1 · Activation — 5 min</div>
+  <div class="drawer-info-block">
+    <p>🚶 Marche rapide — 1 min<br>
+    🦵 Talons-fesses — 30 sec<br>
+    ⬆️ Montées de genoux — 30 sec<br>
+    🤸 Fentes dynamiques — 10 (5 par jambe)<br>
+    🔄 Cercles de hanches — 10<br>
+    ⚡ Accélérations progressives sur 20 m — × 3</p>
+  </div>`;
+
+const RUN_BLOC3 = `
+  <div class="drawer-sep">Bloc 3 · Renfo + étirements — 10 min</div>
+  <div class="drawer-info-block">
+    <p><strong>Renforcement (5 min)</strong><br>
+    🧱 Gainage frontal — 2 × 30 sec<br>
+    🧱 Gainage latéral — 2 × 20 sec chaque côté<br>
+    🤲 Pompes — 2 × 15</p>
+  </div>
+  <div class="drawer-info-block">
+    <p><strong>Étirements (5 min)</strong> — enchaînés, 2 × 20 sec par jambe<br>
+    🦵 Mollets (bas et haut)<br>
+    🦵 Ischio-jambiers<br>
+    🦵 Quadriceps<br>
+    🍑 Fessiers<br>
+    🧍 Psoas</p>
+  </div>`;
+
+const RUN_EXTRA = `<br><br>➕ <strong>Variante 1h30 :</strong> +15 min en continu à 60–65% VMA (allure facile, sans intensité ajoutée).`;
+
+// Bloc 2 par jour et par phase. main = version 1h ; main + RUN_EXTRA = version 1h30.
+const RUN2 = {
+  lun_s12: { zone:'zone-2', banner:'🎯 60% VMA — tu peux parler facilement',
+    main:`🏃 <strong>12 min à 60% VMA</strong><br>🚶 2 min de marche<br>🏃 <strong>12 min à 60% VMA</strong>` },
+  lun_s34: { zone:'zone-2', banner:'🎯 60–65% VMA + 2 pointes à 70–75%',
+    main:`🏃 <strong>25 min à 60–65% VMA</strong><br>Dont <strong>2 × 3 min à 70–75% VMA</strong> intercalées (vers la 8ᵉ et la 16ᵉ minute). À 70–75% tu peux encore parler, mais par phrases courtes.` },
+  lun_s56: { zone:'zone-hiit', banner:'⚡ Fractionné court — 80% VMA',
+    main:`🏃 10 min à 60% VMA (échauffement)<br>⚡ <strong>Bloc 1 : 6 × (30s à 80% / 30s lent)</strong><br>🚶 2 min de marche<br>⚡ <strong>Bloc 2 : 6 × (30s à 80% / 30s lent)</strong><br>🏃 8 min à 60% VMA (récup)` },
+  lun_s7: { zone:'zone-hiit', banner:'⚡ Fractionné dense — 80% VMA',
+    main:`🏃 10 min à 60% VMA (échauffement)<br>⚡ <strong>3 blocs de 6 × (30s à 80% / 30s lent)</strong><br>(2 min de marche entre chaque bloc)<br>🏃 8 min à 60% VMA (récup)` },
+
+  jeu_s12: { zone:'zone-2', banner:'🎯 Découverte des allures',
+    main:`🏃 8 min à 60% VMA<br>🔁 <strong>6 × (1 min soutenu ~65–70% / 1 min marche)</strong><br>🏃 6 min à 60% VMA` },
+  jeu_s34: { zone:'zone-hiit', banner:'⚡ Premier fractionné court — 80% VMA',
+    main:`🏃 10 min à 60% VMA<br>⚡ <strong>6 × (30s à 80% / 30s lent)</strong><br>🏃 8 min à 60% VMA (récup)` },
+  jeu_s56: { zone:'zone-hiit', banner:'⚡ Fractionné dense — 80% VMA',
+    main:`🏃 10 min à 60% VMA<br>⚡ <strong>Bloc 1 : 8 × (30s à 80% / 30s lent)</strong><br>🚶 2 min de marche<br>⚡ <strong>Bloc 2 : 8 × (30s à 80% / 30s lent)</strong><br>🏃 6 min à 60% VMA (récup)` },
+  jeu_s7: { zone:'zone-hiit', banner:'⚡ Fractionné maximal — 80% VMA',
+    main:`🏃 10 min à 60% VMA<br>⚡ <strong>3 blocs de 8 × (30s à 80% / 30s lent)</strong><br>(2 min de marche entre chaque bloc)<br>🏃 6 min à 60% VMA (récup)` },
+
+  sam_s12: { zone:'zone-2', banner:'🌅 Sortie longue facile — 60% VMA',
+    main:`🏃 <strong>30 min en continu à 60% VMA</strong><br>Allure conversation, sans jamais forcer. C'est la séance qui puise le plus dans les graisses.` },
+  sam_s34: { zone:'zone-2', banner:'🌅 Sortie longue — 60–65% VMA',
+    main:`🏃 <strong>35 min en continu à 60–65% VMA</strong><br>Allure régulière et confortable du début à la fin.` },
+  sam_s56: { zone:'zone-2', banner:'🌅 Sortie longue — 60–65% VMA',
+    main:`🏃 <strong>40 min en continu à 60–65% VMA</strong><br>Idéalement le matin, 2h après le réveil, pour maximiser l'utilisation des graisses.` },
+  sam_s7: { zone:'zone-2', banner:'🌅 Sortie longue record — 60–65% VMA',
+    main:`🏃 <strong>45 min en continu à 60–65% VMA</strong><br>La plus longue du programme. Garde une allure facile : c'est la durée qui fait le travail, pas la vitesse.` },
+};
+
+function buildRunningDrawer(day, ph, decharge) {
+  const b = RUN2[day + '_' + ph];
+  if (!b) return '<p style="padding:16px;color:var(--muted)">Contenu bientôt disponible.</p>';
+  const title = 'Bloc 2 · Running' + (decharge ? ' — décharge' : '');
+  return RUN_NUTRI + RUN_TOGGLE + RUN_BLOC1
+    + `<div class="drawer-sep">${title}</div>`
+    + `<div class="drawer-run-block"><div class="drawer-run-zone ${b.zone}">${b.banner}</div></div>`
+    + `<div class="run-1h"><div class="drawer-info-block"><p>${b.main}</p></div></div>`
+    + `<div class="run-1h30" style="display:none"><div class="drawer-info-block"><p>${b.main}${RUN_EXTRA}</p></div></div>`
+    + RUN_BLOC3;
+}
+
+// Enregistre les drawers running dans DAY_CONTENT
+(function registerRunningDrawers(){
+  ['lun','jeu','sam'].forEach(day => {
+    ['s12','s34','s56','s7'].forEach(ph => {
+      DAY_CONTENT['run_'+day+'_'+ph] = { html: buildRunningDrawer(day, ph, false) };
+    });
+  });
+  // S8 = semaine de décharge → contenu niveau S3–S4
+  DAY_CONTENT['run_lun_s8'] = { html: buildRunningDrawer('lun','s34', true) };
+  DAY_CONTENT['run_jeu_s8'] = { html: buildRunningDrawer('jeu','s34', true) };
+})();
+
+function setRunMode(mode, btn) {
+  document.querySelectorAll('.run-mode-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const show1h = mode === '1h';
+  document.querySelectorAll('#drawerContent .run-1h').forEach(e => e.style.display = show1h ? 'block' : 'none');
+  document.querySelectorAll('#drawerContent .run-1h30').forEach(e => e.style.display = show1h ? 'none' : 'block');
 }
 
 function openDay(key, dayLabel, title) {
