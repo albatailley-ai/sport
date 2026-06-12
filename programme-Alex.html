@@ -914,6 +914,84 @@ nav::-webkit-scrollbar { display: none; }
 .i-high { color: var(--fire); }
 .i-peak { color: #1aa86c; font-weight: 700; }
 
+/* ═══════════════ MOTIVATION ═══════════════ */
+/* Streak dans le hero */
+.hero-streak {
+  display: flex; align-items: center; gap: 12px; margin-top: 22px;
+  background: rgba(125,255,184,0.10); border: 1px solid rgba(125,255,184,0.22);
+  border-radius: 14px; padding: 10px 16px; width: fit-content; max-width: 100%;
+}
+.hero-streak .flame { font-size: 26px; line-height: 1; }
+.hero-streak .hs-n { font-family: 'Outfit', sans-serif; font-size: 24px; font-weight: 800; color: #7dffb8; line-height: 1; }
+.hero-streak .hs-lbl { font-size: 10px; color: rgba(255,255,255,0.55); text-transform: uppercase; letter-spacing: 1px; margin-top: 2px; }
+.hero-streak .hs-badge { font-size: 11px; font-weight: 700; color: #0a2010; background: #7dffb8; padding: 4px 10px; border-radius: 100px; white-space: nowrap; }
+
+/* Message contextuel + citation (onglet Programme) */
+.motiv-wrap { margin-bottom: 20px; }
+.motiv-card {
+  background: linear-gradient(135deg, #0a3d28, #1aa86c); color: #fff;
+  border-radius: 14px; padding: 16px 18px; box-shadow: 0 4px 14px rgba(26,168,108,0.22);
+}
+.motiv-week { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #7dffb8; font-weight: 700; margin-bottom: 6px; }
+.motiv-msg { font-family: 'Outfit', sans-serif; font-size: 16px; font-weight: 600; line-height: 1.4; }
+.motiv-quote {
+  font-size: 13px; font-style: italic; color: var(--muted);
+  margin-top: 12px; padding: 8px 0 0 13px; border-left: 3px solid var(--border);
+}
+.motiv-slump {
+  margin-top: 12px; background: var(--run-bg); border: 1px solid #f5cca8; color: var(--run);
+  border-radius: 12px; padding: 12px 14px; font-size: 13px; line-height: 1.55; font-weight: 500;
+}
+.motiv-slump strong { color: #b8500a; }
+
+/* Streak dans le tracker (Suivi) */
+.streak-box {
+  background: var(--surface); border: 1px solid var(--border); border-radius: 14px;
+  padding: 16px; margin-bottom: 16px; box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+}
+.streak-box-main { display: flex; align-items: center; gap: 14px; }
+.streak-box .flame { font-size: 36px; line-height: 1; }
+.streak-box .sb-n { font-family: 'Outfit', sans-serif; font-size: 28px; font-weight: 800; color: var(--fire); line-height: 1; }
+.streak-box .sb-lbl { font-size: 12px; color: var(--muted); margin-top: 3px; }
+.streak-badges { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 12px; }
+.streak-badge { font-size: 11px; font-weight: 700; padding: 5px 11px; border-radius: 100px; background: var(--fire-bg); color: var(--fire); }
+.streak-soft { font-size: 13px; color: var(--muted); margin-top: 10px; line-height: 1.5; }
+
+/* Objectif 10km (onglet Running) */
+.obj10k { background: linear-gradient(135deg, #0a3d28, #0e5c3c); color: #fff; border-radius: 14px; padding: 18px; margin-bottom: 18px; }
+.obj10k-title { font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 16px; margin-bottom: 12px; }
+.obj10k-row { display: flex; justify-content: space-between; font-size: 13px; padding: 6px 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
+.obj10k-row:last-of-type { border-bottom: none; }
+.obj10k-row .k { color: rgba(255,255,255,0.6); }
+.obj10k-row .v { font-weight: 700; color: #7dffb8; }
+.obj10k-bar { height: 8px; background: rgba(255,255,255,0.12); border-radius: 100px; margin-top: 14px; overflow: hidden; }
+.obj10k-bar > span { display: block; height: 100%; background: linear-gradient(90deg, #7dffb8, #1aa86c); border-radius: 100px; transition: width 0.5s; }
+
+/* Règle des 2 minutes (bas de chaque drawer) */
+.rule2min {
+  margin: 18px 0 4px; background: var(--bg); border: 1px dashed var(--border);
+  border-radius: 12px; padding: 12px 14px; font-size: 12.5px; color: var(--muted); line-height: 1.5;
+}
+.rule2min strong { color: var(--mid); }
+
+/* Recap hebdomadaire */
+.recap-overlay { display: none; position: fixed; inset: 0; background: rgba(5,20,14,0.7); z-index: 500; align-items: center; justify-content: center; padding: 24px; }
+.recap-overlay.open { display: flex; }
+.recap-card {
+  background: linear-gradient(170deg, #071410, #0a3d28); border: 1px solid rgba(125,255,184,0.2);
+  border-radius: 22px; padding: 32px 24px; text-align: center; max-width: 360px; width: 100%;
+  animation: recapPop 0.42s cubic-bezier(.2,.8,.3,1.2);
+}
+@keyframes recapPop { from { transform: scale(.7); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.recap-emoji { font-size: 54px; display: inline-block; animation: recapBounce 1s ease infinite; }
+@keyframes recapBounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+.recap-title { font-family: 'Outfit', sans-serif; font-size: 22px; font-weight: 800; color: #7dffb8; margin: 10px 0 6px; }
+.recap-sub { font-size: 14px; color: rgba(255,255,255,0.78); line-height: 1.5; margin-bottom: 16px; }
+.recap-streak { font-size: 13px; color: #fff; background: rgba(125,255,184,0.12); border-radius: 10px; padding: 9px 12px; margin-bottom: 18px; }
+.recap-btn { background: linear-gradient(135deg, #1aa86c, #0a3d28); color: #fff; border: none; border-radius: 100px; padding: 12px 30px; font-family: 'Outfit', sans-serif; font-weight: 700; font-size: 14px; cursor: pointer; }
+.confetti { position: fixed; top: -16px; width: 8px; height: 14px; z-index: 501; pointer-events: none; border-radius: 1px; animation: confettiFall linear forwards; }
+@keyframes confettiFall { to { transform: translateY(110vh) rotate(560deg); opacity: 0; } }
+
 </style>
 </head>
 <body>
@@ -929,6 +1007,7 @@ nav::-webkit-scrollbar { display: none; }
     <div class="stat"><div class="stat-val">~20</div><div class="stat-label">Exercices</div></div>
     <div class="stat"><div class="stat-val">~3h</div><div class="stat-label">Sport/sem</div></div>
   </div>
+  <div id="heroStreak" class="hero-streak" style="display:none"></div>
 </div>
 
 <!-- NAV -->
@@ -946,6 +1025,8 @@ nav::-webkit-scrollbar { display: none; }
     <h2>Planning 8 semaines</h2>
     <p>4 phases progressives. Clique sur une semaine pour voir le détail complet.</p>
   </div>
+
+  <div id="motivBox" class="motiv-wrap"></div>
 
   <!-- PHASE TABS -->
   <div class="prog-tabs">
@@ -1874,6 +1955,8 @@ nav::-webkit-scrollbar { display: none; }
 <div id="running" class="section">
   <div class="sec-head"><h2>Guide Running</h2><p>Technique, zones d'effort, protocoles semaine par semaine.</p></div>
 
+  <div id="obj10kBox"></div>
+
   <div class="exo-grid">
     <div class="exo-card">
       <div class="exo-card-head" onclick="toggleExo(this)">
@@ -2033,7 +2116,14 @@ nav::-webkit-scrollbar { display: none; }
 <div id="suivi" class="section">
   <div class="sec-head"><h2>Suivi des séances</h2><p>Coche chaque séance complétée. La régularité bat l'intensité.</p></div>
 
+  <div id="streakBox"></div>
+
   <div id="tracker-container"></div>
+</div>
+
+<!-- RECAP HEBDO -->
+<div class="recap-overlay" id="recapOverlay" onclick="closeRecap(event)">
+  <div class="recap-card" id="recapCard"></div>
 </div>
 
 <!-- DRAWER DETAIL JOUR -->
@@ -2171,6 +2261,7 @@ function buildTracker() {
       </div>
     `;
   });
+  renderMotivation();
 }
 
 function persist() {
@@ -2185,9 +2276,12 @@ function setDayChecked(dayKey, val) {
   checks[dayKey] = val;
   // efface les états d'exercices : ils ré-hériteront de l'état du jour
   Object.keys(checks).forEach(k => { if (k.startsWith(dayKey + '-e')) delete checks[k]; });
+  markDate(dayKey, val);
+  const recap = val ? checkWeekCompletion(dayKey) : null;
   persist();
   buildTracker();
   refreshPlanChecks();
+  if (recap) showWeeklyRecap(recap);
 }
 
 // Envoi vers le cloud (regroupé pour éviter les appels en rafale)
@@ -2293,10 +2387,13 @@ function toggleExo(idx, total) {
   let all = true;                              // séance faite si TOUS cochés
   for (let j = 0; j < total; j++) { if (!checks[dayKey + '-e' + j]) { all = false; break; } }
   checks[dayKey] = all;
+  markDate(dayKey, all);
+  const recap = all ? checkWeekCompletion(dayKey) : null;
   persist();
   refreshDrawerExos();
   buildTracker();
   refreshPlanChecks();
+  if (recap) showWeeklyRecap(recap);
 }
 
 function refreshDrawerExos() {
@@ -2376,7 +2473,213 @@ function initUpdateBanner() {
   });
 }
 
-buildTracker();      // rendu immédiat depuis le cache local
+// ═══════════════════════════════════════
+// MOTIVATION — streak, semaine, messages, recap hebdo
+// ═══════════════════════════════════════
+const WEEK_MSG = {
+  1: 'Tu poses les fondations. Chaque séance compte, même les petites.',
+  2: 'Tu poses les fondations. Chaque séance compte, même les petites.',
+  3: 'La nouveauté est passée — c\'est maintenant que ça devient une vraie habitude. Tiens bon.',
+  4: 'Mi-parcours. Ton corps s\'adapte même quand tu ne le sens pas encore.',
+  5: 'Les résultats deviennent visibles. C\'est la phase où tout bascule.',
+  6: 'Les résultats deviennent visibles. C\'est la phase où tout bascule.',
+  7: 'Dernière ligne droite. Tu es plus fort qu\'en semaine 1.',
+  8: 'Bilan. Mesure, compare, sois fier du chemin parcouru.'
+};
+const WEEK_QUOTE = {
+  1: 'Un voyage de mille kilomètres commence par un premier pas.',
+  2: 'La régularité bat le talent quand le talent ne travaille pas.',
+  3: 'La motivation te fait démarrer. L\'habitude te fait continuer.',
+  4: 'Ne jamais rater deux fois de suite.',
+  5: 'Tu ne regrettes jamais une séance faite.',
+  6: 'La douleur d\'aujourd\'hui est la force de demain.',
+  7: 'Ton futur toi te remercie.',
+  8: '8 semaines. Tu l\'as fait.'
+};
+
+// --- Dates ---
+function todayStr() {
+  const d = new Date();
+  return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+}
+function dayDiff(a, b) {  // b - a, en jours pleins (chaînes 'YYYY-MM-DD')
+  return Math.round((Date.parse(b + 'T00:00:00') - Date.parse(a + 'T00:00:00')) / 86400000);
+}
+function markDate(dayKey, val) {
+  if (!/^w\d+-\d+$/.test(dayKey)) return;
+  checks.__dates = checks.__dates || {};
+  if (val) {
+    if (!checks.__dates[dayKey]) checks.__dates[dayKey] = todayStr();
+    if (!checks.__start) checks.__start = todayStr();
+  } else {
+    delete checks.__dates[dayKey];
+  }
+}
+
+// --- Streak : jours d'affilée, tolère le jour de repos (gap <= 2) ---
+function computeStreak() {
+  const dmap = checks.__dates || {};
+  const dates = [...new Set(Object.keys(dmap).filter(k => checks[k]).map(k => dmap[k]).filter(Boolean))].sort();
+  if (!dates.length) return { count: 0, missed: 0, last: null };
+  const last = dates[dates.length - 1];
+  const since = dayDiff(last, todayStr());
+  const missed = Math.max(0, since - 1);  // jours pleins écoulés sans séance (hors aujourd'hui)
+  let run = 1;
+  for (let i = dates.length - 1; i > 0; i--) {
+    if (dayDiff(dates[i - 1], dates[i]) <= 2) run++; else break;
+  }
+  return { count: since <= 2 ? run : 0, missed, last };
+}
+
+// --- Semaine en cours, détectée depuis la date du premier check ---
+function currentWeekNum() {
+  const start = checks.__start;
+  if (!start) return 1;
+  const w = Math.floor(dayDiff(start, todayStr()) / 7) + 1;
+  return Math.min(8, Math.max(1, w));
+}
+
+// --- Semaines complétées (6/6 séances) ---
+function completedWeeks() {
+  let n = 0;
+  for (let w = 1; w <= 8; w++) {
+    let done = 0;
+    for (let i = 0; i < 6; i++) if (checks['w' + w + '-' + i]) done++;
+    if (done >= 6) n++;
+  }
+  return n;
+}
+
+// --- Rendu global ---
+function renderMotivation() {
+  const wk = currentWeekNum();
+  const s = computeStreak();
+  renderStreakHero(s);
+  renderStreakBox(s);
+  renderMotivBox(wk, s);
+  renderObjectif10k();
+}
+
+function streakBadgesHTML(count, cls) {
+  if (count >= 14) return `<span class="${cls}">L'habitude est installée 🏆</span>`;
+  if (count >= 7)  return `<span class="${cls}">Une semaine sans faillir 💪</span>`;
+  return '';
+}
+
+function renderStreakHero(s) {
+  const el = document.getElementById('heroStreak');
+  if (!el) return;
+  if (s.count <= 0) { el.style.display = 'none'; return; }
+  el.style.display = 'flex';
+  el.innerHTML =
+    `<span class="flame">🔥</span>` +
+    `<div><div class="hs-n">${s.count}</div><div class="hs-lbl">jour${s.count > 1 ? 's' : ''} d'affilée</div></div>` +
+    streakBadgesHTML(s.count, 'hs-badge');
+}
+
+function renderStreakBox(s) {
+  const el = document.getElementById('streakBox');
+  if (!el) return;
+  const n = s.count;
+  let soft = '';
+  if (n <= 0) {
+    soft = s.missed >= 2
+      ? `<div class="streak-soft">Reprends dès aujourd'hui, une séance suffit. 🌱</div>`
+      : `<div class="streak-soft">Coche ta première séance pour lancer ta série. 🔥</div>`;
+  }
+  const badges = n > 0
+    ? `<div class="streak-badges">${streakBadgesHTML(n, 'streak-badge') || '<span class="streak-badge">En route 🔥</span>'}</div>`
+    : '';
+  el.innerHTML =
+    `<div class="streak-box-main">` +
+      `<span class="flame">${n > 0 ? '🔥' : '🌙'}</span>` +
+      `<div class="sb-main">` +
+        `<div class="sb-n">${n} jour${n > 1 ? 's' : ''}</div>` +
+        `<div class="sb-lbl">${n > 0 ? 'série en cours — continue !' : 'aucune série en cours'}</div>` +
+        badges + soft +
+      `</div>` +
+    `</div>`;
+}
+
+function renderMotivBox(wk, s) {
+  const el = document.getElementById('motivBox');
+  if (!el) return;
+  let html =
+    `<div class="motiv-card">` +
+      `<div class="motiv-week">Semaine ${wk}</div>` +
+      `<div class="motiv-msg">${WEEK_MSG[wk]}</div>` +
+      `<div class="motiv-quote">« ${WEEK_QUOTE[wk]} »</div>` +
+    `</div>`;
+  if (s.missed >= 2) {
+    html += `<div class="motiv-slump"><strong>Coup de mou ?</strong> Normal. La règle : jamais deux jours de suite. Une séance demain matin suffit.</div>`;
+  }
+  el.innerHTML = html;
+}
+
+function renderObjectif10k() {
+  const el = document.getElementById('obj10kBox');
+  if (!el) return;
+  const cw = completedWeeks();
+  const pct = Math.round((cw / 8) * 100);
+  el.innerHTML =
+    `<div class="obj10k">` +
+      `<div class="obj10k-title">🎯 Objectif 10 km</div>` +
+      `<div class="obj10k-row"><span class="k">Actuel</span><span class="v">1h03 · 6'18/km</span></div>` +
+      `<div class="obj10k-row"><span class="k">Cible</span><span class="v">sub 55 min · 5'30/km</span></div>` +
+      `<div class="obj10k-row"><span class="k">Progression</span><span class="v">+${cw} semaine${cw > 1 ? 's' : ''} complétée${cw > 1 ? 's' : ''}</span></div>` +
+      `<div class="obj10k-bar"><span style="width:${pct}%"></span></div>` +
+    `</div>`;
+}
+
+// --- Recap hebdomadaire (semaine 6/6 atteinte) ---
+function checkWeekCompletion(dayKey) {
+  const m = /^w(\d+)-/.exec(dayKey);
+  if (!m) return null;
+  const w = +m[1];
+  let done = 0;
+  for (let i = 0; i < 6; i++) if (checks['w' + w + '-' + i]) done++;
+  if (done < 6) return null;
+  checks.__recap = checks.__recap || {};
+  if (checks.__recap[w]) return null;   // déjà célébré pour cette semaine
+  checks.__recap[w] = true;
+  return { week: w, sessions: done, streak: computeStreak().count };
+}
+
+function showWeeklyRecap(r) {
+  const card = document.getElementById('recapCard');
+  const overlay = document.getElementById('recapOverlay');
+  if (!card || !overlay) return;
+  card.innerHTML =
+    `<div class="recap-emoji">🎉</div>` +
+    `<div class="recap-title">Semaine ${r.week} bouclée !</div>` +
+    `<div class="recap-sub">+${r.sessions} séances au compteur. Tu tiens le cap, continue comme ça.</div>` +
+    `<div class="recap-streak">🔥 Série en cours : ${r.streak} jour${r.streak > 1 ? 's' : ''} d'affilée</div>` +
+    `<button class="recap-btn" onclick="closeRecap()">Continuer 💪</button>`;
+  overlay.classList.add('open');
+  launchConfetti();
+}
+
+function closeRecap(e) {
+  const overlay = document.getElementById('recapOverlay');
+  if (e && e.target !== overlay) return;
+  overlay.classList.remove('open');
+}
+
+function launchConfetti() {
+  const colors = ['#7dffb8', '#1aa86c', '#5ab527', '#e8660a', '#c47d00'];
+  for (let i = 0; i < 40; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    c.style.left = (Math.random() * 100) + 'vw';
+    c.style.background = colors[Math.floor(Math.random() * colors.length)];
+    c.style.animationDuration = (1.6 + Math.random() * 1.4) + 's';
+    c.style.animationDelay = (Math.random() * 0.4) + 's';
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 3600);
+  }
+}
+
+buildTracker();      // rendu immédiat depuis le cache local (déclenche renderMotivation)
 enhancePlanning();   // cases "séance faite" + contexte drawer
 initUpdateBanner();  // bandeau de mise à jour
 loadFromCloud();     // puis synchronisation avec le cloud
@@ -3063,10 +3366,13 @@ function setRunMode(mode, btn) {
   document.querySelectorAll('#drawerContent .run-1h30').forEach(e => e.style.display = show1h ? 'none' : 'block');
 }
 
+const RULE_2MIN = `
+  <div class="rule2min">⏳ <strong>Pas envie aujourd'hui ?</strong> Mets juste tes chaussures et sors 2 minutes. Le reste vient tout seul.</div>`;
+
 function openDay(key, dayLabel, title) {
   document.getElementById('drawerDayLabel').textContent = dayLabel;
   document.getElementById('drawerTitle').textContent = title;
-  document.getElementById('drawerContent').innerHTML = buildDrawerContent(key);
+  document.getElementById('drawerContent').innerHTML = buildDrawerContent(key) + RULE_2MIN;
   injectExoChecks();
   document.getElementById('dayDrawer').classList.add('open');
   document.body.style.overflow = 'hidden';
