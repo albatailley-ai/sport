@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="app-build" content="alex-20260613-1">
 <title>Programme 8 Semaines — Perte de Poids</title>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -2416,31 +2417,56 @@ function initUpdateBanner() {
   document.body.appendChild(bar);
   const label = bar.querySelector('span');
 
-  if (!('serviceWorker' in navigator)) return;   // vieux navigateur : pas de SW, pas de bandeau
+  // Build embarqué dans cette page (cf. <meta name="app-build">)
+  const APP_BUILD = (document.querySelector('meta[name="app-build"]') || {}).content || '';
 
-  let waitingSW = null;   // SW en attente (cas mise à jour) ou null (cas 1ère installation)
-  // kind = 'update' : nouvelle version prête à remplacer l'ancienne
-  // kind = 'ready'  : toute première installation (pas encore de contrôleur)
+  let waitingSW = null;   // SW en attente (cas mise à jour) ou null (1ère install / fallback build)
+  // kind = 'update'/'build' : nouvelle version dispo · 'ready' : toute 1ère installation
   const showBanner = (sw, kind) => {
-    waitingSW = (kind === 'update') ? sw : null;
-    label.textContent = (kind === 'update')
-      ? '🔄 Une mise à jour est disponible'
-      : '✅ Application installée — actualiser pour l\'activer';
+    if (sw) waitingSW = sw;
+    if (bar.classList.contains('show')) return;   // déjà affiché : ne pas ré-écraser
+    label.textContent = (kind === 'ready')
+      ? '✅ Application installée — actualiser pour l\'activer'
+      : '🔄 Une mise à jour est disponible';
     bar.classList.add('show');
   };
 
-  // Clic « Actualiser » → on demande au SW en attente de prendre la main, puis reload.
+  // Clic « Actualiser » → skipWaiting() côté SW puis reload (avec reload de secours).
   bar.querySelector('button').addEventListener('click', () => {
-    if (waitingSW) { waitingSW.postMessage('SKIP_WAITING'); }
-    else { location.reload(); }
+    if (waitingSW) {
+      waitingSW.postMessage('SKIP_WAITING');
+      // secours : si « controllerchange » ne se déclenche pas, on recharge quand même
+      setTimeout(() => window.location.reload(), 1500);
+    } else {
+      window.location.reload();
+    }
   });
+
+  // ---- Fallback indépendant du SW : compare le build du HTML distant ----
+  // (fonctionne même si le mécanisme Service Worker échoue, ex. cache CDN GitHub Pages)
+  const checkBuild = () => {
+    if (!APP_BUILD) return;
+    // on re-fetch la page courante elle-même (robuste quel que soit son chemin/casse)
+    fetch(location.pathname, { cache: 'no-store', headers: { 'Cache-Control': 'no-cache' } })
+      .then(r => r.ok ? r.text() : null)
+      .then(html => {
+        if (!html) return;
+        const m = html.match(/name="app-build"\s+content="([^"]+)"/);
+        if (m && m[1] && m[1] !== APP_BUILD) showBanner(null, 'build');
+      })
+      .catch(() => {});
+  };
+  setInterval(checkBuild, 1800000);                                   // toutes les 30 min
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) checkBuild(); });
+
+  if (!('serviceWorker' in navigator)) return;   // vieux navigateur : seul le fallback build agit
 
   // Quand le nouveau SW prend le contrôle (après skipWaiting) → on recharge la page fraîche.
   let reloading = false;
   navigator.serviceWorker.addEventListener('controllerchange', () => {
     if (reloading) return;
     reloading = true;
-    location.reload();
+    window.location.reload();
   });
 
   // Scope limité à la page Alex → le programme de Sarah n'est jamais contrôlé.
@@ -2466,7 +2492,7 @@ function initUpdateBanner() {
     })
     .catch(() => { /* enregistrement impossible (file://, etc.) : on ignore */ });
 
-  // Re-vérifie au retour sur l'onglet
+  // Re-vérifie le SW au retour sur l'onglet
   document.addEventListener('visibilitychange', () => {
     if (document.hidden || !navigator.serviceWorker.controller) return;
     navigator.serviceWorker.getRegistration().then(reg => reg && reg.update()).catch(() => {});
