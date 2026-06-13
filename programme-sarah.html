@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="app-build" content="sarah-20260613-190817">
+<meta name="app-build" content="sarah-20260613-193814">
 <title>Programme Sarah — Ventre Plat</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -460,6 +460,32 @@ nav::-webkit-scrollbar { display: none; }
   height: 100%; border-radius: 100px; width: 0;
   background: linear-gradient(135deg, #1e9455, #6ab820); transition: width .3s ease;
 }
+
+/* Bouton chrono contextuel (fiche exercice + bloc vacuum) */
+.inline-timer-btn, .vac-timer-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  margin-top: 12px; padding: 9px 16px; border-radius: 100px;
+  border: none; cursor: pointer; font-family: inherit;
+  font-size: 13px; font-weight: 600; color: #fff;
+  background: linear-gradient(135deg, #1e9455, #0fb872);
+  box-shadow: 0 2px 10px rgba(30,148,85,0.3);
+  transition: transform .15s;
+}
+.inline-timer-btn:active, .vac-timer-btn:active { transform: scale(0.97); }
+.vac-timer-btn { margin-top: 10px; }
+
+/* Répétitions du Stomach Vacuum (cases à cocher) */
+.vac-reps { display: flex; flex-direction: column; gap: 8px; }
+.vac-rep {
+  display: flex; align-items: center; gap: 12px;
+  padding: 10px 14px; border: 1px solid var(--border);
+  border-radius: 12px; background: var(--blanc);
+  cursor: pointer; transition: all .2s; user-select: none;
+}
+.vac-rep:hover { border-color: #1e9455; }
+.vac-rep-label { font-size: 14px; font-weight: 600; color: var(--mid); }
+.vac-rep.done { opacity: .55; }
+.vac-rep.done .vac-rep-label { text-decoration: line-through; text-decoration-color: var(--muted); }
 
 /* Bandeau de mise à jour */
 #updateBanner {
@@ -1272,12 +1298,14 @@ background: #eaf7ee; border: 1px solid #c0e8cc;
     <div class="timer-phase" id="timerPhase">Prêt</div>
     <div class="timer-big" id="timerDisplay">00:20</div>
     <div class="presets">
-      <button class="preset-btn" onclick="setTimer(15)">15s</button>
-      <button class="preset-btn" onclick="setTimer(20)">20s</button>
-      <button class="preset-btn sel" onclick="setTimer(30)">30s</button>
-      <button class="preset-btn" onclick="setTimer(40)">40s</button>
-      <button class="preset-btn" onclick="setTimer(45)">45s</button>
-      <button class="preset-btn" onclick="setTimer(60)">1 min</button>
+      <button class="preset-btn" data-sec="15" onclick="setTimer(15)">15s</button>
+      <button class="preset-btn" data-sec="20" onclick="setTimer(20)">20s</button>
+      <button class="preset-btn" data-sec="25" onclick="setTimer(25)">25s</button>
+      <button class="preset-btn sel" data-sec="30" onclick="setTimer(30)">30s</button>
+      <button class="preset-btn" data-sec="35" onclick="setTimer(35)">35s</button>
+      <button class="preset-btn" data-sec="40" onclick="setTimer(40)">40s</button>
+      <button class="preset-btn" data-sec="45" onclick="setTimer(45)">45s</button>
+      <button class="preset-btn" data-sec="60" onclick="setTimer(60)">1 min</button>
     </div>
     <div class="t-btns">
       <button class="t-btn primary" id="btnStart" onclick="toggleTimer()">▶ Démarrer</button>
@@ -1295,6 +1323,7 @@ function showSection(id) {
   document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   event.target.classList.add('active');
+  if (id === 'exercices') setupExerciseTimers();   // durées à jour selon la semaine
   window.scrollTo(0, 0);
 }
 
@@ -1526,28 +1555,44 @@ function exoPrefix(dayKey) {
   return m ? 'sarah_exo_' + m[1] + '_' + m[2] + '_' : dayKey + '-e';
 }
 
+// Éléments cochables du drawer : répétitions vacuum (.vac-rep) sinon exercices gainage
+// (.d-exo). Les .d-exo marqués data-nocheck — ex. "technique" du vacuum — sont exclus.
+function getCheckItems() {
+  const reps = document.querySelectorAll('#drawerContent .vac-rep');
+  if (reps.length) return reps;
+  return document.querySelectorAll('#drawerContent .d-exo:not([data-nocheck])');
+}
+function isRepMode() { return !!document.querySelector('#drawerContent .vac-rep'); }
+
 function injectExoChecks() {
   if (!currentDayCtx) return;
   const dayKey = currentDayCtx.dayKey;
-  const exos = document.querySelectorAll('#drawerContent .d-exo');
-  if (!exos.length) return;                    // séance sans liste d'exercices
+  const items = getCheckItems();
+  if (!items.length) return;                   // séance sans liste cochable
   const dayOn = !!checks[dayKey];
-  exos.forEach((exo, i) => {
-    const head = exo.querySelector('.d-exo-head');
-    if (!head || head.querySelector('.exo-check')) return;
+  items.forEach((item, i) => {
     const ek = exoKey(dayKey, i);
     const on = (ek in checks) ? checks[ek] : dayOn;   // état explicite, sinon hérite du jour
-    exo.classList.toggle('done', on);
+    item.classList.toggle('done', on);
+    const rep = item.classList.contains('vac-rep');
+    const host = rep ? item : item.querySelector('.d-exo-head');
+    if (!host || host.querySelector('.exo-check')) return;
     const cb = document.createElement('div');
     cb.className = 'exo-check' + (on ? ' checked' : '');
     cb.innerHTML = on ? '✓' : '';
-    cb.title = 'Marquer l\'exercice comme fait';
-    cb.addEventListener('click', (e) => { e.stopPropagation(); toggleExo(i, exos.length); });
-    // À droite du nom, juste avant le chevron : visible même replié.
-    head.insertBefore(cb, head.querySelector('.d-chevron'));
+    if (rep) {
+      // toute la ligne "Répétition N" est cliquable
+      item.insertBefore(cb, item.firstChild);
+      item.addEventListener('click', () => toggleExo(i, items.length));
+    } else {
+      cb.title = 'Marquer l\'exercice comme fait';
+      cb.addEventListener('click', (e) => { e.stopPropagation(); toggleExo(i, items.length); });
+      // À droite du nom, juste avant le chevron : visible même replié.
+      host.insertBefore(cb, host.querySelector('.d-chevron'));
+    }
   });
-  buildExoSummary(exos.length);
-  updateExoSummary(exos.length);
+  buildExoSummary(items.length);
+  updateExoSummary(items.length);
 }
 
 function toggleExo(idx, total) {
@@ -1573,15 +1618,15 @@ function refreshDrawerExos() {
   if (!currentDayCtx) return;
   const dayKey = currentDayCtx.dayKey;
   const dayOn = !!checks[dayKey];
-  const exos = document.querySelectorAll('#drawerContent .d-exo');
-  exos.forEach((exo, i) => {
+  const items = getCheckItems();
+  items.forEach((item, i) => {
     const ek = exoKey(dayKey, i);
     const on = (ek in checks) ? checks[ek] : dayOn;
-    exo.classList.toggle('done', on);
-    const cb = exo.querySelector('.exo-check');
+    item.classList.toggle('done', on);
+    const cb = item.querySelector('.exo-check');
     if (cb) { cb.classList.toggle('checked', on); cb.innerHTML = on ? '✓' : ''; }
   });
-  updateExoSummary(exos.length);
+  updateExoSummary(items.length);
 }
 
 // Résumé "x/y exercices complétés" + barre de progression verte, en bas du drawer
@@ -1610,8 +1655,9 @@ function updateExoSummary(total) {
   }
   const pct = total ? Math.round(done / total * 100) : 0;
   const complete = done === total && total > 0;
+  const noun = isRepMode() ? ' répétitions complétées' : ' exercices complétés';
   box.querySelector('.exo-summary-label').textContent =
-    complete ? '✓ Séance complétée' : done + '/' + total + ' exercices complétés';
+    complete ? '✓ Séance complétée' : done + '/' + total + noun;
   box.querySelector('.exo-summary-count').textContent = pct + '%';
   box.querySelector('.exo-summary-row').classList.toggle('complete', complete);
   box.querySelector('.exo-bar-fill').style.width = pct + '%';
@@ -1714,49 +1760,9 @@ initUpdateBanner();  // bandeau de mise à jour
 loadFromCloud();     // puis synchronisation avec le cloud
 
 // DRAWER DATA
+// Les séances Vacuum ne sont PAS ici : leur contenu dépend de la semaine
+// (durée cible, position, chrono pré-réglé) → généré par buildVacuumDrawer().
 const DRAWER = {
-
-  vacuum_s1: `
-    <div class="d-info lavande">
-      <p>💨 <strong>Objectif : 15–20 secondes tenus · 5 répétitions</strong><br>
-      Si tu n'arrives pas à 15 sec au début, tiens 8–10 sec. C'est normal, augmente chaque semaine.</p>
-    </div>
-    <div class="d-sep">⏱ Déroulé (~5 min)</div>
-    <div class="d-info">
-      <p>Répète 5 fois :<br>
-      &nbsp;&nbsp;① Expire tout l'air<br>
-      &nbsp;&nbsp;② Rentre le nombril vers la colonne<br>
-      &nbsp;&nbsp;③ Tiens <strong>15–20 sec</strong><br>
-      &nbsp;&nbsp;④ Relâche<br>
-      &nbsp;&nbsp;⏸ 20 sec de repos<br><br>
-      Position recommandée au début : <strong>à quatre pattes</strong> ou debout.</p>
-    </div>
-    <div class="d-sep">Technique complète</div>
-  ` + buildDExo('vacuum_detail', 'Stomach Vacuum', '5 × 15–20 sec', 'sage', '💨', `
-    <ul class="d-step-list">
-      <li data-n="1">Expire complètement. Vide bien les poumons.</li>
-      <li data-n="2">Sans inspirer, rentre le nombril vers la colonne vertébrale.</li>
-      <li data-n="3">Garde la poitrine ouverte, épaules décontractées.</li>
-      <li data-n="4">Tiens. Si besoin : petites inspirations nasales légères.</li>
-      <li data-n="5">Relâche progressivement, reprends ta respiration.</li>
-    </ul>
-    <div class="d-tip-pill lavande">À jeun le matin = optimal</div>
-    <div class="d-tip-pill">Quotidien = meilleurs résultats</div>
-  `),
-  vacuum_s2: `
-    <div class="d-info lavande">
-      <p>💨 <strong>Objectif : 25–30 secondes tenus · 5 répétitions</strong></p>
-    </div>
-    <div class="d-sep">⏱ Déroulé</div>
-    <div class="d-info">
-      <p>Répète 5 fois :<br>
-      &nbsp;&nbsp;① Expire tout l'air<br>
-      &nbsp;&nbsp;② Rentre le nombril à fond<br>
-      &nbsp;&nbsp;③ Tiens <strong>25–30 sec</strong><br>
-      &nbsp;&nbsp;④ Relâche · ⏸ 20 sec repos<br><br>
-      Essaie la position <strong>assise</strong> en plus de debout.</p>
-    </div>
-  `,
   gainage_s1: `
     <div class="d-info" style="background:var(--sage-bg);border-color:#c4dac6">
       <p>💡 <strong>C'est quoi un "tour" ?</strong><br><br>
@@ -1859,9 +1865,9 @@ const DRAWER = {
   `,
 };
 
-function buildDExo(id, name, dose, color, icon, content) {
+function buildDExo(id, name, dose, color, icon, content, nocheck) {
   return `
-    <div class="d-exo" id="dexo-${id}">
+    <div class="d-exo" id="dexo-${id}"${nocheck ? ' data-nocheck' : ''}>
       <div class="d-exo-head" onclick="toggleDExo(this)">
         <div class="d-exo-icon" style="background:var(--${color}-bg)">${icon}</div>
         <div style="flex:1">
@@ -1877,10 +1883,127 @@ function buildDExo(id, name, dose, color, icon, content) {
 
 function toggleDExo(head) { head.closest('.d-exo').classList.toggle('open'); }
 
+// ===== Stomach Vacuum : contenu du drawer selon la semaine =====
+// Durée cible + position recommandée par semaine (cf. brief).
+const VACUUM_WEEK = {
+  1: { sec: 15, pos: 'à quatre pattes' },     2: { sec: 15, pos: 'à quatre pattes' },
+  3: { sec: 25, pos: 'debout' },              4: { sec: 30, pos: 'debout' },
+  5: { sec: 35, pos: 'assis sur une chaise' },6: { sec: 40, pos: 'assis sur une chaise' },
+  7: { sec: 45, pos: 'allongé sur le dos' },  8: { sec: 45, pos: 'allongé sur le dos' },
+};
+
+function weekOf(dayKey) {
+  const m = /^w(\d+)-/.exec(dayKey || '');
+  return m ? +m[1] : null;
+}
+
+// Semaine "en cours" = première semaine pas encore terminée (4/4 séances), sinon S8.
+function currentWeek() {
+  for (let w = 1; w <= 8; w++) {
+    let done = 0;
+    for (const k in checks) { if (new RegExp('^w' + w + '-\\d+$').test(k) && checks[k]) done++; }
+    if (done < 4) return w;
+  }
+  return 8;
+}
+
+// Durées par semaine pour le chrono inline de l'onglet Exercices
+const PLANK_SEC     = { 1: 20, 2: 25, 3: 30, 4: 35, 5: 40, 6: 45, 7: 50, 8: 25 };
+const SIDEPLANK_SEC = { 1: 15, 2: 20, 3: 25, 4: 30, 5: 35, 6: 40, 7: 45, 8: 20 };
+// Exercice (par nom de carte) → durée cible, ou null pour un exercice en répétitions (chrono libre)
+const EXO_TIMER = {
+  'Stomach Vacuum':   w => (VACUUM_WEEK[w] || VACUUM_WEEK[1]).sec,
+  'Planche frontale': w => PLANK_SEC[w],
+  'Planche latérale': w => SIDEPLANK_SEC[w],
+  'Bird Dog':         () => null,
+  'Dead Bug':         () => null,
+};
+
+// Ajoute / met à jour un bouton chrono contextuel sous chaque fiche exercice
+function setupExerciseTimers() {
+  const week = currentWeek();
+  document.querySelectorAll('#exercices .card').forEach(card => {
+    const nameEl = card.querySelector('.card-name');
+    const body = card.querySelector('.card-body');
+    if (!nameEl || !body) return;
+    const name = nameEl.textContent.trim();
+    if (!(name in EXO_TIMER)) return;
+    const sec = EXO_TIMER[name](week);
+    let btn = body.querySelector('.inline-timer-btn');
+    if (!btn) {
+      btn = document.createElement('button');
+      btn.type = 'button';
+      btn.className = 'inline-timer-btn';
+      body.appendChild(btn);
+    }
+    if (sec) {
+      btn.textContent = '⏱ Lancer ' + sec + ' sec';
+      btn.onclick = () => openTimer(sec, { nonBlocking: true });
+    } else {
+      btn.textContent = '⏱ Chrono libre';
+      btn.onclick = () => openTimer(null, { nonBlocking: true });
+    }
+  });
+}
+
+function buildVacuumDrawer(week, cfg) {
+  const sec = cfg.sec, pos = cfg.pos;
+  let reps = '';
+  for (let i = 1; i <= 5; i++) {
+    reps += '<div class="vac-rep"><span class="vac-rep-label">Répétition ' + i + '</span></div>';
+  }
+  return `
+    <div class="d-info lavande">
+      <p>💨 <strong>Objectif : ${sec} secondes tenus · 5 répétitions</strong></p>
+      <button type="button" class="vac-timer-btn" onclick="openTimer(${sec})">⏱ Lancer le chrono ${sec} sec</button>
+    </div>
+    <div class="d-sep">⏱ Déroulé (~5 min)</div>
+    <div class="d-info">
+      <p>Répète 5 fois :<br>
+      &nbsp;&nbsp;① Expire tout l'air<br>
+      &nbsp;&nbsp;② Rentre le nombril vers la colonne<br>
+      &nbsp;&nbsp;③ Tiens <strong>${sec} sec</strong><br>
+      &nbsp;&nbsp;④ Relâche<br>
+      &nbsp;&nbsp;⏸ 20 sec de repos<br><br>
+      Position recommandée cette semaine : <strong>${pos}</strong>.</p>
+    </div>
+    <div class="d-sep">Technique complète</div>
+  ` + buildDExo('vacuum_detail', 'Technique du vacuum', '5 × ' + sec + ' sec', 'lavande', '💨', `
+    <ul class="d-step-list">
+      <li data-n="1">Expire complètement tout l'air des poumons.</li>
+      <li data-n="2">Sans inspirer, rentre le nombril vers la colonne vertébrale.</li>
+      <li data-n="3">Garde la poitrine ouverte, épaules décontractées — aucune tension sur la nuque.</li>
+      <li data-n="4">Tiens. Petites inspirations nasales légères si besoin.</li>
+      <li data-n="5">Relâche progressivement, reprends ta respiration normale.</li>
+    </ul>
+    <div class="step-title" style="margin-top:4px">Erreurs fréquentes</div>
+    <ul class="warn-list">
+      <li>Gonfler le ventre au lieu de le rentrer</li>
+      <li>Bloquer complètement la respiration</li>
+      <li>Forcer sur les épaules ou la nuque</li>
+    </ul>
+  `, true) + `
+    <div class="d-sep">Tes 5 répétitions</div>
+    <div class="vac-reps">${reps}</div>
+    <div class="d-info lavande" style="margin-top:12px">
+      <p>🌅 <strong>Le matin à jeun = résultat optimal.</strong><br>Ventre moins rempli = contraction plus profonde.</p>
+    </div>
+  `;
+}
+
 function openDay(key, label, title) {
   document.getElementById('drawerLabel').textContent = label;
-  document.getElementById('drawerTitle').textContent = title;
-  const content = DRAWER[key] || '<p style="padding:16px;color:var(--muted)">Contenu disponible bientôt.</p>';
+  let content, finalTitle = title;
+  if (key && key.indexOf('vacuum') === 0) {
+    // Séance Vacuum : contenu généré selon la semaine du jour ouvert
+    const week = (currentDayCtx && weekOf(currentDayCtx.dayKey)) || 1;
+    const cfg = VACUUM_WEEK[week] || VACUUM_WEEK[1];
+    finalTitle = 'Vacuum × 5 — ' + cfg.sec + ' sec';
+    content = buildVacuumDrawer(week, cfg);
+  } else {
+    content = DRAWER[key] || '<p style="padding:16px;color:var(--muted)">Contenu disponible bientôt.</p>';
+  }
+  document.getElementById('drawerTitle').textContent = finalTitle;
   document.getElementById('drawerContent').innerHTML = content;
   injectExoChecks();
   document.getElementById('dayDrawer').classList.add('open');
@@ -1900,15 +2023,16 @@ function closeDrawer(e) {
 // TIMER
 let duration = 20, remaining = 20, timerInterval = null, running = false;
 
-function setTimer(sec) {
+// Pré-règle le chrono sur `sec` et surligne le preset correspondant (s'il existe).
+function selectPreset(sec) {
   clearInterval(timerInterval); running = false;
   document.getElementById('btnStart').textContent = '▶ Démarrer';
   duration = sec; remaining = sec;
-  document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('sel'));
-  event.target.classList.add('sel');
+  document.querySelectorAll('.preset-btn').forEach(b => b.classList.toggle('sel', +b.dataset.sec === sec));
   updateTimerDisplay();
   document.getElementById('timerPhase').textContent = 'Prêt';
 }
+function setTimer(sec) { selectPreset(sec); }
 
 function updateTimerDisplay() {
   const m = Math.floor(remaining/60), s = remaining%60;
@@ -1947,12 +2071,15 @@ function resetTimer() {
   updateTimerDisplay();
 }
 
-function openTimer() {
+// openTimer(presetSec?, opts?)
+//  · presetSec : pré-règle la durée (ex. depuis un bouton "Lancer 30 sec")
+//  · opts.nonBlocking : modal "no-dim" → on garde la fiche/le drawer visible derrière
+function openTimer(presetSec, opts) {
   const modal = document.getElementById('timerModal');
-  // Si un drawer de séance est ouvert : chrono par-dessus, sans voile,
-  // pour suivre ses exercices et chronométrer en même temps.
   const drawerOpen = document.getElementById('dayDrawer').classList.contains('open');
-  modal.classList.toggle('no-dim', drawerOpen);
+  const nonBlocking = drawerOpen || !!(opts && opts.nonBlocking);
+  modal.classList.toggle('no-dim', nonBlocking);
+  if (typeof presetSec === 'number' && presetSec > 0) selectPreset(presetSec);
   modal.classList.add('open');
 }
 function closeTimer() {
@@ -1964,6 +2091,7 @@ function closeTimer() {
 }
 
 updateTimerDisplay();
+setupExerciseTimers();   // boutons chrono inline dans l'onglet Exercices
 </script>
 </body>
 </html>
