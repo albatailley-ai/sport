@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="app-build" content="sarah-20260613-193814">
+<meta name="app-build" content="sarah-20260618-223907">
 <title>Programme Sarah — Ventre Plat</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -478,14 +478,77 @@ nav::-webkit-scrollbar { display: none; }
 .vac-reps { display: flex; flex-direction: column; gap: 8px; }
 .vac-rep {
   display: flex; align-items: center; gap: 12px;
-  padding: 10px 14px; border: 1px solid var(--border);
+  padding: 10px 14px; min-height: 44px; border: 1px solid var(--border);
   border-radius: 12px; background: var(--blanc);
   cursor: pointer; transition: all .2s; user-select: none;
 }
 .vac-rep:hover { border-color: #1e9455; }
-.vac-rep-label { font-size: 14px; font-weight: 600; color: var(--mid); }
+.vac-rep-label { flex: 1; font-size: 14px; font-weight: 600; color: var(--mid); }
 .vac-rep.done { opacity: .55; }
 .vac-rep.done .vac-rep-label { text-decoration: line-through; text-decoration-color: var(--muted); }
+
+/* Bouton chrono contextuel (petit) à côté d'une répétition / d'un exercice de tour.
+   Cible tactile ≥ 44px ; ouvre le chrono SANS fermer le drawer (nonBlocking). */
+.rep-timer-btn {
+  flex-shrink: 0; display: inline-flex; align-items: center; justify-content: center;
+  min-width: 52px; min-height: 38px; padding: 0 13px; border-radius: 100px;
+  border: 1.5px solid var(--sage); background: var(--sage-bg); color: var(--sage);
+  font-size: 13px; font-weight: 700; cursor: pointer; font-family: inherit;
+  transition: transform .15s, background .15s;
+}
+.rep-timer-btn:active { transform: scale(0.92); }
+.rep-timer-btn:hover { background: #d8f2e2; }
+
+/* Gainage par TOUR : chaque tour est une unité, chaque exercice y est cochable */
+.tour-block {
+  border: 1px solid var(--border); border-radius: 14px;
+  overflow: hidden; margin-bottom: 12px; background: var(--blanc);
+}
+.tour-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 14px; background: var(--sage-bg);
+  border-bottom: 1px solid var(--border); transition: background .25s;
+}
+.tour-title {
+  font-family: 'Cormorant Garamond', serif; font-size: 18px;
+  font-weight: 600; color: var(--encre);
+}
+.tour-status {
+  width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 700;
+  border: 2px solid var(--border); background: #fff; color: var(--muted);
+  transition: all .2s;
+}
+.tour-block.done .tour-head { background: linear-gradient(135deg, #e8f8ee, #f2fae6); }
+.tour-block.done .tour-status {
+  background: linear-gradient(135deg, #1e9455, #6ab820);
+  border-color: #1e9455; color: #fff;
+}
+.tour-exos { padding: 9px 12px 11px; display: flex; flex-direction: column; gap: 7px; }
+.tour-exo {
+  display: flex; align-items: center; gap: 11px;
+  padding: 9px 12px; min-height: 44px; border: 1px solid var(--border);
+  border-radius: 10px; background: var(--bg);
+  cursor: pointer; transition: all .2s; user-select: none;
+}
+.tour-exo:hover { border-color: #1e9455; }
+.tour-exo-name { flex: 1; font-size: 14px; font-weight: 500; color: var(--mid); }
+.tour-exo.done { opacity: .5; }
+.tour-exo.done .tour-exo-name { text-decoration: line-through; text-decoration-color: var(--muted); }
+.tour-complete {
+  display: none; padding: 0 14px 12px; font-size: 12px;
+  font-weight: 700; color: var(--sage);
+}
+.tour-block.done .tour-complete { display: block; }
+
+/* Animation légère : la coche verte apparaît avec un petit rebond */
+@keyframes checkPop {
+  0% { transform: scale(0.4); }
+  60% { transform: scale(1.18); }
+  100% { transform: scale(1); }
+}
+.exo-check.checked { animation: checkPop .22s ease; }
 
 /* Bandeau de mise à jour */
 #updateBanner {
@@ -1541,28 +1604,28 @@ function refreshPlanChecks() {
   });
 }
 
-// ---- Cases à cocher des exercices dans le drawer ----
-// Clé d'un exercice : sarah_exo_{semaine}_{jour}_{exo_index}
-// (dayKey vaut 'w{semaine}-{jour}', jour = index 0..6)
-function exoKey(dayKey, idx) {
-  const m = /^w(\d+)-(\d+)$/.exec(dayKey);
-  if (!m) return dayKey + '-e' + idx;          // repli si format inattendu
-  return 'sarah_exo_' + m[1] + '_' + m[2] + '_' + idx;
+// ---- Cases à cocher dans le drawer (répétitions vacuum + exercices par tour) ----
+// Clés de stockage Supabase (cf. brief) :
+//   Vacuum  : sarah_exo_{semaine}_{jour}_rep_{n}            (n = 1..5)
+//   Gainage : sarah_exo_{semaine}_{jour}_tour_{t}_exo_{e}   (t, e = 1-based)
+// Chaque élément cochable porte son suffixe de clé dans data-ckey
+// ('rep_2' ou 'tour_1_exo_2'). (dayKey vaut 'w{semaine}-{jour}', jour = 0..6.)
+function exoBase(dayKey) {
+  const m = /^w(\d+)-(\d+)$/.exec(dayKey || '');
+  return m ? 'sarah_exo_' + m[1] + '_' + m[2] + '_' : (dayKey + '-e');
 }
-// Préfixe pour effacer toutes les coches d'exos d'un jour donné
-function exoPrefix(dayKey) {
-  const m = /^w(\d+)-(\d+)$/.exec(dayKey);
-  return m ? 'sarah_exo_' + m[1] + '_' + m[2] + '_' : dayKey + '-e';
-}
+function fullKey(dayKey, suffix) { return exoBase(dayKey) + suffix; }
+// Préfixe pour effacer toutes les coches d'un jour (reps + tours confondus)
+function exoPrefix(dayKey) { return exoBase(dayKey); }
 
-// Éléments cochables du drawer : répétitions vacuum (.vac-rep) sinon exercices gainage
-// (.d-exo). Les .d-exo marqués data-nocheck — ex. "technique" du vacuum — sont exclus.
+// Éléments cochables : répétitions vacuum (.vac-rep) OU exercices de tour (.tour-exo).
 function getCheckItems() {
   const reps = document.querySelectorAll('#drawerContent .vac-rep');
   if (reps.length) return reps;
-  return document.querySelectorAll('#drawerContent .d-exo:not([data-nocheck])');
+  return document.querySelectorAll('#drawerContent .tour-exo');
 }
-function isRepMode() { return !!document.querySelector('#drawerContent .vac-rep'); }
+function isRepMode()  { return !!document.querySelector('#drawerContent .vac-rep'); }
+function isTourMode() { return !!document.querySelector('#drawerContent .tour-exo'); }
 
 function injectExoChecks() {
   if (!currentDayCtx) return;
@@ -1570,43 +1633,37 @@ function injectExoChecks() {
   const items = getCheckItems();
   if (!items.length) return;                   // séance sans liste cochable
   const dayOn = !!checks[dayKey];
-  items.forEach((item, i) => {
-    const ek = exoKey(dayKey, i);
-    const on = (ek in checks) ? checks[ek] : dayOn;   // état explicite, sinon hérite du jour
+  items.forEach(item => {
+    const key = fullKey(dayKey, item.dataset.ckey);
+    const on = (key in checks) ? checks[key] : dayOn;   // état explicite, sinon hérite du jour
     item.classList.toggle('done', on);
-    const rep = item.classList.contains('vac-rep');
-    const host = rep ? item : item.querySelector('.d-exo-head');
-    if (!host || host.querySelector('.exo-check')) return;
-    const cb = document.createElement('div');
-    cb.className = 'exo-check' + (on ? ' checked' : '');
-    cb.innerHTML = on ? '✓' : '';
-    if (rep) {
-      // toute la ligne "Répétition N" est cliquable
+    if (!item.querySelector('.exo-check')) {
+      const cb = document.createElement('div');
+      cb.className = 'exo-check' + (on ? ' checked' : '');
+      cb.innerHTML = on ? '✓' : '';
+      // toute la ligne (répétition / exercice) est cliquable → coche
       item.insertBefore(cb, item.firstChild);
-      item.addEventListener('click', () => toggleExo(i, items.length));
-    } else {
-      cb.title = 'Marquer l\'exercice comme fait';
-      cb.addEventListener('click', (e) => { e.stopPropagation(); toggleExo(i, items.length); });
-      // À droite du nom, juste avant le chevron : visible même replié.
-      host.insertBefore(cb, host.querySelector('.d-chevron'));
+      item.addEventListener('click', () => toggleCheckItem(item));
     }
   });
-  buildExoSummary(items.length);
-  updateExoSummary(items.length);
+  buildExoSummary();
+  refreshTours();
+  updateExoSummary();
 }
 
-function toggleExo(idx, total) {
+function toggleCheckItem(item) {
   if (!currentDayCtx) return;
   const dayKey = currentDayCtx.dayKey;
+  const items = getCheckItems();
   const dayOn = !!checks[dayKey];
-  for (let j = 0; j < total; j++) {            // rendre explicites tous les exercices
-    const k = exoKey(dayKey, j);
+  items.forEach(it => {                         // rendre explicites toutes les coches
+    const k = fullKey(dayKey, it.dataset.ckey);
     if (!(k in checks)) checks[k] = dayOn;
-  }
-  const ek = exoKey(dayKey, idx);
-  checks[ek] = !checks[ek];
-  let all = true;                              // séance faite si TOUS cochés
-  for (let j = 0; j < total; j++) { if (!checks[exoKey(dayKey, j)]) { all = false; break; } }
+  });
+  const key = fullKey(dayKey, item.dataset.ckey);
+  checks[key] = !checks[key];
+  let all = true;                               // séance validée si TOUT est coché
+  items.forEach(it => { if (!checks[fullKey(dayKey, it.dataset.ckey)]) all = false; });
   checks[dayKey] = all;
   persist();
   refreshDrawerExos();
@@ -1619,18 +1676,31 @@ function refreshDrawerExos() {
   const dayKey = currentDayCtx.dayKey;
   const dayOn = !!checks[dayKey];
   const items = getCheckItems();
-  items.forEach((item, i) => {
-    const ek = exoKey(dayKey, i);
-    const on = (ek in checks) ? checks[ek] : dayOn;
+  items.forEach(item => {
+    const key = fullKey(dayKey, item.dataset.ckey);
+    const on = (key in checks) ? checks[key] : dayOn;
     item.classList.toggle('done', on);
     const cb = item.querySelector('.exo-check');
     if (cb) { cb.classList.toggle('checked', on); cb.innerHTML = on ? '✓' : ''; }
   });
-  updateExoSummary(items.length);
+  refreshTours();
+  updateExoSummary();
 }
 
-// Résumé "x/y exercices complétés" + barre de progression verte, en bas du drawer
-function buildExoSummary(total) {
+// Valide visuellement chaque tour quand TOUS ses exercices sont cochés (✓ vert auto)
+function refreshTours() {
+  document.querySelectorAll('#drawerContent .tour-block').forEach(block => {
+    const exos = block.querySelectorAll('.tour-exo');
+    let all = exos.length > 0;
+    exos.forEach(e => { if (!e.classList.contains('done')) all = false; });
+    block.classList.toggle('done', all);
+    const st = block.querySelector('.tour-status');
+    if (st) st.textContent = all ? '✓' : '○';
+  });
+}
+
+// Résumé + barre de progression verte, en bas du drawer
+function buildExoSummary() {
   const content = document.getElementById('drawerContent');
   if (!content || content.querySelector('.exo-summary')) return;
   const box = document.createElement('div');
@@ -1642,22 +1712,33 @@ function buildExoSummary(total) {
   content.appendChild(box);
 }
 
-function updateExoSummary(total) {
+function updateExoSummary() {
   if (!currentDayCtx) return;
   const box = document.querySelector('#drawerContent .exo-summary');
   if (!box) return;
   const dayKey = currentDayCtx.dayKey;
   const dayOn = !!checks[dayKey];
+  const items = getCheckItems();
+  const total = items.length;
   let done = 0;
-  for (let i = 0; i < total; i++) {
-    const ek = exoKey(dayKey, i);
-    if ((ek in checks) ? checks[ek] : dayOn) done++;
-  }
+  items.forEach(item => {
+    const key = fullKey(dayKey, item.dataset.ckey);
+    if ((key in checks) ? checks[key] : dayOn) done++;
+  });
   const pct = total ? Math.round(done / total * 100) : 0;
   const complete = done === total && total > 0;
-  const noun = isRepMode() ? ' répétitions complétées' : ' exercices complétés';
-  box.querySelector('.exo-summary-label').textContent =
-    complete ? '✓ Séance complétée' : done + '/' + total + noun;
+  let label;
+  if (complete) {
+    label = '✓ Séance complétée';
+  } else if (isTourMode()) {
+    const blocks = document.querySelectorAll('#drawerContent .tour-block');
+    let toursDone = 0;
+    blocks.forEach(b => { if (b.classList.contains('done')) toursDone++; });
+    label = 'Tour ' + toursDone + '/' + blocks.length + ' complété · ' + done + '/' + total + ' exercices';
+  } else {
+    label = done + '/' + total + ' répétitions complétées';
+  }
+  box.querySelector('.exo-summary-label').textContent = label;
   box.querySelector('.exo-summary-count').textContent = pct + '%';
   box.querySelector('.exo-summary-row').classList.toggle('complete', complete);
   box.querySelector('.exo-bar-fill').style.width = pct + '%';
@@ -1760,110 +1841,10 @@ initUpdateBanner();  // bandeau de mise à jour
 loadFromCloud();     // puis synchronisation avec le cloud
 
 // DRAWER DATA
-// Les séances Vacuum ne sont PAS ici : leur contenu dépend de la semaine
-// (durée cible, position, chrono pré-réglé) → généré par buildVacuumDrawer().
-const DRAWER = {
-  gainage_s1: `
-    <div class="d-info" style="background:var(--sage-bg);border-color:#c4dac6">
-      <p>💡 <strong>C'est quoi un "tour" ?</strong><br><br>
-      Un tour = faire les 4 exercices l'un après l'autre dans l'ordre, avec 15 sec entre chaque pour se repositionner.<br><br>
-      Quand tu as fini les 4 → fin du tour 1. Tu prends <strong>60 sec de repos</strong>, puis tu recommences = tour 2.<br><br>
-      <strong>Ici : 2 tours = tu fais la liste complète 2 fois.</strong></p>
-    </div>
-    <div class="d-sep">⏱ Déroulé (~20 min)</div>
-    <div class="d-info">
-      <p>▶ <strong>TOUR 1 et 2</strong> (identiques) :<br>
-      &nbsp;&nbsp;① Vacuum × 3 — 15 sec tenus → 15 sec<br>
-      &nbsp;&nbsp;② Planche frontale 20 sec → 15 sec<br>
-      &nbsp;&nbsp;③ Bird Dog × 8/côté → 15 sec<br>
-      &nbsp;&nbsp;④ Planche latérale 15 sec/côté<br>
-      &nbsp;&nbsp;⏸ <strong>60 sec repos</strong> → tour suivant</p>
-    </div>
-    <div class="d-sep">Le détail de chaque exercice</div>
-  ` + buildDExo('planche', 'Planche frontale', '20 secondes', 'sage', '🧱', `
-    <ul class="d-step-list">
-      <li data-n="1">Avant-bras au sol, coudes sous les épaules.</li>
-      <li data-n="2">Corps droit de la tête aux talons.</li>
-      <li data-n="3">Nombril rentré, fessiers contractés.</li>
-      <li data-n="4">Regard vers le sol — nuque dans l'axe, aucune tension.</li>
-      <li data-n="5">Respire normalement. Ne retiens pas ta respiration.</li>
-    </ul>
-    <div class="d-tip-pill sage">Regard sol = nuque neutre</div>
-  `) + buildDExo('bird_dog', 'Bird Dog', '8 reps par côté', 'rosé', '🐦', `
-    <ul class="d-step-list">
-      <li data-n="1">À quatre pattes, dos plat, regard vers le sol.</li>
-      <li data-n="2">Tendre bras droit + jambe gauche simultanément.</li>
-      <li data-n="3">Tenir 2–3 sec. Ventre rentré pendant tout le mouvement.</li>
-      <li data-n="4">Revenir lentement. Alterner les côtés.</li>
-    </ul>
-    <div class="d-tip-pill rosé">Mouvement lent = exercice efficace</div>
-  `) + buildDExo('planche_lat', 'Planche latérale', '15 sec par côté', 'sage', '🔀', `
-    <ul class="d-step-list">
-      <li data-n="1">Sur le côté, appuie sur l'avant-bras.</li>
-      <li data-n="2">Soulever les hanches — ligne droite épaule–hanche.</li>
-      <li data-n="3">Regard droit devant. Tiens.</li>
-      <li data-n="4">Changer de côté.</li>
-    </ul>
-    <p>Version plus facile : genou du bas posé au sol.</p>
-  `),
-  gainage_s2: `
-    <div class="d-info" style="background:var(--sage-bg);border-color:#c4dac6">
-      <p>💡 <strong>3 tours.</strong> Même principe : 4 exercices à la suite → 60 sec repos → recommencer.<br><br>
-      Les durées augmentent légèrement par rapport à S1.</p>
-    </div>
-    <div class="d-sep">⏱ Déroulé (~25 min)</div>
-    <div class="d-info">
-      <p>▶ <strong>3 tours identiques :</strong><br>
-      &nbsp;&nbsp;① Vacuum × 5 — 20 sec tenus → 15 sec<br>
-      &nbsp;&nbsp;② Planche 25 sec → 15 sec<br>
-      &nbsp;&nbsp;③ Bird Dog × 10/côté → 15 sec<br>
-      &nbsp;&nbsp;④ Planche latérale 20 sec/côté<br>
-      &nbsp;&nbsp;⏸ <strong>60 sec repos</strong></p>
-    </div>
-  `,
-  gainage_s3: `
-    <div class="d-info" style="background:var(--sage-bg);border-color:#c4dac6">
-      <p>💡 <strong>3 tours + introduction du Dead Bug.</strong><br><br>
-      Le Dead Bug remplace le vacuum dans le circuit (le vacuum se fait à part le matin). Il est allongé sur le dos — aucune tension sur la nuque.</p>
-    </div>
-    <div class="d-sep">⏱ Déroulé (~30 min)</div>
-    <div class="d-info">
-      <p>▶ <strong>3 tours :</strong><br>
-      &nbsp;&nbsp;① Planche 30 sec → 15 sec<br>
-      &nbsp;&nbsp;② Dead Bug × 10 → 15 sec<br>
-      &nbsp;&nbsp;③ Planche latérale 25 sec/côté → 15 sec<br>
-      &nbsp;&nbsp;④ Bird Dog × 10/côté<br>
-      &nbsp;&nbsp;⏸ <strong>60 sec repos</strong></p>
-    </div>
-    <div class="d-sep">Le Dead Bug</div>
-  ` + buildDExo('dead_bug', 'Dead Bug', '10 reps par côté', 'rosé', '🪲', `
-    <div class="d-info" style="background:var(--rosé-bg);border-color:#e8c0bc;margin-bottom:10px">
-      <p>La nuque repose sur le sol en permanence. Zéro tension cervicale.</p>
-    </div>
-    <ul class="d-step-list">
-      <li data-n="1">Allongé sur le dos, bras vers le plafond, genoux à 90° en l'air.</li>
-      <li data-n="2">Dos collé au sol. Expire et rentre le ventre.</li>
-      <li data-n="3">Étendre bras droit vers l'arrière + jambe gauche vers l'avant, lentement.</li>
-      <li data-n="4">Le dos doit rester collé au sol tout le temps.</li>
-      <li data-n="5">Revenir lentement. Alterner.</li>
-    </ul>
-    <div class="d-tip-pill rosé">Dos collé = exercice réussi</div>
-  `),
-  gainage_s4: `
-    <div class="d-info" style="background:var(--sage-bg);border-color:#c4dac6">
-      <p>💡 <strong>4 tours.</strong> +1 tour vs S3. Même ordre, durées légèrement allongées.</p>
-    </div>
-    <div class="d-sep">⏱ Déroulé (~35 min)</div>
-    <div class="d-info">
-      <p>▶ <strong>4 tours :</strong><br>
-      &nbsp;&nbsp;① Planche 35 sec → 15 sec<br>
-      &nbsp;&nbsp;② Dead Bug × 12 → 15 sec<br>
-      &nbsp;&nbsp;③ Planche latérale 30 sec/côté → 15 sec<br>
-      &nbsp;&nbsp;④ Bird Dog × 12/côté<br>
-      &nbsp;&nbsp;⏸ <strong>60 sec repos</strong></p>
-    </div>
-  `,
-};
+// Les séances Vacuum et Gainage ne sont PAS ici : leur contenu dépend de la
+// semaine (durées, nombre de tours, chrono pré-réglé) et est généré à la volée
+// par buildVacuumDrawer() / buildGainageDrawer(). DRAWER ne sert que de repli.
+const DRAWER = {};
 
 function buildDExo(id, name, dose, color, icon, content, nocheck) {
   return `
@@ -1882,6 +1863,135 @@ function buildDExo(id, name, dose, color, icon, content, nocheck) {
 }
 
 function toggleDExo(head) { head.closest('.d-exo').classList.toggle('open'); }
+
+// ===== Gainage : contenu du drawer par TOUR (chaque exercice cochable) =====
+// Fiches techniques (référence, non cochables) réutilisées par les drawers gainage.
+const EXO_LIB = {
+  vacuum: { name: 'Stomach Vacuum', icon: '💨', color: 'lavande', body: `
+    <ul class="d-step-list">
+      <li data-n="1">Expire complètement tout l'air des poumons.</li>
+      <li data-n="2">Sans inspirer, rentre le nombril vers la colonne vertébrale.</li>
+      <li data-n="3">Poitrine ouverte, épaules décontractées — aucune tension nuque.</li>
+      <li data-n="4">Tiens. Petites inspirations nasales légères si besoin.</li>
+      <li data-n="5">Relâche progressivement, reprends ta respiration normale.</li>
+    </ul>
+    <div class="d-tip-pill lavande">Le matin à jeun = optimal</div>` },
+  planche: { name: 'Planche frontale', icon: '🧱', color: 'sage', body: `
+    <ul class="d-step-list">
+      <li data-n="1">Avant-bras au sol, coudes sous les épaules.</li>
+      <li data-n="2">Corps droit de la tête aux talons.</li>
+      <li data-n="3">Nombril rentré, fessiers contractés.</li>
+      <li data-n="4">Regard vers le sol — nuque dans l'axe, aucune tension.</li>
+      <li data-n="5">Respire normalement. Ne retiens pas ta respiration.</li>
+    </ul>
+    <div class="d-tip-pill sage">Regard sol = nuque neutre</div>` },
+  bird_dog: { name: 'Bird Dog', icon: '🐦', color: 'rosé', body: `
+    <ul class="d-step-list">
+      <li data-n="1">À quatre pattes, dos plat, regard vers le sol.</li>
+      <li data-n="2">Tendre bras droit + jambe gauche simultanément.</li>
+      <li data-n="3">Tenir 2–3 sec. Ventre rentré pendant tout le mouvement.</li>
+      <li data-n="4">Revenir lentement. Alterner les côtés.</li>
+    </ul>
+    <div class="d-tip-pill rosé">Mouvement lent = exercice efficace</div>` },
+  planche_lat: { name: 'Planche latérale', icon: '🔀', color: 'sage', body: `
+    <ul class="d-step-list">
+      <li data-n="1">Sur le côté, appuie sur l'avant-bras.</li>
+      <li data-n="2">Soulever les hanches — ligne droite épaule–hanche.</li>
+      <li data-n="3">Regard droit devant. Tiens.</li>
+      <li data-n="4">Changer de côté.</li>
+    </ul>
+    <p>Version plus facile : genou du bas posé au sol.</p>` },
+  dead_bug: { name: 'Dead Bug', icon: '🪲', color: 'rosé', body: `
+    <div class="d-info" style="background:var(--rosé-bg);border-color:#e8c0bc;margin-bottom:10px">
+      <p>La nuque repose sur le sol en permanence. Zéro tension cervicale.</p>
+    </div>
+    <ul class="d-step-list">
+      <li data-n="1">Allongé sur le dos, bras vers le plafond, genoux à 90° en l'air.</li>
+      <li data-n="2">Dos collé au sol. Expire et rentre le ventre.</li>
+      <li data-n="3">Étendre bras droit vers l'arrière + jambe gauche vers l'avant, lentement.</li>
+      <li data-n="4">Le dos doit rester collé au sol tout le temps.</li>
+      <li data-n="5">Revenir lentement. Alterner.</li>
+    </ul>
+    <div class="d-tip-pill rosé">Dos collé = exercice réussi</div>` },
+};
+
+// Programme gainage par drawer-key : nombre de tours + liste d'exercices.
+// sec = durée cible (→ bouton chrono contextuel) ; null = exercice en répétitions.
+const GAINAGE = {
+  gainage_s1: { tours: 2, mins: '~20 min', intro: `<p>💡 <strong>C'est quoi un "tour" ?</strong><br><br>
+      Un tour = les 4 exercices l'un après l'autre, avec ~15 sec entre chaque pour se repositionner.
+      Quand les 4 sont faits → <strong>60 sec de repos</strong>, puis on recommence.<br><br>
+      <strong>Ici : 2 tours.</strong> Coche chaque exercice au fur et à mesure ; le tour se valide tout seul quand les 4 sont cochés.</p>`,
+    exos: [
+      { det: 'vacuum',      label: 'Vacuum × 3 — 15 sec tenus',   sec: 15 },
+      { det: 'planche',     label: 'Planche frontale 20 sec',     sec: 20 },
+      { det: 'bird_dog',    label: 'Bird Dog × 8/côté',           sec: null },
+      { det: 'planche_lat', label: 'Planche latérale 15 sec/côté', sec: 15 },
+    ] },
+  gainage_s2: { tours: 3, mins: '~25 min', intro: `<p>💡 <strong>3 tours.</strong> Les 4 exercices à la suite, puis 60 sec de repos avant de recommencer.
+      Durées légèrement allongées vs S1. Coche chaque exercice ; le tour se valide automatiquement.</p>`,
+    exos: [
+      { det: 'vacuum',      label: 'Vacuum × 5 — 20 sec tenus',   sec: 20 },
+      { det: 'planche',     label: 'Planche frontale 25 sec',     sec: 25 },
+      { det: 'bird_dog',    label: 'Bird Dog × 10/côté',          sec: null },
+      { det: 'planche_lat', label: 'Planche latérale 20 sec/côté', sec: 20 },
+    ] },
+  gainage_s3: { tours: 3, mins: '~30 min', intro: `<p>💡 <strong>3 tours + Dead Bug.</strong> Le Dead Bug remplace le vacuum dans le circuit
+      (le vacuum se fait à part, le matin). Allongé sur le dos — aucune tension nuque. 60 sec de repos entre les tours.</p>`,
+    exos: [
+      { det: 'planche',     label: 'Planche frontale 30 sec',     sec: 30 },
+      { det: 'dead_bug',    label: 'Dead Bug × 10',               sec: null },
+      { det: 'planche_lat', label: 'Planche latérale 25 sec/côté', sec: 25 },
+      { det: 'bird_dog',    label: 'Bird Dog × 10/côté',          sec: null },
+    ] },
+  gainage_s4: { tours: 4, mins: '~35 min', intro: `<p>💡 <strong>4 tours.</strong> +1 tour vs S3. Même ordre, durées légèrement allongées.
+      60 sec de repos entre les tours.</p>`,
+    exos: [
+      { det: 'planche',     label: 'Planche frontale 35 sec',     sec: 35 },
+      { det: 'dead_bug',    label: 'Dead Bug × 12',               sec: null },
+      { det: 'planche_lat', label: 'Planche latérale 30 sec/côté', sec: 30 },
+      { det: 'bird_dog',    label: 'Bird Dog × 12/côté',          sec: null },
+    ] },
+};
+
+function buildGainageDrawer(key) {
+  const cfg = GAINAGE[key] || GAINAGE.gainage_s1;
+  let tours = '';
+  for (let t = 1; t <= cfg.tours; t++) {
+    let rows = '';
+    cfg.exos.forEach((e, idx) => {
+      const timer = e.sec
+        ? '<button type="button" class="rep-timer-btn" title="Lancer ' + e.sec + ' sec" ' +
+            'onclick="event.stopPropagation(); openTimer(' + e.sec + ', {nonBlocking:true})">⏱ ' + e.sec + 's</button>'
+        : '';
+      rows += '<div class="tour-exo" data-ckey="tour_' + t + '_exo_' + (idx + 1) + '">' +
+                '<span class="tour-exo-name">' + e.label + '</span>' + timer + '</div>';
+    });
+    tours += '<div class="tour-block" data-tour="' + t + '">' +
+               '<div class="tour-head"><span class="tour-title">▶ Tour ' + t + '</span>' +
+               '<span class="tour-status">○</span></div>' +
+               '<div class="tour-exos">' + rows + '</div>' +
+               '<div class="tour-complete">✓ Tour ' + t + ' complété</div>' +
+             '</div>';
+  }
+  // Fiches techniques (une par exercice distinct, non cochables)
+  const seen = {};
+  let details = '';
+  cfg.exos.forEach(e => {
+    if (e.det && !seen[e.det] && EXO_LIB[e.det]) {
+      seen[e.det] = 1;
+      const lib = EXO_LIB[e.det];
+      details += buildDExo('gd-' + e.det, lib.name, 'Technique', lib.color, lib.icon, lib.body, true);
+    }
+  });
+  return `
+    <div class="d-info sage">${cfg.intro}</div>
+    <div class="d-sep">⏱ Déroulé (${cfg.mins}) · ${cfg.tours} tours</div>
+    ${tours}
+    <div class="d-sep">Le détail de chaque exercice</div>
+    ${details}
+  `;
+}
 
 // ===== Stomach Vacuum : contenu du drawer selon la semaine =====
 // Durée cible + position recommandée par semaine (cf. brief).
@@ -1950,7 +2060,11 @@ function buildVacuumDrawer(week, cfg) {
   const sec = cfg.sec, pos = cfg.pos;
   let reps = '';
   for (let i = 1; i <= 5; i++) {
-    reps += '<div class="vac-rep"><span class="vac-rep-label">Répétition ' + i + '</span></div>';
+    reps += '<div class="vac-rep" data-ckey="rep_' + i + '">' +
+              '<span class="vac-rep-label">Répétition ' + i + ' — ' + sec + ' sec</span>' +
+              '<button type="button" class="rep-timer-btn" title="Lancer ' + sec + ' sec" ' +
+                'onclick="event.stopPropagation(); openTimer(' + sec + ', {nonBlocking:true})">⏱ ' + sec + 's</button>' +
+            '</div>';
   }
   return `
     <div class="d-info lavande">
@@ -2000,6 +2114,9 @@ function openDay(key, label, title) {
     const cfg = VACUUM_WEEK[week] || VACUUM_WEEK[1];
     finalTitle = 'Vacuum × 5 — ' + cfg.sec + ' sec';
     content = buildVacuumDrawer(week, cfg);
+  } else if (key && key.indexOf('gainage') === 0) {
+    // Séance Gainage : tours générés à la volée (chaque exercice cochable)
+    content = buildGainageDrawer(key);
   } else {
     content = DRAWER[key] || '<p style="padding:16px;color:var(--muted)">Contenu disponible bientôt.</p>';
   }
