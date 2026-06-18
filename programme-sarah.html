@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="app-build" content="sarah-20260618-223907">
+<meta name="app-build" content="sarah-20260618-224401">
 <title>Programme Sarah — Ventre Plat</title>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -595,6 +595,16 @@ nav::-webkit-scrollbar { display: none; }
   font-size: 16px; cursor: pointer; color: var(--muted);
   display: flex; align-items: center; justify-content: center;
 }
+/* Actions de la barre du drawer : chrono + fermeture, côte à côte à droite */
+.drawer-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.drawer-chrono {
+  background: var(--sage-bg); border: 1.5px solid var(--sage);
+  width: 38px; height: 38px; border-radius: 50%;
+  font-size: 16px; cursor: pointer; color: var(--sage);
+  display: flex; align-items: center; justify-content: center;
+  transition: transform .15s;
+}
+.drawer-chrono:active { transform: scale(0.92); }
 .drawer-day-label { font-size: 11px; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
 .drawer-title {
   font-family: 'Cormorant Garamond', serif;
@@ -664,14 +674,10 @@ background: #eaf7ee; border: 1px solid #c0e8cc;
   transition: transform 0.2s, top 0.25s, bottom 0.25s;
 }
 .fab:hover { transform: scale(1.08); }
-/* Drawer ouvert : le FAB chrono remonte en haut (au-dessus du drawer),
-   reste visible/cliquable et ne se cache pas derrière le bas du drawer. */
-.fab.in-drawer {
-  top: calc(env(safe-area-inset-top, 0px) + 14px);
-  bottom: auto;
-  background: var(--sage);
-  box-shadow: 0 4px 18px rgba(30,148,85,0.45);
-}
+/* Drawer ouvert : on masque le FAB flottant. Le chrono reste accessible via le
+   bouton ⏱ intégré dans la barre du drawer (à gauche du ✕) → il ne recouvre
+   jamais le bouton de fermeture et ne se cache pas derrière le bas du drawer. */
+.fab.in-drawer { display: none; }
 
 /* MODAL */
 .modal-overlay {
@@ -1344,7 +1350,10 @@ background: #eaf7ee; border: 1px solid #c0e8cc;
         <div class="drawer-day-label" id="drawerLabel">LUNDI</div>
         <div class="drawer-title" id="drawerTitle">Séance</div>
       </div>
-      <button class="drawer-close" onclick="closeDrawer()">✕</button>
+      <div class="drawer-actions">
+        <button class="drawer-chrono" onclick="openTimer(null,{nonBlocking:true})" title="Ouvrir le chrono" aria-label="Ouvrir le chrono">⏱</button>
+        <button class="drawer-close" onclick="closeDrawer()" title="Fermer" aria-label="Fermer">✕</button>
+      </div>
     </div>
     <div class="drawer-content" id="drawerContent"></div>
   </div>
@@ -2125,7 +2134,8 @@ function openDay(key, label, title) {
   injectExoChecks();
   document.getElementById('dayDrawer').classList.add('open');
   document.body.style.overflow = 'hidden';
-  // Le FAB chrono remonte en haut : visible et cliquable par-dessus le drawer
+  // On masque le FAB flottant : le chrono passe par le bouton ⏱ de la barre du
+  // drawer, qui ne recouvre jamais le bouton de fermeture.
   document.querySelector('.fab').classList.add('in-drawer');
 }
 
@@ -2133,7 +2143,7 @@ function closeDrawer(e) {
   if (e && e.target !== document.getElementById('dayDrawer')) return;
   document.getElementById('dayDrawer').classList.remove('open');
   document.body.style.overflow = '';
-  // Le FAB revient en bas-droite (le timer, s'il est ouvert, le couvre de toute façon)
+  // Le FAB flottant réapparaît en bas-droite une fois le drawer fermé
   document.querySelector('.fab').classList.remove('in-drawer');
 }
 
