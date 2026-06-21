@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="app-build" content="alex-20260613-1">
+<meta name="app-build" content="alex-20260621-113322">
 <title>Programme 8 Semaines — Perte de Poids</title>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -280,6 +280,42 @@ nav::-webkit-scrollbar { display: none; }
 .day-type-label.hiit { background: var(--gold-bg); color: var(--gold); font-weight: 700; }
 .day-type-label.rest { background: var(--green-bg); color: var(--green); }
 .day-type-label.active { background: var(--green-bg); color: var(--green); }
+.day-type-label.cardio-alt { background: var(--green-bg); color: var(--green); font-weight: 700; }
+
+/* Note visible sur une semaine (ex : semaine compressée) */
+.week-note {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  background: var(--gold-bg);
+  border: 1px solid #f0d98a;
+  color: #8a6500;
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-bottom: 12px;
+  font-size: 12.5px;
+  font-weight: 600;
+  line-height: 1.45;
+}
+.week-note .week-note-emoji { font-size: 15px; line-height: 1.2; }
+
+/* Bandeau « apprentissage en pause » sur l'onglet Corde */
+.pause-banner {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  background: var(--gold-bg);
+  border: 1px solid #f0d98a;
+  color: #8a6500;
+  border-radius: 12px;
+  padding: 14px 16px;
+  margin-bottom: 18px;
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+.pause-banner .pause-emoji { font-size: 20px; line-height: 1.2; }
+.pause-banner strong { color: #6e5000; }
+.exo-grid.paused { opacity: 0.55; }
 
 .day-detail {
   font-size: 13px;
@@ -1073,12 +1109,12 @@ nav::-webkit-scrollbar { display: none; }
             <div class="day-tap-hint">👆 Voir le détail des exercices</div>
           </div>
         </div>
-        <div class="day-row clickable" onclick="openDay('corde_debutant','MERCREDI','Corde à sauter — Débutant')">
-          <div class="day-tag"><div class="day-name-short">Mer</div><span class="day-emoji">🪢</span></div>
+        <div class="day-row clickable" onclick="openDay('cardio_alt','MERCREDI','Cardio alternatif')">
+          <div class="day-tag"><div class="day-name-short">Mer</div><span class="day-emoji">🏃</span></div>
           <div class="day-content">
-            <div class="day-type-label corde">Corde — Débutant</div>
-            <div class="day-detail"><strong>Prise en main</strong> — 10 × 20 sauts / 30 sec repos.</div>
-            <div class="day-duration">Total : 12 min</div>
+            <div class="day-type-label cardio-alt">Cardio alternatif</div>
+            <div class="day-detail"><strong>Corde en pause</strong> — 15 min de montées de genoux ou course en place.</div>
+            <div class="day-duration">Total : 15 min</div>
             <div class="day-tap-hint">👆 Voir le détail</div>
           </div>
         </div>
@@ -1145,11 +1181,11 @@ nav::-webkit-scrollbar { display: none; }
             <div class="day-tap-hint">👆 Voir le détail des exercices</div>
           </div>
         </div>
-        <div class="day-row clickable" onclick="openDay('corde_debutant','MERCREDI','Corde — Séries longues')">
-          <div class="day-tag"><div class="day-name-short">Mer</div><span class="day-emoji">🪢</span></div>
+        <div class="day-row clickable" onclick="openDay('cardio_alt','MERCREDI','Cardio alternatif')">
+          <div class="day-tag"><div class="day-name-short">Mer</div><span class="day-emoji">🏃</span></div>
           <div class="day-content">
-            <div class="day-type-label corde">Corde — Progression</div>
-            <div class="day-detail"><strong>Séries longues</strong> — 8 × 30 sec saut / 30 sec repos.</div>
+            <div class="day-type-label cardio-alt">Cardio alternatif</div>
+            <div class="day-detail"><strong>Corde en pause</strong> — 15 min de montées de genoux ou course en place.</div>
             <div class="day-duration">Total : 15 min</div>
             <div class="day-tap-hint">👆 Voir le détail</div>
           </div>
@@ -1199,67 +1235,65 @@ nav::-webkit-scrollbar { display: none; }
 
     <div class="week-block">
       <div class="week-head" onclick="toggleWeek(this)">
-        <div class="week-head-left"><span class="week-num">S3</span><span class="week-name">Fractionné — Introduction du HIIT running</span></div>
+        <div class="week-head-left"><span class="week-num">S3</span><span class="week-name">Semaine compressée — départ Portugal</span></div>
         <span class="week-arrow">▾</span>
       </div>
       <div class="week-body">
-        <div class="day-row clickable" onclick="openDay('run_lun_s34','LUNDI','Running · Endurance')">
+        <div class="week-note">
+          <span class="week-note-emoji">✈️</span>
+          <span>Semaine compressée — départ Portugal vendredi soir. 5 séances sur 5 jours.</span>
+        </div>
+        <div class="day-row clickable" onclick="openDay('run_z2_40','LUNDI','Running · Endurance Z2')">
           <div class="day-tag"><div class="day-name-short">Lun</div><span class="day-emoji">🏃</span></div>
           <div class="day-content">
-            <div class="day-type-label run">Running · Endurance</div>
-            <div class="day-detail"><strong>Séance 3 blocs</strong> — Activation · <strong>25 min à 60–65% VMA + 2 × 3 min à 70–75%</strong> · Renfo + étirements.</div>
-            <div class="day-duration">40–45 min (1h30 : 55–60 min)</div>
-            <div class="day-tap-hint">👆 Voir le détail des 3 blocs</div>
+            <div class="day-type-label run">Running · Endurance Z2</div>
+            <div class="day-detail"><strong>Running Z2 40 min</strong> — Activation 5 min · 40 min en Z2 · Étirements 8 min.</div>
+            <div class="day-duration">~53 min</div>
+            <div class="day-tap-hint">👆 Voir le détail</div>
           </div>
         </div>
-        <div class="day-row clickable" onclick="openDay('circuit_a_3t','MARDI S3','Circuit A+ — 3 tours 45s/15s')">
+        <div class="day-row clickable" onclick="openDay('circuit_a_3t','MARDI S3','Circuit A jambes — 3 tours 45s/15s')">
           <div class="day-tag"><div class="day-name-short">Mar</div><span class="day-emoji">💪</span></div>
           <div class="day-content">
-            <div class="day-type-label muscu">Circuit A+</div>
+            <div class="day-type-label muscu">Circuit A · jambes</div>
             <div class="day-detail"><strong>3 tours format 45s/15s</strong> — Squat sauté, Fentes marchées, Glute bridge 1 jambe, Wall sit 50 sec.</div>
             <div class="day-duration">35 min · ~300 kcal</div>
             <div class="day-tap-hint">👆 Voir le détail</div>
           </div>
         </div>
-        <div class="day-row clickable" onclick="openDay('corde_debutant','MERCREDI S3','Corde — Endurance')">
-          <div class="day-tag"><div class="day-name-short">Mer</div><span class="day-emoji">🪢</span></div>
+        <div class="day-row clickable" onclick="openDay('fractionne_6','MERCREDI S3','Running · Fractionné')">
+          <div class="day-tag"><div class="day-name-short">Mer</div><span class="day-emoji">⚡</span></div>
           <div class="day-content">
-            <div class="day-type-label corde">Corde — Endurance</div>
-            <div class="day-detail"><strong>5 × 1 min saut continu / 1 min repos</strong></div>
-            <div class="day-duration">15 min</div>
+            <div class="day-type-label run">Running · Fractionné</div>
+            <div class="day-detail"><strong>6 × [30s sprint / 90s récup]</strong> — 8 min échauffement + 8 min retour au calme.</div>
+            <div class="day-duration">~31 min</div>
             <div class="day-tap-hint">👆 Voir le détail</div>
           </div>
         </div>
-        <div class="day-row clickable" onclick="openDay('run_jeu_s34','JEUDI','Running · Fractionné')">
-          <div class="day-tag"><div class="day-name-short">Jeu</div><span class="day-emoji">⚡</span></div>
+        <div class="day-row clickable" onclick="openDay('circuit_b_3t','JEUDI S3','Circuit B haut + core — 3 tours 45s/15s')">
+          <div class="day-tag"><div class="day-name-short">Jeu</div><span class="day-emoji">💪</span></div>
           <div class="day-content">
-            <div class="day-type-label run">Running · Fractionné</div>
-            <div class="day-detail"><strong>Séance 3 blocs</strong> — Activation · <strong>10 min + 6 × (30s à 80% / 30s lent) + 8 min</strong> · Renfo + étirements.</div>
-            <div class="day-duration">40–45 min (1h30 : 55–60 min)</div>
-            <div class="day-tap-hint">👆 Voir le détail des 3 blocs</div>
-          </div>
-        </div>
-        <div class="day-row clickable" onclick="openDay('circuit_b_3t','VENDREDI S3','Circuit B+ — 3 tours 45s/15s')">
-          <div class="day-tag"><div class="day-name-short">Ven</div><span class="day-emoji">💪</span></div>
-          <div class="day-content">
-            <div class="day-type-label muscu">Circuit B+</div>
-            <div class="day-detail"><strong>3 tours 45s/15s</strong> — Pompes + inclinées, Planche 30s, Dips × 14, Mountain climbers, Burpees × 8.</div>
+            <div class="day-type-label muscu">Circuit B · haut + core</div>
+            <div class="day-detail"><strong>3 tours 45s/15s</strong> — Pompes, Planche, Dips, Mountain climbers, Burpees, Crunchs.</div>
             <div class="day-duration">35 min · ~300 kcal</div>
             <div class="day-tap-hint">👆 Voir le détail</div>
           </div>
         </div>
-        <div class="day-row clickable" onclick="openDay('run_sam_s34','SAMEDI','Running · Sortie longue')">
-          <div class="day-tag"><div class="day-name-short">Sam</div><span class="day-emoji">🏃</span></div>
+        <div class="day-row clickable" onclick="openDay('footing_portugal','VENDREDI','Footing léger — avant départ')">
+          <div class="day-tag"><div class="day-name-short">Ven</div><span class="day-emoji">🏃</span></div>
           <div class="day-content">
-            <div class="day-type-label run">Running · Sortie longue</div>
-            <div class="day-detail"><strong>Séance 3 blocs</strong> — Activation · <strong>35 min continu à 60–65% VMA</strong> · Renfo + étirements.</div>
-            <div class="day-duration">50 min (1h30 : 65 min)</div>
-            <div class="day-tap-hint">👆 Voir le détail des 3 blocs</div>
+            <div class="day-type-label run">Footing léger</div>
+            <div class="day-detail"><strong>25–30 min à 7'15/km</strong> — Footing tranquille avant le départ pour le Portugal.</div>
+            <div class="day-duration">25–30 min</div>
+            <div class="day-tap-hint">👆 Voir le détail</div>
           </div>
         </div>
         <div class="day-row">
-          <div class="day-tag"><div class="day-name-short">Dim</div><span class="day-emoji">😴</span></div>
-          <div class="day-content"><div class="day-type-label rest">Repos</div></div>
+          <div class="day-tag"><div class="day-name-short">S/D</div><span class="day-emoji">🇵🇹</span></div>
+          <div class="day-content">
+            <div class="day-type-label active">Week-end Portugal</div>
+            <div class="day-detail">Repos ou footing libre si possible. Profite du week-end.</div>
+          </div>
         </div>
       </div>
     </div>
@@ -1283,9 +1317,9 @@ nav::-webkit-scrollbar { display: none; }
           <div class="day-tag"><div class="day-name-short">Mar</div><span class="day-emoji">💪</span></div>
           <div class="day-content"><div class="day-type-label muscu">Circuit A+</div><div class="day-detail"><strong>4 tours 45s/15s</strong> — Montée à 4 tours. Repos 90s entre tours. Squat sauté, Fentes marchées, Hip thrust, Squat bulgare (appui chaise), Montées de genoux running.</div><div class="day-duration">40 min · ~350 kcal</div></div>
         </div>
-        <div class="day-row">
-          <div class="day-tag"><div class="day-name-short">Mer</div><span class="day-emoji">🪢</span></div>
-          <div class="day-content"><div class="day-type-label corde">Corde + Muscu</div><div class="day-detail"><strong>Circuit combiné</strong> — 3 tours : 2 min corde / 1 min squats / 1 min repos.</div><div class="day-duration">20 min</div></div>
+        <div class="day-row clickable" onclick="openDay('cardio_alt','MERCREDI','Cardio alternatif')">
+          <div class="day-tag"><div class="day-name-short">Mer</div><span class="day-emoji">🏃</span></div>
+          <div class="day-content"><div class="day-type-label cardio-alt">Cardio alternatif</div><div class="day-detail"><strong>Corde en pause</strong> — 15 min de montées de genoux ou course en place.</div><div class="day-duration">15 min</div><div class="day-tap-hint">👆 Voir le détail</div></div>
         </div>
         <div class="day-row clickable" onclick="openDay('run_jeu_s34','JEUDI','Running · Fractionné')">
           <div class="day-tag"><div class="day-name-short">Jeu</div><span class="day-emoji">⚡</span></div>
@@ -1344,9 +1378,9 @@ nav::-webkit-scrollbar { display: none; }
           <div class="day-tag"><div class="day-name-short">Mar</div><span class="day-emoji">💪</span></div>
           <div class="day-content"><div class="day-type-label muscu">Circuit A · Full</div><div class="day-detail"><strong>4 tours 45s/15s</strong> — Squat sauté, Fentes marchées, Hip thrust 1 jambe, Squat bulgare, Wall sit + talons levés, Course en place genoux hauts.</div><div class="day-duration">40 min · ~380 kcal</div></div>
         </div>
-        <div class="day-row">
-          <div class="day-tag"><div class="day-name-short">Mer</div><span class="day-emoji">🪢</span></div>
-          <div class="day-content"><div class="day-type-label corde">HIIT Corde</div><div class="day-detail"><strong>10 × [30s sprint corde / 30s repos]</strong>. Vitesse maximale sur les sprints. Introduction double pied rapide.</div><div class="day-duration">22 min · ~280 kcal</div></div>
+        <div class="day-row clickable" onclick="openDay('cardio_alt','MERCREDI','Cardio alternatif')">
+          <div class="day-tag"><div class="day-name-short">Mer</div><span class="day-emoji">🏃</span></div>
+          <div class="day-content"><div class="day-type-label cardio-alt">Cardio alternatif</div><div class="day-detail"><strong>Corde en pause</strong> — 15 min de montées de genoux ou course en place.</div><div class="day-duration">15 min</div><div class="day-tap-hint">👆 Voir le détail</div></div>
         </div>
         <div class="day-row clickable" onclick="openDay('run_jeu_s56','JEUDI','Running · Fractionné')">
           <div class="day-tag"><div class="day-name-short">Jeu</div><span class="day-emoji">⚡</span></div>
@@ -1396,9 +1430,9 @@ nav::-webkit-scrollbar { display: none; }
           <div class="day-tag"><div class="day-name-short">Mar</div><span class="day-emoji">💪</span></div>
           <div class="day-content"><div class="day-type-label muscu">Circuit A Complexe</div><div class="day-detail"><strong>5 tours 40s/20s</strong> — Format plus court, plus intense. Enchainements bi-sets : Squat + squat sauté, Fente + pliométrie, Hip thrust lourd.</div><div class="day-duration">38 min · ~380 kcal</div></div>
         </div>
-        <div class="day-row">
-          <div class="day-tag"><div class="day-name-short">Mer</div><span class="day-emoji">🪢</span></div>
-          <div class="day-content"><div class="day-type-label corde">Circuit Corde + Corps</div><div class="day-detail"><strong>3 tours</strong> : 2 min corde / 1 min burpees / 1 min squat / 1 min repos.</div><div class="day-duration">25 min · ~320 kcal</div></div>
+        <div class="day-row clickable" onclick="openDay('cardio_alt','MERCREDI','Cardio alternatif')">
+          <div class="day-tag"><div class="day-name-short">Mer</div><span class="day-emoji">🏃</span></div>
+          <div class="day-content"><div class="day-type-label cardio-alt">Cardio alternatif</div><div class="day-detail"><strong>Corde en pause</strong> — 15 min de montées de genoux ou course en place.</div><div class="day-duration">15 min</div><div class="day-tap-hint">👆 Voir le détail</div></div>
         </div>
         <div class="day-row clickable" onclick="openDay('run_jeu_s56','JEUDI','Running · Fractionné')">
           <div class="day-tag"><div class="day-name-short">Jeu</div><span class="day-emoji">⚡</span></div>
@@ -1457,9 +1491,9 @@ nav::-webkit-scrollbar { display: none; }
           <div class="day-tag"><div class="day-name-short">Mar</div><span class="day-emoji">💪</span></div>
           <div class="day-content"><div class="day-type-label muscu">Full Body Circuit A</div><div class="day-detail"><strong>5 tours 45s/15s sans pause entre exercices</strong>. Repos 2 min entre tours seulement.</div><div class="day-duration">45 min · ~420 kcal</div></div>
         </div>
-        <div class="day-row">
-          <div class="day-tag"><div class="day-name-short">Mer</div><span class="day-emoji">🪢</span></div>
-          <div class="day-content"><div class="day-type-label corde">HIIT Corde intensif</div><div class="day-detail"><strong>15 × [30s max / 30s repos]</strong> — 15 séries. Mélange simple, alterné et course en place.</div><div class="day-duration">25 min · ~350 kcal</div></div>
+        <div class="day-row clickable" onclick="openDay('cardio_alt','MERCREDI','Cardio alternatif')">
+          <div class="day-tag"><div class="day-name-short">Mer</div><span class="day-emoji">🏃</span></div>
+          <div class="day-content"><div class="day-type-label cardio-alt">Cardio alternatif</div><div class="day-detail"><strong>Corde en pause</strong> — 15 min de montées de genoux ou course en place.</div><div class="day-duration">15 min</div><div class="day-tap-hint">👆 Voir le détail</div></div>
         </div>
         <div class="day-row clickable" onclick="openDay('run_jeu_s7','JEUDI','Running · Fractionné')">
           <div class="day-tag"><div class="day-name-short">Jeu</div><span class="day-emoji">⚡</span></div>
@@ -1509,9 +1543,9 @@ nav::-webkit-scrollbar { display: none; }
           <div class="day-tag"><div class="day-name-short">Mar</div><span class="day-emoji">💪</span></div>
           <div class="day-content"><div class="day-type-label muscu">Circuit A · Léger</div><div class="day-detail"><strong>3 tours 45s/15s</strong> — Retour à 3 tours. Qualité du mouvement, pas de performance.</div></div>
         </div>
-        <div class="day-row">
-          <div class="day-tag"><div class="day-name-short">Mer</div><span class="day-emoji">🪢</span></div>
-          <div class="day-content"><div class="day-type-label corde">Corde Plaisir</div><div class="day-detail"><strong>15 min libres</strong> — Pratique libre. Essayer des variations, s'amuser.</div></div>
+        <div class="day-row clickable" onclick="openDay('cardio_alt','MERCREDI','Cardio alternatif')">
+          <div class="day-tag"><div class="day-name-short">Mer</div><span class="day-emoji">🏃</span></div>
+          <div class="day-content"><div class="day-type-label cardio-alt">Cardio alternatif</div><div class="day-detail"><strong>Corde en pause</strong> — 15 min de montées de genoux ou course en place.</div><div class="day-duration">15 min</div><div class="day-tap-hint">👆 Voir le détail</div></div>
         </div>
         <div class="day-row clickable" onclick="openDay('run_jeu_s8','JEUDI','Running · Fractionné (décharge)')">
           <div class="day-tag"><div class="day-name-short">Jeu</div><span class="day-emoji">⚡</span></div>
@@ -1550,7 +1584,7 @@ nav::-webkit-scrollbar { display: none; }
       </div>
       <div class="prog-row-t"><div class="prog-cell week">S1</div><div class="prog-cell">2 × 12 min à 60% VMA</div><div class="prog-cell">2 tours</div><div class="prog-cell intensity i-low">Légère</div></div>
       <div class="prog-row-t"><div class="prog-cell week">S2</div><div class="prog-cell">60% VMA + sortie longue</div><div class="prog-cell">3 tours</div><div class="prog-cell intensity i-low">Légère+</div></div>
-      <div class="prog-row-t"><div class="prog-cell week">S3</div><div class="prog-cell">60–65% + 2 × 3 min à 70–75%</div><div class="prog-cell">3 tours 45s/15s</div><div class="prog-cell intensity i-mid">Modérée</div></div>
+      <div class="prog-row-t"><div class="prog-cell week">S3</div><div class="prog-cell">Z2 40 min + fractionné 6 × 30s</div><div class="prog-cell">3 tours 45s/15s</div><div class="prog-cell intensity i-mid">Compressée ✈️</div></div>
       <div class="prog-row-t"><div class="prog-cell week">S4</div><div class="prog-cell">60–65% + fractionné 80%</div><div class="prog-cell">4 tours</div><div class="prog-cell intensity i-mid">Modérée+</div></div>
       <div class="prog-row-t"><div class="prog-cell week">S5</div><div class="prog-cell">Fractionné 2 × (6 × 30s 80%)</div><div class="prog-cell">4 tours dense</div><div class="prog-cell intensity i-high">Élevée</div></div>
       <div class="prog-row-t"><div class="prog-cell week">S6</div><div class="prog-cell">Fractionné 80% + sortie longue</div><div class="prog-cell">5 tours bi-sets</div><div class="prog-cell intensity i-high">Très élevée</div></div>
@@ -2037,7 +2071,12 @@ nav::-webkit-scrollbar { display: none; }
 <div id="corde" class="section">
   <div class="sec-head"><h2>Apprendre la corde</h2><p>De débutant complet à HIIT corde en 8 semaines.</p></div>
 
-  <div class="exo-grid">
+  <div class="pause-banner">
+    <span class="pause-emoji">⏸️</span>
+    <span><strong>Apprentissage en pause</strong> — Tu reprendras quand tu es prêt. Le contenu est conservé ici pour quand tu veux.</span>
+  </div>
+
+  <div class="exo-grid paused">
     <div class="exo-card">
       <div class="exo-card-head" onclick="toggleExo(this)">
         <div class="exo-icon rope">🪢</div>
@@ -2208,14 +2247,14 @@ function showCat(id, btn) {
 
 // TRACKER
 const WEEKS = [
-  { num: 1, days: ['Run 35', 'Circuit A', 'Corde', 'Run 35', 'Circuit B', 'Récup', 'Repos'] },
-  { num: 2, days: ['Run 40', 'Circuit A', 'Corde', 'Run 40', 'Circuit B', 'Long run', 'Repos'] },
-  { num: 3, days: ['Run 40', 'Circuit A+', 'Corde', 'Fractionné', 'Circuit B+', 'Long run', 'Repos'] },
-  { num: 4, days: ['Run 45', 'Circuit A+', 'Corde+', 'Fractionné', 'Circuit B+', 'Long run', 'Repos'] },
-  { num: 5, days: ['Run Z2', 'Circuit A', 'HIIT Corde', 'Fractionné', 'Circuit B', 'Long run', 'Repos'] },
-  { num: 6, days: ['Run Z2/Z3', 'Circuit A', 'Corde+', 'Tabata', 'Circuit B', 'Long run 60', 'Repos'] },
-  { num: 7, days: ['Run Z2/Z3', 'Circuit A', 'HIIT Corde', 'Frac Long', 'Circuit B', 'Long 65', 'Repos'] },
-  { num: 8, days: ['Run léger', 'Circuit A', 'Corde libre', 'Frac modéré', 'Circuit B', 'Bilan', 'Repos'] },
+  { num: 1, days: ['Run 35', 'Circuit A', 'Cardio alt', 'Run 35', 'Circuit B', 'Récup', 'Repos'] },
+  { num: 2, days: ['Run 40', 'Circuit A', 'Cardio alt', 'Run 40', 'Circuit B', 'Long run', 'Repos'] },
+  { num: 3, days: ['Run Z2 40', 'Circuit A', 'Fractionné', 'Circuit B', 'Footing léger', 'WE Portugal', 'Repos'] },
+  { num: 4, days: ['Run 45', 'Circuit A+', 'Cardio alt', 'Fractionné', 'Circuit B+', 'Long run', 'Repos'] },
+  { num: 5, days: ['Run Z2', 'Circuit A', 'Cardio alt', 'Fractionné', 'Circuit B', 'Long run', 'Repos'] },
+  { num: 6, days: ['Run Z2/Z3', 'Circuit A', 'Cardio alt', 'Tabata', 'Circuit B', 'Long run 60', 'Repos'] },
+  { num: 7, days: ['Run Z2/Z3', 'Circuit A', 'Cardio alt', 'Frac Long', 'Circuit B', 'Long 65', 'Repos'] },
+  { num: 8, days: ['Run léger', 'Circuit A', 'Cardio alt', 'Frac modéré', 'Circuit B', 'Bilan', 'Repos'] },
 ];
 const DAYS = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
 const REST_IDX = 6;
@@ -3044,6 +3083,61 @@ const DAY_CONTENT = {
       </div>
     `
   },
+  run_z2_40: {
+    html: `
+      <div class="drawer-run-block">
+        <div class="drawer-run-zone zone-2">🎯 Zone 2 — Endurance · Brûle les graisses</div>
+        <p><strong>Effort perçu 5–6/10.</strong> Tu dois pouvoir tenir une conversation sans être haletant.</p>
+      </div>
+      <div class="drawer-sep">Structure de la séance (~53 min)</div>
+      <div class="drawer-info-block">
+        <p>🤸 <strong>5 min</strong> — Activation (mobilité + montées de genoux, talons-fesses)<br>
+        🏃 <strong>40 min</strong> — Footing allure Z2 (confort total)<br>
+        🧘 <strong>8 min</strong> — Étirements (mollets, ischios, quadriceps, fessiers, psoas)</p>
+      </div>
+      <div class="drawer-sep">Technique de course</div>
+      <div class="drawer-info-block">
+        <p>• Corps légèrement incliné vers l'avant (depuis les chevilles)<br>
+        • Regard à 10–15 m devant<br>
+        • Épaules basses, bras à 90°<br>
+        • Attaque milieu/avant-pied<br>
+        • Respiration : 3 pas inspiration / 2 pas expiration</p>
+      </div>
+    `
+  },
+  footing_portugal: {
+    html: `
+      <div class="drawer-run-block">
+        <div class="drawer-run-zone zone-2">🇵🇹 Footing léger — avant départ Portugal</div>
+        <p><strong>Allure très tranquille (~7'15/km).</strong> Séance facile pour finir la semaine sans fatigue avant le voyage.</p>
+      </div>
+      <div class="drawer-sep">Structure de la séance</div>
+      <div class="drawer-info-block">
+        <p>🏃 <strong>25–30 min en continu à 7'15/km</strong><br>
+        Pas d'intensité, pas de fractionné. Juste un footing souple pour entretenir sans se vider.<br><br>
+        Si fatigue ou timing serré avant le départ : 20 min suffisent.</p>
+      </div>
+    `
+  },
+  cardio_alt: {
+    html: `
+      <div class="drawer-info-block" style="background:var(--gold-bg); border-color:#f0d98a;">
+        <p>⏸️ <strong>Corde en pause</strong> — Remplacée par 15 min de montées de genoux ou course en place. Même effet cardio.</p>
+      </div>
+      <div class="drawer-sep">⏱ Déroulé (~15 min)</div>
+      <div class="drawer-info-block">
+        <p>
+        🏃 <strong>15 min</strong> de cardio sur place, en alternant librement :<br>
+        &nbsp;&nbsp;⬆️ Montées de genoux<br>
+        &nbsp;&nbsp;🏃 Course en place<br><br>
+        Format possible : 1 min d'effort soutenu / 30 sec calme, à répéter. Garde un rythme qui te fait monter le cœur sans t'épuiser.
+        </p>
+      </div>
+      <div class="drawer-sep">Le détail du mouvement</div>
+    ` + buildExoList([
+      { key: 'montees_genoux', dose: '15 min · alternance effort / calme', tip: 'Réception silencieuse sur la pointe des pieds, bras qui bougent comme en course' },
+    ])
+  },
   circuit_a_2t: {
     html: `
       <div class="drawer-info-block" style="background:var(--fire-bg); border-color:#f5c4b4;">
@@ -3082,6 +3176,10 @@ const DAY_CONTENT = {
       <div class="drawer-info-block" style="background:var(--fire-bg); border-color:#f5c4b4;">
         <p>💡 <strong>Rappel "tour" :</strong> tu fais les 5 exercices dans l'ordre → fin du tour 1 → 2 min repos → tu recommences = tour 2.<br><br>
         <strong>15 secondes</strong> entre chaque exercice pour se placer, pas plus.</p>
+      </div>
+
+      <div class="drawer-info-block" style="background:var(--gold-bg); border-color:#f0d98a;">
+        <p>💪 <strong>Pompes</strong> — Si tu n'arrives pas au nombre indiqué : fais jusqu'à l'échec, pause 10 sec, reprends. C'est normal que le haut soit plus dur que les jambes au début — ça progresse vite.</p>
       </div>
 
       <div class="drawer-sep">⏱ Déroulé complet (~25 min)</div>
@@ -3169,6 +3267,10 @@ const DAY_CONTENT = {
       <div class="drawer-info-block" style="background:var(--fire-bg); border-color:#f5c4b4;">
         <p>💡 <strong>3 tours, format 45s/15s.</strong> 6 exercices dans l'ordre → 2 min repos → recommencer.<br><br>
         Les burpees ici = <strong>version sans saut</strong> : tu te lèves debout au lieu de sauter.</p>
+      </div>
+
+      <div class="drawer-info-block" style="background:var(--gold-bg); border-color:#f0d98a;">
+        <p>💪 <strong>Pompes</strong> — Si tu n'arrives pas au nombre indiqué : fais jusqu'à l'échec, pause 10 sec, reprends. C'est normal que le haut soit plus dur que les jambes au début — ça progresse vite.</p>
       </div>
 
       <div class="drawer-sep">⏱ Déroulé (~35 min)</div>
