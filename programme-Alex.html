@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="app-build" content="alex-20260622-094254">
+<meta name="app-build" content="alex-20260622-161500">
 <title>Programme 8 Semaines — Perte de Poids</title>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -1241,28 +1241,23 @@ nav::-webkit-scrollbar { display: none; }
       <div class="week-body">
         <div class="week-note">
           <span class="week-note-emoji">✈️</span>
-          <span>Semaine compressée — départ Portugal vendredi soir. 5 séances sur 5 jours.</span>
+          <span>Semaine compressée — départ Portugal vendredi soir. 4 séances + 1 repos sur 5 jours.</span>
+        </div>
+        <div class="week-note">
+          <span class="week-note-emoji">🔄</span>
+          <span>Planning adapté — fractionné avancé au mardi, Circuit A décalé au jeudi.</span>
         </div>
         <div class="day-row clickable" onclick="openDay('run_z2_40','LUNDI','Running · Endurance Z2')">
           <div class="day-tag"><div class="day-name-short">Lun</div><span class="day-emoji">🏃</span></div>
           <div class="day-content">
             <div class="day-type-label run">Running · Endurance Z2</div>
             <div class="day-detail"><strong>Running Z2 40 min</strong> — Activation 5 min · 40 min en Z2 · Étirements 8 min.</div>
-            <div class="day-duration">~53 min</div>
+            <div class="day-duration">~53 min · ✅ déjà fait</div>
             <div class="day-tap-hint">👆 Voir le détail</div>
           </div>
         </div>
-        <div class="day-row clickable" onclick="openDay('circuit_a_3t','MARDI S3','Circuit A jambes — 3 tours 45s/15s')">
-          <div class="day-tag"><div class="day-name-short">Mar</div><span class="day-emoji">💪</span></div>
-          <div class="day-content">
-            <div class="day-type-label muscu">Circuit A · jambes</div>
-            <div class="day-detail"><strong>3 tours format 45s/15s</strong> — Squat sauté, Fentes marchées, Glute bridge 1 jambe, Wall sit 50 sec.</div>
-            <div class="day-duration">35 min · ~300 kcal</div>
-            <div class="day-tap-hint">👆 Voir le détail</div>
-          </div>
-        </div>
-        <div class="day-row clickable" onclick="openDay('fractionne_6','MERCREDI S3','Running · Fractionné')">
-          <div class="day-tag"><div class="day-name-short">Mer</div><span class="day-emoji">⚡</span></div>
+        <div class="day-row clickable" onclick="openDay('fractionne_6','MARDI S3','Running · Fractionné')">
+          <div class="day-tag"><div class="day-name-short">Mar</div><span class="day-emoji">⚡</span></div>
           <div class="day-content">
             <div class="day-type-label run">Running · Fractionné</div>
             <div class="day-detail"><strong>6 × [30s sprint / 90s récup]</strong> — 8 min échauffement + 8 min retour au calme.</div>
@@ -1270,11 +1265,15 @@ nav::-webkit-scrollbar { display: none; }
             <div class="day-tap-hint">👆 Voir le détail</div>
           </div>
         </div>
-        <div class="day-row clickable" onclick="openDay('circuit_b_3t','JEUDI S3','Circuit B haut + core — 3 tours 45s/15s')">
+        <div class="day-row">
+          <div class="day-tag"><div class="day-name-short">Mer</div><span class="day-emoji">🚶</span></div>
+          <div class="day-content"><div class="day-type-label active">Repos ou marche légère</div><div class="day-detail">Repos. <strong>Marche légère 20–30 min</strong> seulement si contrainte, sinon récupération complète.</div></div>
+        </div>
+        <div class="day-row clickable" onclick="openDay('circuit_a_3t','JEUDI S3','Circuit A jambes — 3 tours 45s/15s')">
           <div class="day-tag"><div class="day-name-short">Jeu</div><span class="day-emoji">💪</span></div>
           <div class="day-content">
-            <div class="day-type-label muscu">Circuit B · haut + core</div>
-            <div class="day-detail"><strong>3 tours 45s/15s</strong> — Pompes, Planche, Dips, Mountain climbers, Burpees, Crunchs.</div>
+            <div class="day-type-label muscu">Circuit A · jambes</div>
+            <div class="day-detail"><strong>3 tours format 45s/15s</strong> — Squat sauté, Fentes marchées, Glute bridge 1 jambe, Wall sit 50 sec. <em>(décalé de mardi)</em></div>
             <div class="day-duration">35 min · ~300 kcal</div>
             <div class="day-tap-hint">👆 Voir le détail</div>
           </div>
@@ -2342,7 +2341,7 @@ function showCat(id, btn) {
 const WEEKS = [
   { num: 1, days: ['Run 35', 'Circuit A', 'Cardio alt', 'Run 35', 'Circuit B', 'Récup', 'Repos'] },
   { num: 2, days: ['Run 40', 'Circuit A', 'Cardio alt', 'Run 40', 'Circuit B', 'Long run', 'Repos'] },
-  { num: 3, days: ['Run Z2 40', 'Circuit A', 'Fractionné', 'Circuit B', 'Footing léger', 'WE Portugal', 'Repos'] },
+  { num: 3, days: ['Run Z2 40', 'Fractionné', 'Repos', 'Circuit A', 'Footing léger', 'WE Portugal', 'Repos'] },
   { num: 4, days: ['Z2 45', 'Circuit A', 'Fractionné', 'Z2 45', 'Circuit B', 'Allure 5km', 'Repos'] },
   { num: 5, days: ['Z2 45', 'Circuit A', 'Fractionné', 'Z2 50', 'Circuit B', 'Allure 6km', 'Repos'] },
   { num: 6, days: ['Z2 40', 'Circuit A', 'Frac court', 'Marche', 'Repos', '🏁 Course', 'Repos'] },
