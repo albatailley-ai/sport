@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="app-build" content="alex-20260621-113322">
+<meta name="app-build" content="alex-20260622-094254">
 <title>Programme 8 Semaines — Perte de Poids</title>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -1300,47 +1300,62 @@ nav::-webkit-scrollbar { display: none; }
 
     <div class="week-block">
       <div class="week-head" onclick="toggleWeek(this)">
-        <div class="week-head-left"><span class="week-num">S4</span><span class="week-name">Volume — Augmentation générale</span></div>
+        <div class="week-head-left"><span class="week-num">S4</span><span class="week-name">Construction allure — Cap sur la course</span></div>
         <span class="week-arrow">▾</span>
       </div>
       <div class="week-body">
-        <div class="day-row clickable" onclick="openDay('run_lun_s34','LUNDI','Running · Endurance')">
+        <div class="day-row clickable" onclick="openDay('z2_45','LUNDI','Running · Z2 endurance')">
           <div class="day-tag"><div class="day-name-short">Lun</div><span class="day-emoji">🏃</span></div>
           <div class="day-content">
-            <div class="day-type-label run">Running · Endurance</div>
-            <div class="day-detail"><strong>Séance 3 blocs</strong> — Activation · <strong>25 min à 60–65% VMA + 2 × 3 min à 70–75%</strong> · Renfo + étirements.</div>
-            <div class="day-duration">40–45 min (1h30 : 55–60 min)</div>
-            <div class="day-tap-hint">👆 Voir le détail des 3 blocs</div>
+            <div class="day-type-label run">Running · Z2</div>
+            <div class="day-detail"><strong>Z2 45 min à 7'10/km</strong> — Endurance fondamentale, brûle-graisses. Allure conversation.</div>
+            <div class="day-duration">~60 min (activation + renfo inclus)</div>
+            <div class="day-tap-hint">👆 Voir le détail + allures</div>
           </div>
         </div>
-        <div class="day-row">
+        <div class="day-row clickable" onclick="openDay('circuit_a_3t','MARDI','Circuit A — 4 tours')">
           <div class="day-tag"><div class="day-name-short">Mar</div><span class="day-emoji">💪</span></div>
-          <div class="day-content"><div class="day-type-label muscu">Circuit A+</div><div class="day-detail"><strong>4 tours 45s/15s</strong> — Montée à 4 tours. Repos 90s entre tours. Squat sauté, Fentes marchées, Hip thrust, Squat bulgare (appui chaise), Montées de genoux running.</div><div class="day-duration">40 min · ~350 kcal</div></div>
+          <div class="day-content">
+            <div class="day-type-label muscu">Circuit A · jambes</div>
+            <div class="day-detail"><strong>4 tours 45s/15s</strong> — Maintien musculaire + core. Squat sauté, Fentes, Hip thrust, Wall sit, Montées de genoux.</div>
+            <div class="day-duration">40 min · ~350 kcal</div>
+            <div class="day-tap-hint">👆 Voir le détail</div>
+          </div>
         </div>
-        <div class="day-row clickable" onclick="openDay('cardio_alt','MERCREDI','Cardio alternatif')">
-          <div class="day-tag"><div class="day-name-short">Mer</div><span class="day-emoji">🏃</span></div>
-          <div class="day-content"><div class="day-type-label cardio-alt">Cardio alternatif</div><div class="day-detail"><strong>Corde en pause</strong> — 15 min de montées de genoux ou course en place.</div><div class="day-duration">15 min</div><div class="day-tap-hint">👆 Voir le détail</div></div>
-        </div>
-        <div class="day-row clickable" onclick="openDay('run_jeu_s34','JEUDI','Running · Fractionné')">
-          <div class="day-tag"><div class="day-name-short">Jeu</div><span class="day-emoji">⚡</span></div>
+        <div class="day-row clickable" onclick="openDay('frac_s4','MERCREDI','Running · Fractionné')">
+          <div class="day-tag"><div class="day-name-short">Mer</div><span class="day-emoji">⚡</span></div>
           <div class="day-content">
             <div class="day-type-label run">Running · Fractionné</div>
-            <div class="day-detail"><strong>Séance 3 blocs</strong> — Activation · <strong>10 min + 6 × (30s à 80% / 30s lent) + 8 min</strong> · Renfo + étirements.</div>
-            <div class="day-duration">40–45 min (1h30 : 55–60 min)</div>
-            <div class="day-tap-hint">👆 Voir le détail des 3 blocs</div>
+            <div class="day-detail"><strong>8 × [30s sprint / 90s récup]</strong> — VMA + allure. Chaque sprint = -2 à -3 sec/km sur ta course.</div>
+            <div class="day-duration">~30 min</div>
+            <div class="day-tap-hint">👆 Voir le détail + allures</div>
           </div>
         </div>
-        <div class="day-row">
-          <div class="day-tag"><div class="day-name-short">Ven</div><span class="day-emoji">💪</span></div>
-          <div class="day-content"><div class="day-type-label muscu">Circuit B+</div><div class="day-detail"><strong>4 tours 45s/15s</strong></div><div class="day-duration">40 min · ~350 kcal</div></div>
-        </div>
-        <div class="day-row clickable" onclick="openDay('run_sam_s34','SAMEDI','Running · Sortie longue')">
-          <div class="day-tag"><div class="day-name-short">Sam</div><span class="day-emoji">🏃</span></div>
+        <div class="day-row clickable" onclick="openDay('z2_45','JEUDI','Running · Z2 endurance')">
+          <div class="day-tag"><div class="day-name-short">Jeu</div><span class="day-emoji">🏃</span></div>
           <div class="day-content">
-            <div class="day-type-label run">Running · Sortie longue</div>
-            <div class="day-detail"><strong>Séance 3 blocs</strong> — Activation · <strong>35 min continu à 60–65% VMA</strong> · Renfo + étirements.</div>
-            <div class="day-duration">50 min (1h30 : 65 min)</div>
-            <div class="day-tap-hint">👆 Voir le détail des 3 blocs</div>
+            <div class="day-type-label run">Running · Z2</div>
+            <div class="day-detail"><strong>Z2 45 min à 7'10/km</strong> — Deuxième dose d'endurance fondamentale de la semaine.</div>
+            <div class="day-duration">~60 min</div>
+            <div class="day-tap-hint">👆 Voir le détail + allures</div>
+          </div>
+        </div>
+        <div class="day-row clickable" onclick="openDay('circuit_b_3t','VENDREDI','Circuit B — 4 tours')">
+          <div class="day-tag"><div class="day-name-short">Ven</div><span class="day-emoji">💪</span></div>
+          <div class="day-content">
+            <div class="day-type-label muscu">Circuit B · haut + core</div>
+            <div class="day-detail"><strong>4 tours 45s/15s</strong> — Pompes, Planche, Dips, Mountain climbers, Burpees, Crunchs.</div>
+            <div class="day-duration">40 min · ~350 kcal</div>
+            <div class="day-tap-hint">👆 Voir le détail</div>
+          </div>
+        </div>
+        <div class="day-row clickable" onclick="openDay('cible_s4','SAMEDI','Running · Allure cible 10 km')">
+          <div class="day-tag"><div class="day-name-short">Sam</div><span class="day-emoji">🎯</span></div>
+          <div class="day-content">
+            <div class="day-type-label run">Running · Allure cible</div>
+            <div class="day-detail"><strong>5 km à 6'20/km</strong> — Progressif : départ 6'30, fin 6'10. Sentir l'allure course.</div>
+            <div class="day-duration">~40 min (échauffement + retour au calme)</div>
+            <div class="day-tap-hint">👆 Voir le détail + allures</div>
           </div>
         </div>
         <div class="day-row">
@@ -1354,54 +1369,69 @@ nav::-webkit-scrollbar { display: none; }
   <!-- PHASE 3 -->
   <div id="p3" class="phase-section">
     <div class="phase-intro">
-      <div class="phase-tag tag-intensite">Phase 3 · Intensité</div>
-      <div class="phase-intro-title">Semaines 5–6 · Accélération</div>
-      <div class="phase-intro-desc">Les adaptations physiques sont en place. On pousse l'intensité : fractionné plus dense, circuits 45s/15s complets, corde intégrée dans des HIIT. C'est ici que la silhouette change visiblement.</div>
+      <div class="phase-tag tag-intensite">Phase 3 · Intensité + Course</div>
+      <div class="phase-intro-title">Semaines 5–6 · Intensification puis course 10 km</div>
+      <div class="phase-intro-desc">On densifie le fractionné et on rapproche l'allure cible de l'objectif course. La S6 est une semaine d'affûtage : on garde les jambes vives sans fatiguer, direction le <strong>10 km mi-juillet</strong> (objectif : battre 1h02'50).</div>
     </div>
 
     <div class="week-block">
       <div class="week-head" onclick="toggleWeek(this)">
-        <div class="week-head-left"><span class="week-num">S5</span><span class="week-name">Densité — Moins de repos, plus de travail</span></div>
+        <div class="week-head-left"><span class="week-num">S5</span><span class="week-name">Intensification — Récup réduite</span></div>
         <span class="week-arrow">▾</span>
       </div>
       <div class="week-body">
-        <div class="day-row clickable" onclick="openDay('run_lun_s56','LUNDI','Running · Endurance')">
+        <div class="day-row clickable" onclick="openDay('z2_45','LUNDI','Running · Z2 endurance')">
           <div class="day-tag"><div class="day-name-short">Lun</div><span class="day-emoji">🏃</span></div>
           <div class="day-content">
-            <div class="day-type-label run">Running · Endurance</div>
-            <div class="day-detail"><strong>Séance 3 blocs</strong> — Activation · <strong>10 min + 2 × (6 × 30s à 80% / 30s lent) + 8 min</strong> · Renfo + étirements.</div>
-            <div class="day-duration">40–45 min (1h30 : 55–60 min)</div>
-            <div class="day-tap-hint">👆 Voir le détail des 3 blocs</div>
+            <div class="day-type-label run">Running · Z2</div>
+            <div class="day-detail"><strong>Z2 45 min à 7'10/km</strong> — Endurance fondamentale, allure conversation.</div>
+            <div class="day-duration">~60 min</div>
+            <div class="day-tap-hint">👆 Voir le détail + allures</div>
           </div>
         </div>
-        <div class="day-row">
+        <div class="day-row clickable" onclick="openDay('circuit_a_3t','MARDI','Circuit A — 4 tours dense')">
           <div class="day-tag"><div class="day-name-short">Mar</div><span class="day-emoji">💪</span></div>
-          <div class="day-content"><div class="day-type-label muscu">Circuit A · Full</div><div class="day-detail"><strong>4 tours 45s/15s</strong> — Squat sauté, Fentes marchées, Hip thrust 1 jambe, Squat bulgare, Wall sit + talons levés, Course en place genoux hauts.</div><div class="day-duration">40 min · ~380 kcal</div></div>
+          <div class="day-content">
+            <div class="day-type-label muscu">Circuit A · jambes</div>
+            <div class="day-detail"><strong>4 tours dense 45s/15s</strong> — Repos raccourci entre tours. Squat sauté, Fentes, Hip thrust, Wall sit, Montées de genoux.</div>
+            <div class="day-duration">40 min · ~380 kcal</div>
+            <div class="day-tap-hint">👆 Voir le détail</div>
+          </div>
         </div>
-        <div class="day-row clickable" onclick="openDay('cardio_alt','MERCREDI','Cardio alternatif')">
-          <div class="day-tag"><div class="day-name-short">Mer</div><span class="day-emoji">🏃</span></div>
-          <div class="day-content"><div class="day-type-label cardio-alt">Cardio alternatif</div><div class="day-detail"><strong>Corde en pause</strong> — 15 min de montées de genoux ou course en place.</div><div class="day-duration">15 min</div><div class="day-tap-hint">👆 Voir le détail</div></div>
-        </div>
-        <div class="day-row clickable" onclick="openDay('run_jeu_s56','JEUDI','Running · Fractionné')">
-          <div class="day-tag"><div class="day-name-short">Jeu</div><span class="day-emoji">⚡</span></div>
+        <div class="day-row clickable" onclick="openDay('frac_s5','MERCREDI','Running · Fractionné')">
+          <div class="day-tag"><div class="day-name-short">Mer</div><span class="day-emoji">⚡</span></div>
           <div class="day-content">
             <div class="day-type-label run">Running · Fractionné</div>
-            <div class="day-detail"><strong>Séance 3 blocs</strong> — Activation · <strong>10 min + 2 × (8 × 30s à 80% / 30s lent) + 6 min</strong> · Renfo + étirements.</div>
-            <div class="day-duration">40–45 min (1h30 : 55–60 min)</div>
-            <div class="day-tap-hint">👆 Voir le détail des 3 blocs</div>
+            <div class="day-detail"><strong>10 × [30s sprint / 60s récup]</strong> — Récup réduite à 60s. Plus de densité = allure course qui progresse.</div>
+            <div class="day-duration">~32 min</div>
+            <div class="day-tap-hint">👆 Voir le détail + allures</div>
           </div>
         </div>
-        <div class="day-row">
-          <div class="day-tag"><div class="day-name-short">Ven</div><span class="day-emoji">💪</span></div>
-          <div class="day-content"><div class="day-type-label muscu">Circuit B · Full</div><div class="day-detail"><strong>4 tours 45s/15s</strong> — Pompes pirates, Planche latérale alternée, Dips + leg raise, Mountain climbers rapides, Burpees complets × 10, Crunchs obliques.</div><div class="day-duration">40 min · ~380 kcal</div></div>
-        </div>
-        <div class="day-row clickable" onclick="openDay('run_sam_s56','SAMEDI','Running · Sortie longue')">
-          <div class="day-tag"><div class="day-name-short">Sam</div><span class="day-emoji">🏃</span></div>
+        <div class="day-row clickable" onclick="openDay('z2_50','JEUDI','Running · Z2 endurance')">
+          <div class="day-tag"><div class="day-name-short">Jeu</div><span class="day-emoji">🏃</span></div>
           <div class="day-content">
-            <div class="day-type-label run">Running · Sortie longue</div>
-            <div class="day-detail"><strong>Séance 3 blocs</strong> — Activation · <strong>40 min continu à 60–65% VMA</strong> (à jeun si possible) · Renfo + étirements.</div>
-            <div class="day-duration">55 min (1h30 : 70 min)</div>
-            <div class="day-tap-hint">👆 Voir le détail des 3 blocs</div>
+            <div class="day-type-label run">Running · Z2</div>
+            <div class="day-detail"><strong>Z2 50 min à 7'10/km</strong> — On allonge un peu : +5 min vs lundi.</div>
+            <div class="day-duration">~65 min</div>
+            <div class="day-tap-hint">👆 Voir le détail + allures</div>
+          </div>
+        </div>
+        <div class="day-row clickable" onclick="openDay('circuit_b_3t','VENDREDI','Circuit B — 4 tours dense')">
+          <div class="day-tag"><div class="day-name-short">Ven</div><span class="day-emoji">💪</span></div>
+          <div class="day-content">
+            <div class="day-type-label muscu">Circuit B · haut + core</div>
+            <div class="day-detail"><strong>4 tours dense 45s/15s</strong> — Pompes, Planche, Dips, Mountain climbers, Burpees, Crunchs.</div>
+            <div class="day-duration">40 min · ~380 kcal</div>
+            <div class="day-tap-hint">👆 Voir le détail</div>
+          </div>
+        </div>
+        <div class="day-row clickable" onclick="openDay('cible_s5','SAMEDI','Running · Allure cible 10 km')">
+          <div class="day-tag"><div class="day-name-short">Sam</div><span class="day-emoji">🎯</span></div>
+          <div class="day-content">
+            <div class="day-type-label run">Running · Allure cible</div>
+            <div class="day-detail"><strong>6 km à 6'15/km</strong> — Progressif : départ 6'25, fin 6'05. +1 km vs S4.</div>
+            <div class="day-duration">~45 min</div>
+            <div class="day-tap-hint">👆 Voir le détail + allures</div>
           </div>
         </div>
         <div class="day-row">
@@ -1413,52 +1443,57 @@ nav::-webkit-scrollbar { display: none; }
 
     <div class="week-block">
       <div class="week-head" onclick="toggleWeek(this)">
-        <div class="week-head-left"><span class="week-num">S6</span><span class="week-name">Pic d'intensité — Semaine test</span></div>
+        <div class="week-head-left"><span class="week-num">S6</span><span class="week-name">Affûtage — 🏁 Course 10 km mi-juillet</span></div>
         <span class="week-arrow">▾</span>
       </div>
       <div class="week-body">
-        <div class="day-row clickable" onclick="openDay('run_lun_s56','LUNDI','Running · Endurance')">
+        <div class="week-note">
+          <span class="week-note-emoji">🏁</span>
+          <span>Semaine d'affûtage : on garde les jambes vives sans fatiguer. <strong>Course 10 km ce week-end</strong> — objectif battre 1h02'50 (6'17/km).</span>
+        </div>
+        <div class="day-row clickable" onclick="openDay('z2_40leger','LUNDI','Running · Z2 léger')">
           <div class="day-tag"><div class="day-name-short">Lun</div><span class="day-emoji">🏃</span></div>
           <div class="day-content">
-            <div class="day-type-label run">Running · Endurance</div>
-            <div class="day-detail"><strong>Séance 3 blocs</strong> — Activation · <strong>10 min + 2 × (6 × 30s à 80% / 30s lent) + 8 min</strong> · Renfo + étirements.</div>
-            <div class="day-duration">40–45 min (1h30 : 55–60 min)</div>
-            <div class="day-tap-hint">👆 Voir le détail des 3 blocs</div>
+            <div class="day-type-label run">Running · Z2 léger</div>
+            <div class="day-detail"><strong>Z2 40 min léger à 7'10/km</strong> — Allure très souple, tu finis frais. On entretient, on ne creuse pas.</div>
+            <div class="day-duration">~52 min</div>
+            <div class="day-tap-hint">👆 Voir le détail + allures</div>
           </div>
         </div>
-        <div class="day-row">
+        <div class="day-row clickable" onclick="openDay('circuit_a_3t','MARDI','Circuit A — 3 tours (décharge)')">
           <div class="day-tag"><div class="day-name-short">Mar</div><span class="day-emoji">💪</span></div>
-          <div class="day-content"><div class="day-type-label muscu">Circuit A Complexe</div><div class="day-detail"><strong>5 tours 40s/20s</strong> — Format plus court, plus intense. Enchainements bi-sets : Squat + squat sauté, Fente + pliométrie, Hip thrust lourd.</div><div class="day-duration">38 min · ~380 kcal</div></div>
-        </div>
-        <div class="day-row clickable" onclick="openDay('cardio_alt','MERCREDI','Cardio alternatif')">
-          <div class="day-tag"><div class="day-name-short">Mer</div><span class="day-emoji">🏃</span></div>
-          <div class="day-content"><div class="day-type-label cardio-alt">Cardio alternatif</div><div class="day-detail"><strong>Corde en pause</strong> — 15 min de montées de genoux ou course en place.</div><div class="day-duration">15 min</div><div class="day-tap-hint">👆 Voir le détail</div></div>
-        </div>
-        <div class="day-row clickable" onclick="openDay('run_jeu_s56','JEUDI','Running · Fractionné')">
-          <div class="day-tag"><div class="day-name-short">Jeu</div><span class="day-emoji">⚡</span></div>
           <div class="day-content">
-            <div class="day-type-label run">Running · Fractionné</div>
-            <div class="day-detail"><strong>Séance 3 blocs</strong> — Activation · <strong>10 min + 2 × (8 × 30s à 80% / 30s lent) + 6 min</strong> · Renfo + étirements.</div>
-            <div class="day-duration">40–45 min (1h30 : 55–60 min)</div>
-            <div class="day-tap-hint">👆 Voir le détail des 3 blocs</div>
+            <div class="day-type-label muscu">Circuit A · jambes</div>
+            <div class="day-detail"><strong>3 tours 45s/15s (décharge légère)</strong> — Qualité du mouvement, pas de performance. On préserve les jambes pour la course.</div>
+            <div class="day-duration">35 min</div>
+            <div class="day-tap-hint">👆 Voir le détail</div>
+          </div>
+        </div>
+        <div class="day-row clickable" onclick="openDay('frac_s6','MERCREDI','Running · Fractionné court')">
+          <div class="day-tag"><div class="day-name-short">Mer</div><span class="day-emoji">⚡</span></div>
+          <div class="day-content">
+            <div class="day-type-label run">Running · Fractionné court</div>
+            <div class="day-detail"><strong>6 × [20s sprint / 90s récup]</strong> — Garder les jambes vives sans fatiguer. Sprints courts, récup longue.</div>
+            <div class="day-duration">~26 min</div>
+            <div class="day-tap-hint">👆 Voir le détail + allures</div>
           </div>
         </div>
         <div class="day-row">
-          <div class="day-tag"><div class="day-name-short">Ven</div><span class="day-emoji">💪</span></div>
-          <div class="day-content"><div class="day-type-label muscu">Circuit B Complexe</div><div class="day-detail"><strong>5 tours 40s/20s</strong></div><div class="day-duration">38 min · ~380 kcal</div></div>
-        </div>
-        <div class="day-row clickable" onclick="openDay('run_sam_s56','SAMEDI','Running · Sortie longue')">
-          <div class="day-tag"><div class="day-name-short">Sam</div><span class="day-emoji">🏃</span></div>
-          <div class="day-content">
-            <div class="day-type-label run">Running · Sortie longue</div>
-            <div class="day-detail"><strong>Séance 3 blocs</strong> — Activation · <strong>40 min continu à 60–65% VMA</strong> · Renfo + étirements.</div>
-            <div class="day-duration">55 min (1h30 : 70 min)</div>
-            <div class="day-tap-hint">👆 Voir le détail des 3 blocs</div>
-          </div>
+          <div class="day-tag"><div class="day-name-short">Jeu</div><span class="day-emoji">🚶</span></div>
+          <div class="day-content"><div class="day-type-label active">Repos ou marche</div><div class="day-detail"><strong>Repos ou marche 30 min</strong> — Récupération active légère, rien d'intense.</div></div>
         </div>
         <div class="day-row">
-          <div class="day-tag"><div class="day-name-short">Dim</div><span class="day-emoji">😴</span></div>
-          <div class="day-content"><div class="day-type-label rest">Repos complet — Tu le mérites</div></div>
+          <div class="day-tag"><div class="day-name-short">Ven</div><span class="day-emoji">😴</span></div>
+          <div class="day-content"><div class="day-type-label rest">Repos complet</div><div class="day-detail">Veille de course : repos total, hydratation, repas riche en glucides le soir.</div></div>
+        </div>
+        <div class="day-row clickable" onclick="openDay('course_10k','SAM / DIM','🏁 Course 10 km')">
+          <div class="day-tag"><div class="day-name-short">S/D</div><span class="day-emoji">🏁</span></div>
+          <div class="day-content">
+            <div class="day-type-label run">🏁 Course 10 km</div>
+            <div class="day-detail"><strong>Objectif : battre 1h02'50 (6'17/km).</strong> Départ contrôlé à 6'20, accélère sur la 2ᵉ moitié.</div>
+            <div class="day-duration">10 km · ~1h02</div>
+            <div class="day-tap-hint">👆 Stratégie de course + allures</div>
+          </div>
         </div>
       </div>
     </div>
@@ -1467,106 +1502,149 @@ nav::-webkit-scrollbar { display: none; }
   <!-- PHASE 4 -->
   <div id="p4" class="phase-section">
     <div class="phase-intro">
-      <div class="phase-tag tag-peak">Phase 4 · Peak</div>
-      <div class="phase-intro-title">Semaines 7–8 · Pic et ancrage</div>
-      <div class="phase-intro-desc">Niveau maximum. Séance 7 = charge maximale. Séance 8 = légère décharge pour ancrer les acquis et mesurer les progrès. Fin de programme = bilan et transition vers programme de maintien.</div>
+      <div class="phase-tag tag-peak">Phase 4 · Relance & Peak final</div>
+      <div class="phase-intro-title">Semaines 7–8 · Récupération puis peak — objectif sub-1h</div>
+      <div class="phase-intro-desc">Après la course : S7 = récupération + relance progressive (Z2 léger, fractionné réintroduit, circuits 3 tours). S8 = peak final, la semaine la plus chargée avant le bilan. On vise désormais le <strong>sub-1h (6'00/km)</strong>.</div>
     </div>
 
     <div class="week-block">
       <div class="week-head" onclick="toggleWeek(this)">
-        <div class="week-head-left"><span class="week-num">S7</span><span class="week-name">Overload — Charge maximale</span></div>
+        <div class="week-head-left"><span class="week-num">S7</span><span class="week-name">Récupération + relance</span></div>
         <span class="week-arrow">▾</span>
       </div>
       <div class="week-body">
-        <div class="day-row clickable" onclick="openDay('run_lun_s7','LUNDI','Running · Endurance')">
+        <div class="week-note">
+          <span class="week-note-emoji">🌱</span>
+          <span>Semaine de relance après la course : Z2 léger, fractionné réintroduit en douceur, circuits 3 tours seulement.</span>
+        </div>
+        <div class="day-row clickable" onclick="openDay('z2_40leger','LUNDI','Running · Z2 léger')">
           <div class="day-tag"><div class="day-name-short">Lun</div><span class="day-emoji">🏃</span></div>
           <div class="day-content">
-            <div class="day-type-label run">Running · Endurance</div>
-            <div class="day-detail"><strong>Séance 3 blocs</strong> — Activation · <strong>10 min + 3 × (6 × 30s à 80% / 30s lent) + 8 min</strong> · Renfo + étirements.</div>
-            <div class="day-duration">40–45 min (1h30 : 55–60 min)</div>
-            <div class="day-tap-hint">👆 Voir le détail des 3 blocs</div>
+            <div class="day-type-label run">Running · Z2 léger</div>
+            <div class="day-detail"><strong>Z2 40 min léger à 7'10/km</strong> — Reprise tout en souplesse après la course.</div>
+            <div class="day-duration">~52 min</div>
+            <div class="day-tap-hint">👆 Voir le détail + allures</div>
           </div>
         </div>
-        <div class="day-row">
+        <div class="day-row clickable" onclick="openDay('circuit_a_3t','MARDI','Circuit A — 3 tours')">
           <div class="day-tag"><div class="day-name-short">Mar</div><span class="day-emoji">💪</span></div>
-          <div class="day-content"><div class="day-type-label muscu">Full Body Circuit A</div><div class="day-detail"><strong>5 tours 45s/15s sans pause entre exercices</strong>. Repos 2 min entre tours seulement.</div><div class="day-duration">45 min · ~420 kcal</div></div>
+          <div class="day-content">
+            <div class="day-type-label muscu">Circuit A · jambes</div>
+            <div class="day-detail"><strong>3 tours 45s/15s</strong> — Retour aux 3 tours. Qualité du mouvement.</div>
+            <div class="day-duration">35 min</div>
+            <div class="day-tap-hint">👆 Voir le détail</div>
+          </div>
         </div>
-        <div class="day-row clickable" onclick="openDay('cardio_alt','MERCREDI','Cardio alternatif')">
-          <div class="day-tag"><div class="day-name-short">Mer</div><span class="day-emoji">🏃</span></div>
-          <div class="day-content"><div class="day-type-label cardio-alt">Cardio alternatif</div><div class="day-detail"><strong>Corde en pause</strong> — 15 min de montées de genoux ou course en place.</div><div class="day-duration">15 min</div><div class="day-tap-hint">👆 Voir le détail</div></div>
-        </div>
-        <div class="day-row clickable" onclick="openDay('run_jeu_s7','JEUDI','Running · Fractionné')">
-          <div class="day-tag"><div class="day-name-short">Jeu</div><span class="day-emoji">⚡</span></div>
+        <div class="day-row clickable" onclick="openDay('frac_s7','MERCREDI','Running · Fractionné (relance)')">
+          <div class="day-tag"><div class="day-name-short">Mer</div><span class="day-emoji">⚡</span></div>
           <div class="day-content">
             <div class="day-type-label run">Running · Fractionné</div>
-            <div class="day-detail"><strong>Séance 3 blocs</strong> — Activation · <strong>10 min + 3 × (8 × 30s à 80% / 30s lent) + 6 min</strong> · Renfo + étirements.</div>
-            <div class="day-duration">40–45 min (1h30 : 55–60 min)</div>
-            <div class="day-tap-hint">👆 Voir le détail des 3 blocs</div>
+            <div class="day-detail"><strong>Réintroduction — 6 × [30s sprint / 90s récup]</strong> — On remet de l'intensité en douceur, récup longue.</div>
+            <div class="day-duration">~28 min</div>
+            <div class="day-tap-hint">👆 Voir le détail + allures</div>
           </div>
         </div>
-        <div class="day-row">
-          <div class="day-tag"><div class="day-name-short">Ven</div><span class="day-emoji">💪</span></div>
-          <div class="day-content"><div class="day-type-label muscu">Full Body Circuit B</div><div class="day-detail"><strong>5 tours 45s/15s</strong></div><div class="day-duration">45 min · ~420 kcal</div></div>
-        </div>
-        <div class="day-row clickable" onclick="openDay('run_sam_s7','SAMEDI','Running · Sortie longue')">
-          <div class="day-tag"><div class="day-name-short">Sam</div><span class="day-emoji">🏃</span></div>
+        <div class="day-row clickable" onclick="openDay('z2_40leger','JEUDI','Running · Z2 léger')">
+          <div class="day-tag"><div class="day-name-short">Jeu</div><span class="day-emoji">🏃</span></div>
           <div class="day-content">
-            <div class="day-type-label run">Running · Sortie longue</div>
-            <div class="day-detail"><strong>Séance 3 blocs</strong> — Activation · <strong>45 min continu à 60–65% VMA</strong> (record du programme) · Renfo + étirements.</div>
-            <div class="day-duration">60 min (1h30 : 75 min)</div>
-            <div class="day-tap-hint">👆 Voir le détail des 3 blocs</div>
+            <div class="day-type-label run">Running · Z2 léger</div>
+            <div class="day-detail"><strong>Z2 40 min léger à 7'10/km</strong> — Deuxième footing souple de la semaine.</div>
+            <div class="day-duration">~52 min</div>
+            <div class="day-tap-hint">👆 Voir le détail + allures</div>
+          </div>
+        </div>
+        <div class="day-row clickable" onclick="openDay('circuit_b_3t','VENDREDI','Circuit B — 3 tours')">
+          <div class="day-tag"><div class="day-name-short">Ven</div><span class="day-emoji">💪</span></div>
+          <div class="day-content">
+            <div class="day-type-label muscu">Circuit B · haut + core</div>
+            <div class="day-detail"><strong>3 tours 45s/15s</strong> — Pompes, Planche, Dips, Mountain climbers, Burpees, Crunchs.</div>
+            <div class="day-duration">35 min</div>
+            <div class="day-tap-hint">👆 Voir le détail</div>
+          </div>
+        </div>
+        <div class="day-row clickable" onclick="openDay('cible_s7','SAMEDI','Running · Allure cible 10 km')">
+          <div class="day-tag"><div class="day-name-short">Sam</div><span class="day-emoji">🎯</span></div>
+          <div class="day-content">
+            <div class="day-type-label run">Running · Allure cible</div>
+            <div class="day-detail"><strong>5 km à 6'10/km</strong> — Progressif : départ 6'20, fin 6'00. On vise déjà l'allure sub-1h.</div>
+            <div class="day-duration">~40 min</div>
+            <div class="day-tap-hint">👆 Voir le détail + allures</div>
           </div>
         </div>
         <div class="day-row">
           <div class="day-tag"><div class="day-name-short">Dim</div><span class="day-emoji">😴</span></div>
-          <div class="day-content"><div class="day-type-label rest">Repos absolu</div></div>
+          <div class="day-content"><div class="day-type-label rest">Repos</div></div>
         </div>
       </div>
     </div>
 
     <div class="week-block">
       <div class="week-head" onclick="toggleWeek(this)">
-        <div class="week-head-left"><span class="week-num">S8</span><span class="week-name">Décharge — Consolider et mesurer</span></div>
+        <div class="week-head-left"><span class="week-num">S8</span><span class="week-name">Peak final — Bilan & cap sub-1h</span></div>
         <span class="week-arrow">▾</span>
       </div>
       <div class="week-body">
-        <div class="day-row clickable" onclick="openDay('run_lun_s8','LUNDI','Running · Endurance (décharge)')">
+        <div class="week-note">
+          <span class="week-note-emoji">🔥</span>
+          <span>Semaine la plus chargée avant bilan. Fractionné maximal, sortie longue, allure cible la plus rapide. Objectif en vue : <strong>sub-1h (6'00/km)</strong>.</span>
+        </div>
+        <div class="day-row clickable" onclick="openDay('z2_45','LUNDI','Running · Z2 endurance')">
           <div class="day-tag"><div class="day-name-short">Lun</div><span class="day-emoji">🏃</span></div>
           <div class="day-content">
-            <div class="day-type-label run">Running · Endurance</div>
-            <div class="day-detail"><strong>Séance 3 blocs · décharge</strong> — Activation · <strong>25 min à 60–65% VMA + 2 × 3 min à 70–75%</strong> · Renfo + étirements.</div>
-            <div class="day-duration">40–45 min (1h30 : 55–60 min)</div>
-            <div class="day-tap-hint">👆 Voir le détail des 3 blocs</div>
+            <div class="day-type-label run">Running · Z2</div>
+            <div class="day-detail"><strong>Z2 45 min à 7'10/km</strong> — Endurance fondamentale, allure conversation.</div>
+            <div class="day-duration">~60 min</div>
+            <div class="day-tap-hint">👆 Voir le détail + allures</div>
           </div>
         </div>
-        <div class="day-row">
+        <div class="day-row clickable" onclick="openDay('circuit_a_3t','MARDI','Circuit A — 4 tours')">
           <div class="day-tag"><div class="day-name-short">Mar</div><span class="day-emoji">💪</span></div>
-          <div class="day-content"><div class="day-type-label muscu">Circuit A · Léger</div><div class="day-detail"><strong>3 tours 45s/15s</strong> — Retour à 3 tours. Qualité du mouvement, pas de performance.</div></div>
+          <div class="day-content">
+            <div class="day-type-label muscu">Circuit A · jambes</div>
+            <div class="day-detail"><strong>4 tours 45s/15s</strong> — Retour au volume plein. Squat sauté, Fentes, Hip thrust, Wall sit, Montées de genoux.</div>
+            <div class="day-duration">40 min · ~380 kcal</div>
+            <div class="day-tap-hint">👆 Voir le détail</div>
+          </div>
         </div>
-        <div class="day-row clickable" onclick="openDay('cardio_alt','MERCREDI','Cardio alternatif')">
-          <div class="day-tag"><div class="day-name-short">Mer</div><span class="day-emoji">🏃</span></div>
-          <div class="day-content"><div class="day-type-label cardio-alt">Cardio alternatif</div><div class="day-detail"><strong>Corde en pause</strong> — 15 min de montées de genoux ou course en place.</div><div class="day-duration">15 min</div><div class="day-tap-hint">👆 Voir le détail</div></div>
-        </div>
-        <div class="day-row clickable" onclick="openDay('run_jeu_s8','JEUDI','Running · Fractionné (décharge)')">
-          <div class="day-tag"><div class="day-name-short">Jeu</div><span class="day-emoji">⚡</span></div>
+        <div class="day-row clickable" onclick="openDay('frac_s8','MERCREDI','Running · Fractionné 12×')">
+          <div class="day-tag"><div class="day-name-short">Mer</div><span class="day-emoji">⚡</span></div>
           <div class="day-content">
             <div class="day-type-label run">Running · Fractionné</div>
-            <div class="day-detail"><strong>Séance 3 blocs · décharge</strong> — Activation · <strong>10 min + 6 × (30s à 80% / 30s lent) + 8 min</strong> · Renfo + étirements.</div>
-            <div class="day-duration">40–45 min (1h30 : 55–60 min)</div>
-            <div class="day-tap-hint">👆 Voir le détail des 3 blocs</div>
+            <div class="day-detail"><strong>12 × [30s sprint / 60s récup]</strong> — Le plus gros volume de sprints du programme.</div>
+            <div class="day-duration">~33 min</div>
+            <div class="day-tap-hint">👆 Voir le détail + allures</div>
+          </div>
+        </div>
+        <div class="day-row clickable" onclick="openDay('z2_long65','JEUDI','Running · Sortie longue Z2')">
+          <div class="day-tag"><div class="day-name-short">Jeu</div><span class="day-emoji">🏃</span></div>
+          <div class="day-content">
+            <div class="day-type-label run">Running · Sortie longue</div>
+            <div class="day-detail"><strong>65 min en continu à 7'10/km</strong> — Sortie longue Z2, à jeun si possible. La plus longue du bloc.</div>
+            <div class="day-duration">~80 min</div>
+            <div class="day-tap-hint">👆 Voir le détail + allures</div>
+          </div>
+        </div>
+        <div class="day-row clickable" onclick="openDay('circuit_b_3t','VENDREDI','Circuit B — 4 tours')">
+          <div class="day-tag"><div class="day-name-short">Ven</div><span class="day-emoji">💪</span></div>
+          <div class="day-content">
+            <div class="day-type-label muscu">Circuit B · haut + core</div>
+            <div class="day-detail"><strong>4 tours 45s/15s</strong> — Pompes, Planche, Dips, Mountain climbers, Burpees, Crunchs.</div>
+            <div class="day-duration">40 min · ~380 kcal</div>
+            <div class="day-tap-hint">👆 Voir le détail</div>
+          </div>
+        </div>
+        <div class="day-row clickable" onclick="openDay('cible_s8','SAMEDI','Running · Allure cible 10 km')">
+          <div class="day-tag"><div class="day-name-short">Sam</div><span class="day-emoji">🎯</span></div>
+          <div class="day-content">
+            <div class="day-type-label run">Running · Allure cible</div>
+            <div class="day-detail"><strong>7 km à 6'05/km</strong> — Progressif : départ 6'15, fin 5'55. La plus longue et la plus rapide.</div>
+            <div class="day-duration">~50 min</div>
+            <div class="day-tap-hint">👆 Voir le détail + allures</div>
           </div>
         </div>
         <div class="day-row">
-          <div class="day-tag"><div class="day-name-short">Ven</div><span class="day-emoji">💪</span></div>
-          <div class="day-content"><div class="day-type-label muscu">Circuit B · Léger</div><div class="day-detail"><strong>3 tours</strong></div></div>
-        </div>
-        <div class="day-row">
-          <div class="day-tag"><div class="day-name-short">Sam</div><span class="day-emoji">📏</span></div>
-          <div class="day-content"><div class="day-type-label active">Bilan</div><div class="day-detail"><strong>Mesures + photos</strong> — Tour de taille, hanches, bras. Comparer avec J1. Peser le matin à jeun.</div></div>
-        </div>
-        <div class="day-row">
-          <div class="day-tag"><div class="day-name-short">Dim</div><span class="day-emoji">🎉</span></div>
-          <div class="day-content"><div class="day-type-label rest">Repos — 8 semaines bouclées !</div></div>
+          <div class="day-tag"><div class="day-name-short">Dim</div><span class="day-emoji">📏</span></div>
+          <div class="day-content"><div class="day-type-label rest">Bilan & repos</div><div class="day-detail"><strong>Mesures + poids</strong> — Tour de taille, hanches, bras. Comparer avec J1. Peser à jeun. Objectif sub-1h en ligne de mire.</div></div>
         </div>
       </div>
     </div>
@@ -1585,11 +1663,11 @@ nav::-webkit-scrollbar { display: none; }
       <div class="prog-row-t"><div class="prog-cell week">S1</div><div class="prog-cell">2 × 12 min à 60% VMA</div><div class="prog-cell">2 tours</div><div class="prog-cell intensity i-low">Légère</div></div>
       <div class="prog-row-t"><div class="prog-cell week">S2</div><div class="prog-cell">60% VMA + sortie longue</div><div class="prog-cell">3 tours</div><div class="prog-cell intensity i-low">Légère+</div></div>
       <div class="prog-row-t"><div class="prog-cell week">S3</div><div class="prog-cell">Z2 40 min + fractionné 6 × 30s</div><div class="prog-cell">3 tours 45s/15s</div><div class="prog-cell intensity i-mid">Compressée ✈️</div></div>
-      <div class="prog-row-t"><div class="prog-cell week">S4</div><div class="prog-cell">60–65% + fractionné 80%</div><div class="prog-cell">4 tours</div><div class="prog-cell intensity i-mid">Modérée+</div></div>
-      <div class="prog-row-t"><div class="prog-cell week">S5</div><div class="prog-cell">Fractionné 2 × (6 × 30s 80%)</div><div class="prog-cell">4 tours dense</div><div class="prog-cell intensity i-high">Élevée</div></div>
-      <div class="prog-row-t"><div class="prog-cell week">S6</div><div class="prog-cell">Fractionné 80% + sortie longue</div><div class="prog-cell">5 tours bi-sets</div><div class="prog-cell intensity i-high">Très élevée</div></div>
-      <div class="prog-row-t"><div class="prog-cell week">S7</div><div class="prog-cell">Fractionné 3 × (6–8 × 30s 80%)</div><div class="prog-cell">5 tours max</div><div class="prog-cell intensity i-peak">Peak 🔥</div></div>
-      <div class="prog-row-t"><div class="prog-cell week">S8</div><div class="prog-cell">Décharge — niveau S3</div><div class="prog-cell">3 tours</div><div class="prog-cell intensity i-low">Décharge</div></div>
+      <div class="prog-row-t"><div class="prog-cell week">S4</div><div class="prog-cell">2× Z2 7'10 + frac 8×30s + allure 5 km 6'20</div><div class="prog-cell">4 tours</div><div class="prog-cell intensity i-mid">Construction</div></div>
+      <div class="prog-row-t"><div class="prog-cell week">S5</div><div class="prog-cell">2× Z2 + frac 10×30s + allure 6 km 6'15</div><div class="prog-cell">4 tours dense</div><div class="prog-cell intensity i-high">Intensité</div></div>
+      <div class="prog-row-t"><div class="prog-cell week">S6</div><div class="prog-cell">Z2 léger + frac court 6×20s + 🏁 Course 10 km</div><div class="prog-cell">3 tours décharge</div><div class="prog-cell intensity i-high">Course 🏁</div></div>
+      <div class="prog-row-t"><div class="prog-cell week">S7</div><div class="prog-cell">Z2 léger ×2 + frac relance + allure 5 km 6'10</div><div class="prog-cell">3 tours</div><div class="prog-cell intensity i-mid">Relance</div></div>
+      <div class="prog-row-t"><div class="prog-cell week">S8</div><div class="prog-cell">Frac 12×30s + long 65 min + allure 7 km 6'05</div><div class="prog-cell">4 tours</div><div class="prog-cell intensity i-peak">Peak 🔥</div></div>
     </div>
   </div>
 </div>
@@ -1992,27 +2070,40 @@ nav::-webkit-scrollbar { display: none; }
 
   <div id="obj10kBox"></div>
 
+  <div style="background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden;margin-bottom:18px;box-shadow:0 2px 8px rgba(0,0,0,0.04);">
+    <div style="background:linear-gradient(135deg,#e8660a,#c47d00);color:#fff;padding:12px 16px;font-family:'Outfit',sans-serif;font-weight:800;font-size:15px;">📈 Allure cible — progression vers le sub-1h</div>
+    <div style="padding:4px 16px 10px;">
+      <div style="display:flex;justify-content:space-between;font-size:13px;padding:8px 0;border-bottom:1px solid var(--border);"><span style="color:var(--mid);font-weight:600;">S4 · 5 km</span><span style="color:var(--run);font-weight:700;">6'20/km</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:13px;padding:8px 0;border-bottom:1px solid var(--border);"><span style="color:var(--mid);font-weight:600;">S5 · 6 km</span><span style="color:var(--run);font-weight:700;">6'15/km</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:13px;padding:8px 0;border-bottom:1px solid var(--border);"><span style="color:var(--mid);font-weight:600;">S6 · 🏁 Course 10 km</span><span style="color:var(--run);font-weight:700;">6'17/km</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:13px;padding:8px 0;border-bottom:1px solid var(--border);"><span style="color:var(--mid);font-weight:600;">S7 · 5 km</span><span style="color:var(--run);font-weight:700;">6'10/km</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:13px;padding:8px 0;"><span style="color:var(--mid);font-weight:600;">S8 · 7 km</span><span style="color:var(--run);font-weight:700;">6'05/km</span></div>
+      <div style="margin-top:8px;font-size:12px;color:var(--muted);line-height:1.5;">Chaque sortie : progressive (±10 sec autour de la cible), encadrée de 10 min d'échauffement Z2 (7'15/km) et 5 min de retour au calme.</div>
+    </div>
+  </div>
+
   <div class="exo-grid">
     <div class="exo-card">
       <div class="exo-card-head" onclick="toggleExo(this)">
         <div class="exo-icon run">🎯</div>
         <div class="exo-head-text">
-          <div class="exo-name">Tes allures (VMA) — en simple</div>
-          <div class="exo-meta">60% · 70–75% · 80% expliqués sans jargon</div>
+          <div class="exo-name">Tes allures (min/km) — en simple</div>
+          <div class="exo-meta">Z2 7'10 · cible 6'00–6'20 · sprint 4'45</div>
         </div>
         <span class="exo-chevron">▾</span>
       </div>
       <div class="exo-body">
-        <p>La <strong>VMA</strong>, c'est simplement ta vitesse quand tu cours à fond. Tout le programme se règle en pourcentage de cette vitesse. Pas besoin de la mesurer précisément : le <strong>test de la parole</strong> suffit pour savoir si tu es dans la bonne zone.</p>
-        <div class="exo-section-title">60% VMA — allure facile</div>
-        <p><strong>Tu peux parler en faisant des phrases complètes</strong>, sans être essoufflé. Si tu n'y arrives pas, ralentis. C'est l'allure de base du programme : celle qui brûle le plus de graisses et qu'on garde sur les sorties longues. La plupart de tes minutes de course sont ici.</p>
-        <div class="exo-section-title">70–75% VMA — un peu plus soutenu</div>
-        <p><strong>Tu peux encore parler, mais par phrases courtes</strong>, ça commence à demander de l'effort. On l'utilise par petites pointes de 2–3 min glissées dans une séance facile, pour habituer le corps à aller un peu plus vite.</p>
-        <div class="exo-section-title">80% VMA — accélérations courtes</div>
-        <p><strong>Là tu ne peux plus parler</strong>, tu respires fort. On n'y reste que <strong>30 secondes à la fois</strong>, suivies de 30 sec lentes pour récupérer. Ce sont les accélérations du fractionné. C'est court mais ça fait travailler le cœur et ça continue à brûler des calories plusieurs heures après.</p>
+        <p>La <strong>VMA</strong>, c'est simplement ta vitesse quand tu cours à fond. Ta VMA estimée est de <strong>12 km/h</strong>. Pas besoin de la mesurer précisément : le <strong>test de la parole</strong> + les allures en min/km ci-dessous suffisent.</p>
+        <div class="exo-section-title">Zone 2 — allure facile · 7'10/km</div>
+        <p><strong>Tu peux parler en faisant des phrases complètes</strong>, sans être essoufflé. C'est l'allure de base (lundi + jeudi) : celle qui brûle le plus de graisses et qu'on garde sur les sorties longues. La plupart de tes minutes de course sont ici.</p>
+        <div class="exo-section-title">Allure cible 10 km — 6'00 à 6'20/km</div>
+        <p><strong>Tu peux encore parler, mais par phrases courtes</strong>, ça demande de l'effort. C'est l'allure des sorties du samedi, celle qui prépare la course. On la travaille de 6'20/km (S4) vers 6'00/km (objectif sub-1h).</p>
+        <div class="exo-section-title">Sprint — accélérations courtes · ~4'45/km</div>
+        <p><strong>Là tu ne peux plus parler</strong>, tu respires fort. On n'y reste que <strong>20–30 secondes à la fois</strong>, suivies d'une récup lente. Ce sont les accélérations du fractionné (mercredi). C'est court mais ça fait gagner 2 à 3 sec/km sur ton allure course.</p>
         <div class="tips-row">
-          <span class="tip-pill run">Dans le doute : ralentis</span>
-          <span class="tip-pill run">L'essentiel du temps à 60%</span>
+          <span class="tip-pill run">Z2 = 7'10/km · l'essentiel du temps</span>
+          <span class="tip-pill run">Cible = 6'00–6'20/km</span>
+          <span class="tip-pill run">Sprint = ~4'45/km</span>
         </div>
       </div>
     </div>
@@ -2046,22 +2137,24 @@ nav::-webkit-scrollbar { display: none; }
         <div class="exo-icon run">⚡</div>
         <div class="exo-head-text">
           <div class="exo-name">Le fractionné, semaine par semaine</div>
-          <div class="exo-meta">La séance du jeudi · S1 → S8</div>
+          <div class="exo-meta">La séance du mercredi · S3 → S8</div>
         </div>
         <span class="exo-chevron">▾</span>
       </div>
       <div class="exo-body">
-        <p>Le fractionné, c'est alterner des moments rapides et des moments lents. Toujours encadré par l'<strong>activation (5 min)</strong> au début et le <strong>renfo + étirements (10 min)</strong> à la fin. On monte tout doucement de semaine en semaine.</p>
-        <div class="exo-section-title">S1–S2 : découverte des allures</div>
-        <p><strong>6 × (1 min un peu plus vite / 1 min de marche).</strong> Pas encore de vrai sprint : juste sentir ce que veut dire « accélérer un peu ». Tu dois finir sans être cuit.</p>
-        <div class="exo-section-title">S3–S4 : premier vrai fractionné</div>
-        <p><strong>6 × (30 sec à 80% / 30 sec lent).</strong> Les accélérations passent à 30 secondes, là où tu ne peux plus parler. La récup lente est aussi de 30 secondes.</p>
-        <div class="exo-section-title">S5–S6 : on densifie</div>
-        <p><strong>2 blocs de 8 × (30 sec à 80% / 30 sec lent),</strong> avec 2 min de marche entre les deux blocs. Plus de répétitions, donc plus de travail.</p>
-        <div class="exo-section-title">S7 : le pic</div>
-        <p><strong>3 blocs de 8 × (30 sec à 80% / 30 sec lent).</strong> Le plus gros volume du programme. Garde la même qualité d'accélération jusqu'au bout.</p>
-        <div class="exo-section-title">S8 : décharge</div>
-        <p><strong>Retour à 6 × (30 sec / 30 sec).</strong> On lève le pied pour récupérer et ancrer les progrès avant le bilan.</p>
+        <p>Le fractionné, c'est alterner des sprints rapides (~4'45/km) et des récups lentes. Toujours encadré par <strong>10 min d'échauffement Z2 (7'15/km)</strong> et <strong>5 min de retour au calme</strong>. Chaque séance gagne 2 à 3 sec/km sur ton allure course.</p>
+        <div class="exo-section-title">S3 : premier fractionné (Portugal)</div>
+        <p><strong>6 × [30s sprint / 90s récup].</strong> On découvre le vrai sprint : 30 secondes où tu ne peux plus parler, récup longue de 90 secondes.</p>
+        <div class="exo-section-title">S4 : on ajoute du volume</div>
+        <p><strong>8 × [30s sprint / 90s récup].</strong> +2 répétitions, même récup confortable.</p>
+        <div class="exo-section-title">S5 : on réduit la récup</div>
+        <p><strong>10 × [30s sprint / 60s récup].</strong> Plus de répétitions ET récup raccourcie à 60s : c'est là que l'allure course progresse vraiment.</p>
+        <div class="exo-section-title">S6 : affûtage avant course</div>
+        <p><strong>6 × [20s sprint / 90s récup].</strong> Sprints raccourcis, récup longue : on garde les jambes vives sans fatiguer avant le 10 km.</p>
+        <div class="exo-section-title">S7 : relance en douceur</div>
+        <p><strong>6 × [30s sprint / 90s récup].</strong> Réintroduction après la course, volume réduit.</p>
+        <div class="exo-section-title">S8 : peak final</div>
+        <p><strong>12 × [30s sprint / 60s récup].</strong> Le plus gros volume de sprints du programme. Cap sur le sub-1h.</p>
       </div>
     </div>
   </div>
@@ -2250,11 +2343,11 @@ const WEEKS = [
   { num: 1, days: ['Run 35', 'Circuit A', 'Cardio alt', 'Run 35', 'Circuit B', 'Récup', 'Repos'] },
   { num: 2, days: ['Run 40', 'Circuit A', 'Cardio alt', 'Run 40', 'Circuit B', 'Long run', 'Repos'] },
   { num: 3, days: ['Run Z2 40', 'Circuit A', 'Fractionné', 'Circuit B', 'Footing léger', 'WE Portugal', 'Repos'] },
-  { num: 4, days: ['Run 45', 'Circuit A+', 'Cardio alt', 'Fractionné', 'Circuit B+', 'Long run', 'Repos'] },
-  { num: 5, days: ['Run Z2', 'Circuit A', 'Cardio alt', 'Fractionné', 'Circuit B', 'Long run', 'Repos'] },
-  { num: 6, days: ['Run Z2/Z3', 'Circuit A', 'Cardio alt', 'Tabata', 'Circuit B', 'Long run 60', 'Repos'] },
-  { num: 7, days: ['Run Z2/Z3', 'Circuit A', 'Cardio alt', 'Frac Long', 'Circuit B', 'Long 65', 'Repos'] },
-  { num: 8, days: ['Run léger', 'Circuit A', 'Cardio alt', 'Frac modéré', 'Circuit B', 'Bilan', 'Repos'] },
+  { num: 4, days: ['Z2 45', 'Circuit A', 'Fractionné', 'Z2 45', 'Circuit B', 'Allure 5km', 'Repos'] },
+  { num: 5, days: ['Z2 45', 'Circuit A', 'Fractionné', 'Z2 50', 'Circuit B', 'Allure 6km', 'Repos'] },
+  { num: 6, days: ['Z2 40', 'Circuit A', 'Frac court', 'Marche', 'Repos', '🏁 Course', 'Repos'] },
+  { num: 7, days: ['Z2 léger', 'Circuit A', 'Frac relance', 'Z2 léger', 'Circuit B', 'Allure 5km', 'Repos'] },
+  { num: 8, days: ['Z2 45', 'Circuit A', 'Frac 12×', 'Long 65', 'Circuit B', 'Allure 7km', 'Bilan'] },
 ];
 const DAYS = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
 const REST_IDX = 6;
@@ -2688,11 +2781,16 @@ function renderObjectif10k() {
   const pct = Math.round((cw / 8) * 100);
   el.innerHTML =
     `<div class="obj10k">` +
-      `<div class="obj10k-title">🎯 Objectif 10 km</div>` +
+      `<div class="obj10k-title">🎯 Objectifs</div>` +
+      `<div class="obj10k-row"><span class="k">Course mi-juillet</span><span class="v">battre 1h02'50 · 6'17/km</span></div>` +
+      `<div class="obj10k-row"><span class="k">Objectif final</span><span class="v">sub-1h · 6'00/km</span></div>` +
       `<div class="obj10k-row"><span class="k">Actuel</span><span class="v">1h03 · 6'18/km</span></div>` +
-      `<div class="obj10k-row"><span class="k">Cible</span><span class="v">sub 55 min · 5'30/km</span></div>` +
-      `<div class="obj10k-row"><span class="k">Progression</span><span class="v">+${cw} semaine${cw > 1 ? 's' : ''} complétée${cw > 1 ? 's' : ''}</span></div>` +
+      `<div class="obj10k-row"><span class="k">Semaine en cours</span><span class="v">S3</span></div>` +
       `<div class="obj10k-bar"><span style="width:${pct}%"></span></div>` +
+      `<div style="margin-top:12px;font-size:12.5px;color:rgba(255,255,255,0.82);line-height:1.5;display:flex;gap:8px;align-items:flex-start;">` +
+        `<span style="font-size:15px;line-height:1.2;">⚡</span>` +
+        `<span>Chaque séance fractionné = <strong style="color:#7dffb8;">-2 à -3 sec/km</strong> sur ton allure course.</span>` +
+      `</div>` +
     `</div>`;
 }
 
@@ -3484,6 +3582,102 @@ function buildRunningDrawer(day, ph, decharge) {
   // S8 = semaine de décharge → contenu niveau S3–S4
   DAY_CONTENT['run_lun_s8'] = { html: buildRunningDrawer('lun','s34', true) };
   DAY_CONTENT['run_jeu_s8'] = { html: buildRunningDrawer('jeu','s34', true) };
+})();
+
+// ═══════════════════════════════════════
+// PROGRAMME COURSE 10 KM (S4 → S8) — allures en min/km (VMA 12 km/h)
+// Z2 7'10/km · échauffement 7'15/km · allure cible 6'00 → 6'20/km
+// ═══════════════════════════════════════
+const ALL_Z2  = "7'10/km";          // Zone 2 endurance
+const ALL_ECH = "7'15/km";          // échauffement Z2
+const ALL_SPR = "~4'45/km";         // sprint 30s (≈ 90 % effort)
+const ALL_REC = "trot lent ~8'00/km";
+
+// — Séance Z2 endurance (lun/jeu) — toggle 1h / 1h30 —
+function z2Drawer(min, opts) {
+  opts = opts || {};
+  const leger = opts.leger, long = opts.long;
+  const titre = long ? 'Sortie longue Z2' : ('Endurance Z2' + (leger ? ' — léger' : ''));
+  const sousTitre = leger
+    ? `Allure souple, tu finis frais. Endurance fondamentale qui entretient sans creuser la fatigue.`
+    : `<strong>Effort 5–6/10.</strong> Tu dois pouvoir parler en phrases complètes. C'est l'allure qui brûle le plus de graisses.`;
+  const noteLong = long ? `<br>À jeun ou 2 h après le repas pour puiser au maximum dans les graisses.` : '';
+  return RUN_NUTRI + RUN_TOGGLE + RUN_BLOC1
+    + `<div class="drawer-sep">Bloc 2 · ${titre}</div>`
+    + `<div class="drawer-run-block"><div class="drawer-run-zone zone-2">🎯 Zone 2 — ${ALL_Z2} · allure conversation</div><p>${sousTitre}</p></div>`
+    + `<div class="run-1h"><div class="drawer-info-block"><p>🏃 <strong>${min} min en continu à ${ALL_Z2}</strong> (Zone 2, confort total)${noteLong}</p></div></div>`
+    + `<div class="run-1h30" style="display:none"><div class="drawer-info-block"><p>🏃 <strong>${min + 15} min en continu à ${ALL_Z2}</strong> (Zone 2)${noteLong}${RUN_EXTRA}</p></div></div>`
+    + RUN_BLOC3;
+}
+
+// — Séance fractionné (mer) —
+function fracDrawer(reps, on, off, opts) {
+  opts = opts || {};
+  return RUN_NUTRI + RUN_BLOC1
+    + `<div class="drawer-sep">Bloc 2 · Fractionné</div>`
+    + `<div class="drawer-run-block"><div class="drawer-run-zone zone-hiit">⚡ Fractionné — ${reps} × [${on}s sprint / ${off}s récup]</div>`
+      + `<p>Chaque sprint te rapproche de ton allure course (<strong>-2 à -3 sec/km</strong>). Effet afterburn jusqu'à 24 h après.</p></div>`
+    + `<div class="drawer-info-block"><p>`
+      + `🏃 <strong>10 min échauffement Z2</strong> (${ALL_ECH})<br>`
+      + `⚡ <strong>${reps} × [${on}s sprint ${ALL_SPR} / ${off}s ${ALL_REC}]</strong><br>`
+      + `🚶 <strong>5 min retour au calme</strong> (marche / trot très lent)</p>`
+      + `<p><strong>Sprint :</strong> 90 % effort, impossible de parler (~${ALL_SPR}).<br>`
+      + `<strong>Récup :</strong> trot très lent, surtout pas l'arrêt complet.</p></div>`
+    + (opts.note ? `<div class="drawer-info-block" style="background:var(--gold-bg);border-color:#f0d98a;"><p>${opts.note}</p></div>` : '')
+    + RUN_BLOC3;
+}
+
+// — Séance allure cible 10 km (sam) — progressive ±10 sec —
+function cibleDrawer(dist, cible, start, end) {
+  return RUN_NUTRI + RUN_BLOC1
+    + `<div class="drawer-sep">Bloc 2 · Allure cible 10 km</div>`
+    + `<div class="drawer-run-block"><div class="drawer-run-zone zone-3">🎯 Allure cible — ${cible}/km</div>`
+      + `<p>On simule les conditions de course : sentir l'allure, pas se vider.</p></div>`
+    + `<div class="drawer-info-block"><p>`
+      + `🏃 <strong>10 min échauffement Z2</strong> (${ALL_ECH})<br>`
+      + `🎯 <strong>${dist} à allure cible ${cible}/km</strong><br>`
+      + `&nbsp;&nbsp;&nbsp;↳ progressif : commence à <strong>${start}/km</strong> (10 sec plus lent), finis à <strong>${end}/km</strong> (10 sec plus vite)<br>`
+      + `🚶 <strong>5 min retour au calme</strong></p></div>`
+    + `<div class="drawer-info-block" style="background:var(--run-bg);border-color:#f5cca8;"><p>💡 Cette sortie simule les conditions de course. L'objectif n'est pas de souffrir mais de <strong>sentir l'allure 6'10–6'20/km dans les jambes.</strong></p></div>`
+    + RUN_BLOC3;
+}
+
+// — Course 10 km (S6) —
+function courseDrawer() {
+  return RUN_NUTRI
+    + `<div class="drawer-run-block"><div class="drawer-run-zone zone-3">🏁 Course 10 km — objectif 1h02'50 (6'17/km)</div>`
+      + `<p>Le jour J. Tu as construit l'allure depuis 3 semaines : fais-toi confiance.</p></div>`
+    + `<div class="drawer-sep">Échauffement (avant le départ)</div>`
+    + `<div class="drawer-info-block"><p>🚶 10 min marche + montées de genoux<br>⚡ 3–4 accélérations progressives de 20 m<br>🧘 Mobilité chevilles / hanches</p></div>`
+    + `<div class="drawer-sep">Stratégie de course</div>`
+    + `<div class="drawer-info-block"><p>`
+      + `🟢 <strong>km 1–3 :</strong> départ contrôlé à <strong>6'20/km</strong> — ne pars JAMAIS trop vite.<br>`
+      + `🟡 <strong>km 4–7 :</strong> installe l'allure cible <strong>6'17/km</strong>, respiration régulière.<br>`
+      + `🔴 <strong>km 8–10 :</strong> accélère progressivement vers <strong>6'10/km</strong> et finis vidé.</p>`
+      + `<p><strong>Négatif split</strong> = 2ᵉ moitié plus rapide que la 1ʳᵉ. C'est comme ça qu'on bat un record.</p></div>`
+    + `<div class="drawer-info-block" style="background:var(--gold-bg);border-color:#f0d98a;"><p>🎯 <strong>Tableau de marche :</strong> 6'17/km = 1h02'50 sur 10 km. Tenir 6'10/km = ~1h01'40. Vise la régularité avant la performance.</p></div>`;
+}
+
+// Enregistrement des drawers du bloc course 10 km
+(function registerCourse10kDrawers(){
+  // Z2 endurance (lun / jeu / sortie longue)
+  DAY_CONTENT['z2_45']      = { html: z2Drawer(45) };
+  DAY_CONTENT['z2_50']      = { html: z2Drawer(50) };
+  DAY_CONTENT['z2_40leger'] = { html: z2Drawer(40, { leger:true }) };
+  DAY_CONTENT['z2_long65']  = { html: z2Drawer(65, { long:true }) };
+  // Fractionné (mercredi)
+  DAY_CONTENT['frac_s4'] = { html: fracDrawer(8, 30, 90) };
+  DAY_CONTENT['frac_s5'] = { html: fracDrawer(10, 30, 60, { note:'⏱ Récup réduite à 60 s (vs 90 s en S4) : plus de densité, allure course qui progresse.' }) };
+  DAY_CONTENT['frac_s6'] = { html: fracDrawer(6, 20, 90, { note:'✂️ Sprints raccourcis à 20 s, récup longue à 90 s : on garde les jambes vives sans fatiguer avant la course.' }) };
+  DAY_CONTENT['frac_s7'] = { html: fracDrawer(6, 30, 90, { note:'🌱 Réintroduction après la course : volume réduit, récup longue. On remet de l\'intensité en douceur.' }) };
+  DAY_CONTENT['frac_s8'] = { html: fracDrawer(12, 30, 60, { note:'🔥 Le plus gros volume de sprints du programme. Cap sur le sub-1h.' }) };
+  // Allure cible 10 km (samedi)
+  DAY_CONTENT['cible_s4'] = { html: cibleDrawer('5 km', "6'20", "6'30", "6'10") };
+  DAY_CONTENT['cible_s5'] = { html: cibleDrawer('6 km', "6'15", "6'25", "6'05") };
+  DAY_CONTENT['cible_s7'] = { html: cibleDrawer('5 km', "6'10", "6'20", "6'00") };
+  DAY_CONTENT['cible_s8'] = { html: cibleDrawer('7 km', "6'05", "6'15", "5'55") };
+  // Course
+  DAY_CONTENT['course_10k'] = { html: courseDrawer() };
 })();
 
 function setRunMode(mode, btn) {
