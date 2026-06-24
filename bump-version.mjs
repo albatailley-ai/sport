@@ -28,7 +28,7 @@ const ROOT = dirname(fileURLToPath(import.meta.url));
 // Chaque programme → ses deux fichiers à versionner.
 const TARGETS = {
   sarah: { html: 'programme-sarah.html', sw: 'sw-sarah.js' },
-  alex:  { html: 'programme-Alex.html',  sw: 'sw-alex.js'  },
+  alex:  { html: 'programme-2mois.html', sw: 'sw-alex.js'  },
 };
 
 // ---- Args ----

@@ -8,13 +8,13 @@
    attente » (waiting), et la page affiche le bandeau
    « mise à jour disponible ».
    ------------------------------------------------------------
-   Scope limité à programme-Alex.html : le programme de Sarah
+   Scope limité à programme-2mois.html : le programme de Sarah
    n'est JAMAIS contrôlé par ce worker. Les appels Supabase /
    CDN passent directement au réseau : la synchro est intacte.
    ============================================================ */
 
-const CACHE_VERSION = 'alex-20260624-221713';
-const PAGE = 'programme-Alex.html';
+const CACHE_VERSION = 'alex-20260624-222535';
+const PAGE = 'programme-2mois.html';
 
 // --- Installation : on précharge la page, sans forcer l'activation ---
 self.addEventListener('install', (event) => {

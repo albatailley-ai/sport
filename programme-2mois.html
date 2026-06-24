@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="app-build" content="alex-20260624-221713">
+<meta name="app-build" content="alex-20260624-222535">
 <title>Programme 8 Semaines — Perte de Poids</title>
 <link rel="manifest" href="manifest-alex.json">
 <meta name="theme-color" content="#0a3d28">
@@ -2609,7 +2609,7 @@ function initUpdateBanner() {
   });
 
   // Scope limité à la page Alex → le programme de Sarah n'est jamais contrôlé.
-  navigator.serviceWorker.register('sw-alex.js', { scope: 'programme-Alex.html' })
+  navigator.serviceWorker.register('sw-alex.js', { scope: 'programme-2mois.html' })
     .then(reg => {
       // Un SW est déjà en attente au chargement (mise à jour pas encore appliquée)
       if (reg.waiting && navigator.serviceWorker.controller) showBanner(reg.waiting, 'update');
