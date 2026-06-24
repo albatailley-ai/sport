@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="Sport Alex">
+  <rect width="512" height="512" fill="#0a3d28"/>
+  <g fill="none" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Jambes du A -->
+    <path d="M256 134 L150 392" stroke-width="44"/>
+    <path d="M256 134 L362 392" stroke-width="44"/>
+    <!-- Barre transversale = onde de rythme cardiaque (ECG) -->
+    <path d="M168 300 L222 300 L236 300 L248 250 L262 344 L276 300 L344 300" stroke-width="23"/>
+  </g>
+</svg>

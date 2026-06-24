@@ -1,0 +1,27 @@
+{
+  "id": "/programme-Alex.html",
+  "name": "Sport Alex",
+  "short_name": "Sport Alex",
+  "description": "Programme sport — course 10 km (sub-1h) & perte de poids.",
+  "lang": "fr",
+  "start_url": "./programme-Alex.html",
+  "scope": "./programme-Alex.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#0a3d28",
+  "background_color": "#0e1f1a",
+  "icons": [
+    {
+      "src": "icon-alex-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-alex-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

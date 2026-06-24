@@ -14,7 +14,7 @@
    la synchro cloud n'est pas touchée.
    ============================================================ */
 
-const CACHE_VERSION = 'sarah-20260618-224401';
+const CACHE_VERSION = 'sarah-20260624-221713';
 const PAGE = 'programme-sarah.html';
 
 // --- Installation : on précharge la page, sans forcer l'activation ---

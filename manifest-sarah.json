@@ -1,0 +1,27 @@
+{
+  "id": "/programme-sarah.html",
+  "name": "Sport Sarah",
+  "short_name": "Sport Sarah",
+  "description": "Programme sport de Sarah — gainage & renforcement.",
+  "lang": "fr",
+  "start_url": "./programme-sarah.html",
+  "scope": "./programme-sarah.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "theme_color": "#0fb872",
+  "background_color": "#0d2318",
+  "icons": [
+    {
+      "src": "icon-sarah-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-sarah-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}

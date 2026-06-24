@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-label="Sport Sarah">
+  <rect width="512" height="512" fill="#0fb872"/>
+  <!-- S stylisé -->
+  <path d="M330 200
+           C330 160 266 150 224 170
+           C176 192 180 238 234 258
+           C300 282 320 316 292 352
+           C262 390 196 386 166 352"
+        fill="none" stroke="#ffffff" stroke-width="46" stroke-linecap="round"/>
+  <!-- Feuille -->
+  <path d="M318 196
+           C308 156 330 120 370 104
+           C372 150 356 184 318 196 Z"
+        fill="#ffffff"/>
+  <path d="M328 186 L360 124" fill="none" stroke="#0fb872" stroke-width="8" stroke-linecap="round"/>
+</svg>
